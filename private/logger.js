@@ -26,6 +26,7 @@ var logger = {
             if (err) {
                 console.error(err);
             }
+            console.log('empty success');
         });
     }
 };

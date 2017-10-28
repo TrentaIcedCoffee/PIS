@@ -1,5 +1,6 @@
 /*
-    This script is used to empty log, use with care
+    This script is used to empty log
+    NOTE use with care
 */
 var path = require('path');
 global.rootUri = path.join(__dirname, '..');

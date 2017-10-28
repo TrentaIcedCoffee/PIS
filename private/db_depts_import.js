@@ -1,5 +1,6 @@
 /*
-    This script imports data from MySQL to Mongo, use with care.
+    This script imports data from MySQL to Mongo
+    NOTE use with care
 */
 var mongoUser = '********'; // config.dbUser
 var mongoPwd = '********'; // config.dbPwd
