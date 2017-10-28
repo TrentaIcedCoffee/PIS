@@ -1,7 +1,5 @@
-// TODO -> findOne
 /*
-This script imports data from MySQL to Mongo, use with care.
-Password remain unset
+    This script imports data from MySQL to Mongo, use with care.
 */
 var mongoUser = '********'; // config.dbUser
 var mongoPwd = '********'; // config.dbPwd
@@ -10,13 +8,13 @@ var mysqlPwd = '********';
 var mysqlDbName = '********';
 var mysqlHost = '********';
 
-var MongoClient = require('mongodb').MongoClient;
-var mysql = require('mysql');
-
 var config = {
     dbUri: `mongodb://${mongoUser}:${mongoPwd}@siss-shard-00-00-aoiln.mongodb.net:27017,siss-shard-00-01-aoiln.mongodb.net:27017,siss-shard-00-02-aoiln.mongodb.net:27017/test?ssl=true&replicaSet=siss-shard-0&authSource=admin`,
     dbDepts: 'depts'
 };
+
+var MongoClient = require('mongodb').MongoClient;
+var mysql = require('mysql');
 
 var data = [];
 
@@ -55,7 +53,6 @@ var connection = mysql.createConnection({
     database: mysqlDbName
 });
 
-// TODO -> findOne
 connection.connect(function(err) {
     if (err) {
         throw err;
@@ -67,19 +64,16 @@ connection.connect(function(err) {
        for (var val of result) {
            data.push(regulateData(new Model(val[fields[1].name], val[fields[3].name], val[fields[2].name])));
        }
-
        MongoClient.connect(config.dbUri, function(err, db) {
            if (err) {
                throw err;
            }
-
            db.collection(config.dbDepts).insertMany(data, function(err, res) {
                if (err) {
                    throw err;
                }
                console.log('insert finished ' + res.insertedCount);
                db.close();
-
                process.exit(0);
            });
        });
