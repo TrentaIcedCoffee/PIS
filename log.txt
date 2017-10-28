@@ -1,0 +1,1 @@
+ip;2017:09:27:15:20:29;uri;method;status
