@@ -1,0 +1,8 @@
+var config = {};
+
+config.dbUri = 'mongodb://sissdata:********@siss-shard-00-00-aoiln.mongodb.net:27017,siss-shard-00-01-aoiln.mongodb.net:27017,siss-shard-00-02-aoiln.mongodb.net:27017/test?ssl=true&replicaSet=siss-shard-0&authSource=admin';
+config.dbUsers = 'users';
+config.dbDepts = 'depts';
+config.logUri = `${rootUri}/log.txt`;
+
+module.exports = config;
