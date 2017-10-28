@@ -21,17 +21,17 @@ api: {
 
 user: {
   "_id": "default",
-  "name": "required",
   "email": "required",
   "password": "required",
-  "working_email": "optional",
+  "name": "required",
   "phone": "required",
-  "dept": ["len > 0"],
-  "note": "optional",
-  "visa_type": ["len > 0"],
+  "lifetime": "required",
+  "depts": ["len > 0"],
+  "visa_types": ["len > 0"],
+  "working_email": "optional",
   "supervisor_name": "optional",
   "supervisor_email": "optional",
-  "lifetime": "required"
+  "note": "optional"
 }
 
 dept: {
