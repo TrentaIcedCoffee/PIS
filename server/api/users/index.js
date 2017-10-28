@@ -1,4 +1,6 @@
-// TODO better crud
+// TODO improve crud
+// TODO console -> log
+
 var usersRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -58,6 +60,12 @@ usersRouter.route('/')
                 });
             });
         });
+    })
+    .post(function(req, res) {
+        res.status(405).end() // not supported
+    })
+    .delete(function(req, res) {
+        res.status(405).end() // not supported
     });
 
 usersRouter.route('/:id')
@@ -76,6 +84,9 @@ usersRouter.route('/:id')
                 db.close();
             });
         });
+    })
+    .put(function(req, res) {
+        res.status(405).end() // not supported
     })
     .post(function(req, res) {
         console.log('POST localhost:3000/users/id');

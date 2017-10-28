@@ -8,6 +8,12 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
+var Data = function(req) {
+    this.name: req.body.name;
+    this.college: req.body.college;
+    this.cluster: req.body.cluster;
+}
+
 deptsRouter.route('/')
     .get(function(req, res) {
         console.log('GET localhost:3000/depts');
@@ -27,11 +33,7 @@ deptsRouter.route('/')
     .put(function(req, res) {
         console.log('PUT localhost:3000/depts');
         console.log(req.body);
-        var data = {
-            name: req.body.name,
-            college: req.body.college,
-            cluster: req.body.cluster
-        };
+        var data = new Data(req);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -50,6 +52,12 @@ deptsRouter.route('/')
                 });
             });
         })
+    })
+    .post(function(req, res) {
+        res.status(405).end() // not supported
+    })
+    .delete(function(req, res) {
+        res.status(405).end() // not supported
     });
 
 deptsRouter.route('/:id')
@@ -69,14 +77,13 @@ deptsRouter.route('/:id')
             });
         })
     })
+    .put(function(req, res) {
+        res.status(405).end() // not supported
+    })
     .post(function(req, res) {
         console.log('POST localhost:3000/depts/id');
         console.log(req.params.id);
-        var data = {
-            name: req.body.name,
-            college: req.body.college,
-            cluster: req.body.cluster
-        };
+        var data = new Data(req);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
