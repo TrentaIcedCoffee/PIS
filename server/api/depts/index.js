@@ -1,7 +1,6 @@
-// FIXED find toArray -> findOne
-// FIXED crud test
 // TODO improve crud
 // TODO console -> log
+
 var deptsRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -11,6 +10,7 @@ var util = require(`${rootUri}/private/util`);
 
 deptsRouter.route('/')
     .get(function(req, res) {
+        console.log(config.dbUri);
         console.log('GET localhost:3000/depts');
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {

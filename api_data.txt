@@ -2,7 +2,7 @@ api: {
   "/users": {
     "GET": ["all data"],
     "PUT": "put json"
-  }, 
+  },
   "/depts": {
 	"GET": ["all data"],
 	"PUT": "put json"
@@ -37,7 +37,7 @@ user: {
 dept: {
   "_id": "default",
   "name": "required",
-  "collage": "optional",
+  "college": "optional",
   "cluster": "optional"
 }
 
