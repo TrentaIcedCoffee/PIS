@@ -1,3 +1,7 @@
+// FIXED find toArray -> findOne
+// FIXED crud test
+// TODO improve crud
+// TODO console -> log
 var deptsRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -21,6 +25,7 @@ deptsRouter.route('/')
             });
         })
     })
+
     .put(function(req, res) {
         console.log('PUT localhost:3000/depts');
         console.log(req.body);
@@ -33,20 +38,16 @@ deptsRouter.route('/')
             if (err) {
                 throw err;
             }
-            db.collection(config.dbDepts).insertOne(data, function(err, results) {
+            db.collection(config.dbDepts).insertOne(data, function(err, result) {
                 if (err) {
                     throw err;
                 }
-                data._id = results.insertedId;
-                db.collection(config.dbDepts).find({_id: data._id}).toArray(function(err, results) {
+                data._id = result.insertedId; // data._id: ObjectId
+                db.collection(config.dbDepts).findOne({_id: data._id}, function(err, result) {
                     if (err) {
                         throw err;
                     }
-                    if (results.length != 1) {
-                        throw new Error('debugException'); // TODO
-                    }
-                    res.json(results[0]);
-
+                    res.json(result);
                     db.close();
                 });
             });
@@ -61,14 +62,12 @@ deptsRouter.route('/:id')
             if (err) {
                 throw err;
             }
-            db.collection(config.dbDepts).find({_id: new ObjectId(req.params.id)}).toArray(function(err, results) {
+            db.collection(config.dbDepts).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
                 if (err) {
                     throw err;
                 }
-                if (results.length != 1) {
-                    throw new Error('debug') // TODO
-                }
-                res.json(results);
+                res.json(result);
+                db.close();
             });
         })
     })
@@ -115,7 +114,6 @@ deptsRouter.route('/:id')
                         throw err;
                     }
                     res.json(data);
-                    console.log(data);
                     db.close();
                 });
             });
