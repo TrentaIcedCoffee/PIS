@@ -1,0 +1,44 @@
+api: {
+  "/users": {
+    "GET": ["all data"],
+    "PUT": "put json"
+  }, 
+  "/depts": {
+	"GET": ["all data"],
+	"PUT": "put json"
+  },
+  "/users:id" {
+	"GET": "json",
+	"POST": "merged json",
+	"DELETE": "deleted json"
+  },
+  "/depts:id" {
+	"GET": "json",
+	"POST": "merged json",
+	"DELETE": "deleted json"
+  }
+}
+
+user: {
+  "_id": "default",
+  "name": "required",
+  "email": "required",
+  "password": "required",
+  "working_email": "optional",
+  "phone": "required",
+  "dept": ["len > 0"],
+  "note": "optional",
+  "visa_type": ["len > 0"],
+  "supervisor_name": "optional",
+  "supervisor_email": "optional",
+  "lifetime": "required"
+}
+
+dept: {
+  "_id": "default",
+  "name": "required",
+  "collage": "optional",
+  "cluster": "optional"
+}
+
+note: impl query and search on list
