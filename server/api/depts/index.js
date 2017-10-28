@@ -10,7 +10,6 @@ var util = require(`${rootUri}/private/util`);
 
 deptsRouter.route('/')
     .get(function(req, res) {
-        console.log(config.dbUri);
         console.log('GET localhost:3000/depts');
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
@@ -25,7 +24,6 @@ deptsRouter.route('/')
             });
         })
     })
-
     .put(function(req, res) {
         console.log('PUT localhost:3000/depts');
         console.log(req.body);
