@@ -9,9 +9,9 @@ var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
 var Data = function(req) {
-    this.name: req.body.name;
-    this.college: req.body.college;
-    this.cluster: req.body.cluster;
+    this.name = req.body.name;
+    this.college = req.body.college;
+    this.cluster = req.body.cluster;
 }
 
 deptsRouter.route('/')
