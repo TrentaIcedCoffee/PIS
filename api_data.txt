@@ -1,44 +1,44 @@
 api: {
-  "/users": {
-    "GET": ["all data"],
-    "POST": "posted json"
-  },
-  "/depts": {
-	"GET": ["all data"],
-	"POST": "posted json"
-  },
-  "/users:id" {
-	"GET": "json",
-	"PUT": "merged json",
-	"DELETE": "deleted json"
-  },
-  "/depts:id" {
-	"GET": "json",
-	"PUT": "merged json",
-	"DELETE": "deleted json"
-  }
+    "/users": {
+        "GET": ["all data"],
+        "POST": "posted json"
+    },
+    "/depts": {
+        "GET": ["all data"],
+        "POST": "posted json"
+    },
+    "/users:id" {
+        "GET": "json",
+        "PUT": "merged json",
+        "DELETE": "deleted json"
+    },
+    "/depts:id" {
+        "GET": "json",
+        "PUT": "merged json",
+        "DELETE": "deleted json"
+    }
 }
 
 user: {
-  "_id": "default",
-  "email": "required",
-  "password": "required",
-  "name": "required",
-  "phone": "required",
-  "lifetime": "required",
-  "depts": ["len > 0"],
-  "visa_types": ["len > 0"],
-  "working_email": "optional",
-  "supervisor_name": "optional",
-  "supervisor_email": "optional",
-  "note": "optional"
+    "_id": "default",
+    "email": "required",
+    "password": "required",
+    "name": "required",
+    "phone": "required",
+    "lifetime": "required",
+    "depts": ["len > 0"],
+    "visa_types": ["len > 0"],
+    "working_email": "optional",
+    "supervisor_name": "optional",
+    "supervisor_email": "optional",
+    "note": "optional"
 }
 
 dept: {
-  "_id": "default",
-  "name": "required",
-  "college": "optional",
-  "cluster": "optional"
+    "_id": "default",
+    "name": "required",
+    "college": "optional",
+    "cluster": "optional"
 }
 
 note: impl query and search on list
