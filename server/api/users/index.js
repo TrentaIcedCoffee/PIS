@@ -41,8 +41,8 @@ usersRouter.route('/')
             });
         });
     })
-    .put(function(req, res) {
-        console.log('PUT localhost:3000/users');
+    .post(function(req, res) {
+        console.log('POST localhost:3000/users');
         console.log(req.body);
         var data = new Data(req);
         MongoClient.connect(config.dbUri, function(err, db) {
@@ -66,7 +66,7 @@ usersRouter.route('/')
             });
         });
     })
-    .post(function(req, res) {
+    .put(function(req, res) {
         res.status(405).end() // not supported
     })
     .delete(function(req, res) {
@@ -92,11 +92,11 @@ usersRouter.route('/:id')
             });
         });
     })
-    .put(function(req, res) {
+    .post(function(req, res) {
         res.status(405).end() // not supported
     })
-    .post(function(req, res) {
-        console.log('POST localhost:3000/users/id');
+    .put(function(req, res) {
+        console.log('PUT localhost:3000/users/id');
         console.log(req.params.id);
         var data = new Data(req);
         MongoClient.connect(config.dbUri, function(err, db) {
