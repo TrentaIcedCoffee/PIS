@@ -1,20 +1,20 @@
 api: {
   "/users": {
     "GET": ["all data"],
-    "PUT": "put json"
+    "POST": "posted json"
   },
   "/depts": {
 	"GET": ["all data"],
-	"PUT": "put json"
+	"POST": "posted json"
   },
   "/users:id" {
 	"GET": "json",
-	"POST": "merged json",
+	"PUT": "merged json",
 	"DELETE": "deleted json"
   },
   "/depts:id" {
 	"GET": "json",
-	"POST": "merged json",
+	"PUT": "merged json",
 	"DELETE": "deleted json"
   }
 }
