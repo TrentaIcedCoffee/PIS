@@ -1,5 +1,6 @@
 // TODO improve crud
-// TODO console -> log
+// TODO console -> log\
+// TODO write head and send data
 
 var deptsRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
@@ -25,7 +26,7 @@ deptsRouter.route('/')
                 if (err) {
                     throw err;
                 }
-                res.json(results);
+                // TODO write head and send data
                 db.close();
             });
         })
