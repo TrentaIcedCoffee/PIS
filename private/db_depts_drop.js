@@ -1,5 +1,6 @@
 /*
-    This script views all data in Mongo
+    This script drops all data in Mongo
+    NOTE use with care
 */
 
 var mongoUser = '*'; // config.dbUser
@@ -16,12 +17,12 @@ MongoClient.connect(config.dbUri, function(err, db) {
     if (err) {
         throw err;
     }
-    db.collection(config.dbDepts).find().toArray(function(err, result) {
+    db.collection(config.dbDepts).drop(function(err, ok) {
         if (err) {
             throw err;
         }
-        console.log(result);
-        console.log('result size ' + result.length);
+        console.log('depts dropped');
+        db.close();
         process.exit(0);
     });
 });
