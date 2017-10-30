@@ -41,4 +41,6 @@ dept: {
     "cluster": "optional"
 }
 
-note: impl query and search on list
+visa_typies : ["J-1", "H-1B", "O-1", "TN", "PR", "E"]
+
+note: impl query and search on list, speed and that's it.
