@@ -27,8 +27,8 @@ deptsRouter.route('/')
                 if (err) {
                     throw err;
                 }
-                res.setHeader('Content-Type', 'application/json');
-                res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
+                // res.setHeader('Content-Type', 'application/json');
+                // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                 res.json(results);
                 db.close();
             });
@@ -51,8 +51,8 @@ deptsRouter.route('/')
                     if (err) {
                         throw err;
                     }
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
+                    // res.setHeader('Content-Type', 'application/json');
+                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(result);
                     db.close();
                 });
@@ -78,8 +78,8 @@ deptsRouter.route('/:id')
                 if (err) {
                     throw err;
                 }
-                res.setHeader('Content-Type', 'application/json');
-                res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
+                // res.setHeader('Content-Type', 'application/json');
+                // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                 res.json(result);
                 db.close();
             });
@@ -104,8 +104,8 @@ deptsRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
+                    // res.setHeader('Content-Type', 'application/json');
+                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(result);
                     db.close();
                 });
@@ -128,8 +128,8 @@ deptsRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    res.setHeader('Content-Type', 'application/json');
-                    res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
+                    // res.setHeader('Content-Type', 'application/json');
+                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(data);
                     db.close();
                 });

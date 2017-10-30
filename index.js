@@ -1,4 +1,5 @@
-// TODO: cros -> same domain
+// TODO: cors -> same domain
+// TODO: test this might be a fix
 
 var express = require('express');
 var app = express();
@@ -13,9 +14,15 @@ var logger = require(`${rootUri}/private/logger`);
 var util = require(`${rootUri}/private/util`);
 var api = require(`${rootUri}/server/api`);
 
-// app.use(express.static(`${rootUri}/public`)); // TODO: cros -> same domain
+// app.use(express.static(`${rootUri}/public`)); // TODO: cors -> same domain
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+}); // TODO: test this might be a fix
 
 app.use(api);
 
