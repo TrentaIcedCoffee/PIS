@@ -16,7 +16,7 @@ util.getTime = function() {
     second = (second < 10 ? '0' : '') + second;
 
     return Array.of(year, month, day, hour, min, second).join(':');
-}
+};
 
 util.getCounter = function() {
     var counter = {
@@ -26,6 +26,17 @@ util.getCounter = function() {
         }
     };
     return counter;
-}
+};
+
+// remove all fields with value null or undefined
+util.solidFields = function(object) {
+    var objectSolidFields = {};
+    for (var index in object) {
+        if (object[index] !== null && object[index] !== undefined) {
+            objectSolidFields[index] = object[index];
+        }
+    }
+    return objectSolidFields;
+};
 
 module.exports = util;
