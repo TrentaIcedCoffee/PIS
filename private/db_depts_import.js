@@ -2,12 +2,14 @@
     This script imports data from MySQL to Mongo
     NOTE use with care
 */
-var mongoUser = '********'; // config.dbUser
-var mongoPwd = '********'; // config.dbPwd
-var mysqlUser = '********';
-var mysqlPwd = '********';
-var mysqlDbName = '********';
-var mysqlHost = '********';
+var mongoUser = '*'; // config.dbUser
+var mongoPwd = '*'; // config.dbPwd
+var mysqlHost = '*';
+var mysqlUser = '*';
+var mysqlPwd = '*';
+var mysqlDbName = '*';
+var mysqlTable = '*'
+
 
 var config = {
     dbUri: `mongodb://${mongoUser}:${mongoPwd}@siss-shard-00-00-aoiln.mongodb.net:27017,siss-shard-00-01-aoiln.mongodb.net:27017,siss-shard-00-02-aoiln.mongodb.net:27017/test?ssl=true&replicaSet=siss-shard-0&authSource=admin`,
@@ -58,7 +60,7 @@ connection.connect(function(err) {
     if (err) {
         throw err;
     }
-    connection.query('SELECT * FROM `data`;', function (err, result, fields) {
+    connection.query(`SELECT * FROM \`${mysqlTable}\`;`, function (err, result, fields) {
        if (err) {
            throw err;
        }
