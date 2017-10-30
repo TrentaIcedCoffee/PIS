@@ -1,7 +1,7 @@
 // TODO improve crud
-// TODO console -> log\
+// TODO console -> log
 // TODO better write head and send data
-// TODO possible fix for security
+// TODO possible fix for security cros
 
 var deptsRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
@@ -91,12 +91,12 @@ deptsRouter.route('/:id')
     .put(function(req, res) {
         console.log('PUT localhost:3000/depts/id');
         console.log(req.params.id);
-        var data = new Data(req);
+        var data = util.solidFields(new Data(req)); // remove all null/undefined fields for update
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
             }
-            db.collection(config.dbDepts).updateOne({_id: new ObjectId(req.params.id)}, data, function(err, result) {
+            db.collection(config.dbDepts).updateOne({_id: new ObjectId(req.params.id)}, {$set: data}, function(err, result) {
                 if (err) {
                     throw err;
                 }
