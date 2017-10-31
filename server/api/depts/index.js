@@ -1,7 +1,4 @@
-// TODO improve crud
 // TODO console -> log
-// TODO better write head and send data
-// TODO possible fix for security cros
 
 var deptsRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
@@ -27,8 +24,6 @@ deptsRouter.route('/')
                 if (err) {
                     throw err;
                 }
-                // res.setHeader('Content-Type', 'application/json');
-                // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                 res.json(results);
                 db.close();
             });
@@ -51,8 +46,6 @@ deptsRouter.route('/')
                     if (err) {
                         throw err;
                     }
-                    // res.setHeader('Content-Type', 'application/json');
-                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(result);
                     db.close();
                 });
@@ -78,8 +71,6 @@ deptsRouter.route('/:id')
                 if (err) {
                     throw err;
                 }
-                // res.setHeader('Content-Type', 'application/json');
-                // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                 res.json(result);
                 db.close();
             });
@@ -104,8 +95,6 @@ deptsRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    // res.setHeader('Content-Type', 'application/json');
-                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(result);
                     db.close();
                 });
@@ -128,8 +117,6 @@ deptsRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    // res.setHeader('Content-Type', 'application/json');
-                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(data);
                     db.close();
                 });
