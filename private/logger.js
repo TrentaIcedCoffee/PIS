@@ -1,7 +1,7 @@
-// TODO debugError
 var fs = require('fs');
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
+var exceptions = require(`${rootUri}/private/exceptions`);
 
 var logger = {
     'logUri': config.logUri,
@@ -12,7 +12,7 @@ var logger = {
         } else if (params.length == 5) {
             message = params.join(';');
         } else {
-            throw new Error('debug'); // TODO debugError
+            throw new exceptions.DebugException();
         }
 
         fs.appendFile(config.logUri, message + "\n", function(err) {
