@@ -1,7 +1,6 @@
 /*
     This script views all data in Mongo
 */
-
 var mongoUser = '*'; // config.dbUser
 var mongoPwd = '*'; // config.dbPwd
 
