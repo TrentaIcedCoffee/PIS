@@ -7,12 +7,12 @@ api: {
         "GET": ["all data"],
         "POST": "posted json"
     },
-    "/users:id" {
+    "/users/id" {
         "GET": "json",
         "PUT": "merged json",
         "DELETE": "deleted json"
     },
-    "/depts:id" {
+    "/depts/id" {
         "GET": "json",
         "PUT": "merged json",
         "DELETE": "deleted json"
