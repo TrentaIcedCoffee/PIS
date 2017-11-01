@@ -26,7 +26,7 @@ user: {
     "name": "required",
     "phone": "required",
     "lifetime": "required",
-    "depts": ["len > 0"],
+    "dept_names": ["len > 0"],
     "visa_types": ["len > 0"],
     "working_email": "optional",
     "supervisor_name": "optional",
