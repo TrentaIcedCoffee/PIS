@@ -3,7 +3,6 @@ var util = {};
 util.getTime = function() {
     var date = new Date();
     var year = date.getFullYear();
-    year = (year < 10 ? '0' : '') + year;
     var month = date.getMonth();
     month = (month < 10 ? '0' : '') + month;
     var day = date.getDate();
