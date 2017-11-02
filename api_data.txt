@@ -25,7 +25,7 @@ user: {
     "password": "required",
     "name": "required",
     "phone": "required",
-    "lifetime": "required",
+    "stop_time": "required",
     "dept_names": ["len > 0"],
     "visa_types": ["len > 0"],
     "working_email": "optional",
