@@ -2,7 +2,6 @@
 
 var express = require('express');
 var app = express();
-var _ = require('lodash');
 var bodyParser = require('body-parser');
 var path = require('path');
 
@@ -14,7 +13,7 @@ var logger = require(`${rootUri}/private/logger`);
 var util = require(`${rootUri}/private/util`);
 var api = require(`${rootUri}/server/api`);
 
-// app.use(express.static(`${rootUri}/public`));
+// app.use(express.static(`${rootUri}/public`)); // spaceholder for cors -> same domain
 app.use(cors); // TODO: cors -> same domain
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
