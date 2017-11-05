@@ -18,7 +18,6 @@ app.use(cors); // TODO: cors -> same domain
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-
 app.use(api);
 
 console.log('listening on http://localhost: 3000');
