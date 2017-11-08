@@ -21,9 +21,9 @@ var mysql = require('mysql');
 var data = [];
 
 var Model = function(name, college, cluster) {
-    this.name = name;
-    this.college = college === undefined ? null : college;
-    this.cluster = cluster === undefined ? null : cluster;
+    this.name = (name === undefined || name.length == 0 ? null : name);
+    this.college = (college === undefined || college.length == 0 ? null : college);
+    this.cluster = (cluster === undefined || cluster.length == 0 ? null : cluster);
 }
 
 String.prototype.replaceAll = function(search, replacement) {
