@@ -1,0 +1,431 @@
+<!-- TODO password retrive -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Public Information Collecting Service - sissdata" />
+        <meta name="author" content="Xin Jin" />
+        <link rel="icon" href="img/favicon.ico" />
+        <!-- jQuery 2.0.0 CDN -->
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+        <!-- Angular CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <!-- bootstrap 3 CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- daterangepicker CDN -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        <!-- bootstrap select CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+        <!-- customized packages -->
+        <script src="js/exceptions.js"></script>
+        <script src="js/date.js"></script>
+        <script src="js/util.js"></script>
+        <title>PICS - UC Davis department contact</title>
+    </head>
+    <body ng-app="app">
+        <script>
+            // static data resources
+            var visaTypes = ['J-1', 'H-1B', 'O-1', 'TN', 'PR', 'E'];
+            var deptNames = ["Evolution & Ecology","Microbiology and Molecular Genetics","Molecular and Cellular Biology","Neurobiology Physiology and Behavior","Plant Biology","Art and Art History","Cinema & Technocultural Studies","Music","Theatre & Dance","Biological and Agricultural Engineering","Food Science and Technology","Textiles and Clothing","Viticulture and Enology","East Asian Studies","Economics","Hemispheric Institute of the Americas","History","Agricultural and Resource Economics","Environmental Science and Policy","Human Ecology","Animal Science","Nutrition","Anthropology","Middle East/South Asia Studies","Sociology","Environmental Toxicology","Land Air and Water Resources","Wildlife Fish and Conservation Biology","Communication","International Relations","Linguistics","Political Science","UC Center Sacramento (UCCS)","Entomology","Nematology","Plant Pathology","African American and African Studies","Agr and Envir Science Office of Dean","Agricultural Issues Center","Agricultural Sustainability Institute","Air Quality Research Center","American Studies","Asian American Studies","Biological Chemistry","Biomedical Engineering","Bodega Marine Laboratory","Budget and Institutional Analysis","California Institute of Food and Agricultural Research","California Lighting Technology Center","Center for Health & Technology","Center for Health and the Environment","Center for Healthcare Policy and Research","Center for Mind and Brain","Center for Molecular and Genomic Imaging","Center for Neuroscience","Center for Regional Change","Center for Science and Innovation Studies","Center for Student Affairs Assessement","Center for Transnational Health","Center for Watershed Sciences","Chancellor and Provost Office","Chemical Engineering and Materials Science","Chemistry","Chicana/o Studies","Civil and Environmental Engineering","Classics Program","Comparative Literature","Computer Science","Counseling and Psychological Services","Davis Language Center","Department of Design","Design and Construction Management","Division of Agriculture and Natural Resources","Earth and Planetary Sciences","East Asian Languages and Cultures","Electrical and Computer Engineering","Energy Institute","English","Facilities Management","French and Italian","Gender, Sexuality and Women's Studies","Genome Center","German Department","Global Affairs Confucius Institute","Global Affairs Fulbright","Global Affairs Humphrey","Global Affairs Sponsored Programs","Global Affairs Staff Exchange","Grad Group in Cultural Studies","Graduate School of Management","Hart Interdisciplinary Programs","Humanities Institute","Humanities, Arts and Cultural Studies","Information and Educational Technology","Institute for Governmental Affairs","Institute for Transportation Studies","Intercollegiate Athletics","International & Community Nutrition","International Law Programs","International Programs of the CA & ES","JMIE Center for Watershed Science","JMIE Road Ecology Center","JMIE Tahoe Environmental Research Center","Law School Dean's Office","Mathematics","McClellan Nuclear Research Center","Mechanical and Aerospace Engineering","MED Anesthesiology and Pain Medicine","MED Biochemistry and Molecular Medicine","MED Cancer Center","MED Cell Biology and Human Anatomy","MED Center for Biophotonics","MED Center for Musculoskeletal Health","MED Center for Reducing Health Disparities","MED Center for Virtual Care","MED Dermatology","MED Emergency Medicine","MED Family and Community Medicine","MED Global Health Sciences","MED Health Information Management","MED Hematology and Oncology","MED IM Aging and Education Center","MED IM Cardiovascular Medicine","MED IM Gastroenterology and Hepatology","MED IM Pulmonary and Critical Care Medicine","MED IM Rheumatology Allergy & Clinical Immunology","MED Imaging Research Center","MED Infectious Diseases","MED Institute for Population Health & Improvement","MED Internal Medicine","MED M.I.N.D. Institute","MED Medical Pathology","MED Microbiology and Immunology","MED Nephrology","MED Neurological Surgery","MED Neurology","MED Obstetrics and Gynecology","MED Office of Medical Education","MED Ophthalmology","MED Orthopaedic Surgery","MED Otolaryngology","MED Pathology and Laboratory Medicine","MED Patient Care Services Emergency Room","MED Pediatrics","MED Pharmacology","MED Physical Medicine and Rehabilitation","MED Physiology and Membrane Biology","MED Primary Care Network Operations","MED Psychiatry and Behavioral Medicine","MED Public Health Sciences","MED Radiation Oncology","MED Radiology","MED Stem Cell Program","MED Surgery","MED Urology","Mondavi Center","Native American Studies","NEAT ORU and Thermochemistry Unit","Nuclear Magnetic Resonance Facility","Office of the Vice Chancellor for Research","Olive Center","Other","Philosophy","Physical Education Program","Physics","Plant Sciences","Psychology","Religious Studies","Safety Services","School of Education","School of Nursing","Science and Technology Studies","Services for International Students and Scholars","Spanish Portuguese","Statistics","Student Health & Counseling Services","UC Cooperative Extension","University Extension","University Writing Program","VM Anatomy Physiology and Cell Biology","VM California Animal Health and Food Safety","VM California National Primate Research Center","VM Center for Companion Animal Health","VM Center for Comparative Medicine","VM Center for Equine Health","VM Center for Lab Animal Science","VM International Laboratory of Molecular Biology","VM Medicine & Epidemiology","VM Molecular Biosciences","VM One Health Institute","VM Pathology Microbiology and Immunology","VM Population Health and Reproduction","VM Surgical and Radiological Sciences","VM Veterinary Genetics Lab","VM Veterinary Medical Teaching Hospital","VM Veterinary Medicine Extension Public Programs","VM Veterinary Medicine Teaching and Research Center","VM Western Institute for Food Safety and Security","VM Wildlife Health Center","Western Cooling Efficiency Center", "Others (please indicate at Note)"];
+        </script>
+        <script>
+            // register angular modulo
+            var app = angular.module('app', []);
+        </script>
+        <h1>UC Davis departmental contact update</h1>
+        <p>Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
+        <div ng-controller="controller-signup" class="container">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Create an account</h2>
+                <p>Already have an account? Please <a id="anchor-signup_to_login">Login</a></p>
+                <div class="input-field" id="field-email">
+                    <div class="illustration">Email address - this will be your login id</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" id="input-email" ng-model="inputEmail" class="form-control" placeholder="Email address" autofocus />
+                    </div>
+                    <div class="error" id="error-empty_email">Email address is required.</div>
+                    <div class="error" id="error-invalid_email">Invalid email address.</div>
+                    <div class="error" id="error-email_exists">Email address already exists, you can <a id="anchor-signup_to_login">Login</a> here.</div>
+                </div>
+                <div class="input-field" id="field-password">
+                    <div class="illustration">Password</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" id="input-password" ng-model="inputPassword" class="form-control" placeholder="Password" />
+                    </div>
+                    <div class="error" id="error-empty_password">Password is required.</div>
+                    <div class="error" id="error-short_password">Password has to be 6 characters or more.</div>
+                </div>
+                <div class="input-field" id="field-password-retype">
+                    <div class="illustration">Retype password</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" id="input-password-retype" class="form-control" placeholder="Retype Password" />
+                    </div>
+                    <div class="error" id="error-password_mismatch">Password mismatch</div>
+                </div>
+                <div class="input-field" id="field-name">
+                    <div class="illustration">Full name (Firstname Lastname, ex: John Smith)</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="input-name" ng-model="inputName" class="form-control" placeholder="Your Name" />
+                    </div>
+                    <div class="error" id="error-empty_name">Full name is required.</div>
+                </div>
+                <div class="input-field" id="field-phone">
+                    <div class="illustration">Phone number</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                        <input type="text" id="input-phone" ng-model="inputPhone" class="form-control" placeholder="Phone Number" />
+                    </div>
+                    <div class="error" id="error-empty_phone">Phone number is required.</div>
+                </div>
+                <div class="input-field" id="field-stop_time">
+                    <div class="illustration">End date - the information you provide here will be considered valid until this date</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input type="text" id="input-stop_time" ng-model="inputStopTime" class="form-control" />
+                    </div>
+                    <div class="btn-group btn-group-justified">
+                        <a class="btn btn-primary" onclick="setMonthGap(3)">3 Months</a>
+                        <a class="btn btn-primary" onclick="setMonthGap(6)">6 Months</a>
+                        <a class="btn btn-primary" onclick="setMonthGap(9)">9 Months</a>
+                        <a class="btn btn-primary" onclick="setMonthGap(12)">1 Year (maximum)</a>
+                    </div>
+                    <div class="error" id="error-empty_stop_time">End date is required.</div>
+                </div>
+                <div class="input-field" id="field-dept_names">
+                    <div class="illustration">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
+                    <select class="selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true">
+                        <option ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
+                    </select>
+                    <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
+                </div>
+                <div class="input-field" id="field-visa_types">
+                    <div class="illustration">Visa type(s) - Please at least select 1 visa type</div>
+                    <select class="selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true">
+                        <option ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
+                    </select>
+                    <div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
+                </div>
+                <div class="input-field" id="field-working_email">
+                    <div class="illustration">Official University Email</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" id="input-working_email" ng-model="inputWorkingEmail" class="form-control" placeholder="Official University Email" />
+                    </div>
+                    <div class="error" id="error-invalid_working_email">Invalid email address.</div>
+                </div>
+                <div class="input-field" id="field-supervisor_name">
+                    <div class="illustration">Supervisor's Name - your supervisor's name</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="input-supervisor_name" ng-model="inputSupervisorName" class="form-control" placeholder="Supervisor's Name" />
+                    </div>
+                </div>
+                <div class="input-field" id="field-supervisor_email">
+                    <div class="illustration">Supervisor's Email</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" id="input-supervisor_email" ng-model="inputSupervisorEmail" class="form-control" placeholder="Supervisor's Email" />
+                    </div>
+                    <div class="error" id="error-invalid_supervisor_email">Invalid supervisor email.</div>
+                </div>
+                <div class="input-field" id="field-note">
+                    <div class="illustration">Note - any additional information you would like to provide</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+                        <input type="text" id="input-note" ng-model="inputNote" class="form-control" placeholder="Note" />
+                    </div>
+                </div>
+                <div class="error" id="error-invalid_signup">Information above has error. Please fix errors</div>
+                <button ng-click="signup()" type="submit" class="btn btn-lg btn-primary btn-block">Create my account</button>
+            </form>
+        </div>
+
+        <div ng-controller="controller-login" class="container">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Login</h2>
+                <p>Back to <a id="anchor-login_to_signup">Sign Up</a></p>
+                <div class="input-field" id="field-email-login">
+                    <div class="illustration">User Email</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input id="input-email-login" ng-model="inputEmail" required type="text" class="form-control" placeholder="User Email" />
+                    </div>
+                </div>
+                <div class="input-field" id="field-password-login">
+                    <div class="illustration">User Password</div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="input-password-login" ng-model="inputPassword" required type="password" class="form-control" placeholder="User Password" />
+                    </div>
+                </div>
+                <!-- TODO impl remember me -->
+                <!--
+                <label class="checkbox">
+                    <input type="checkbox" value="remember_me" id="remember_me" /> Remember me
+                </label>
+                -->
+                <div class="error-login" id="error-no_user">User does not exist, you can <a id="anchor-login_to_signup">Sign Up Here</a></div>
+                <div class="error-login" id="error-wrong_password">Wrong password</div>
+                <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+            </form>
+        </div>
+        <script>
+            var signupValidate = function() {
+                $('.error').hide();
+
+                var isValidSignup = true;
+
+                if ($('#input-email').val().length == 0) {
+                    $('#error-empty_email').show();
+                    isValidSignup = false;
+                } else if (!isValidEmail($('#input-email').val())) {
+                    $('#error-invalid_email').show();
+                    isValidSignup = false;
+                } else if ($.inArray($('#input-email').val(), emails) != -1) {
+                    $('#error-email_exists').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-password').val().length == 0) {
+                    $('#error-empty_password').show();
+                    isValidSignup = false;
+                } else if (!isValidPassword($('#input-password').val())) {
+                    $('#error-short_password').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-password-retype').val() != $('#input-password').val()) {
+                    $('#error-password_mismatch').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-name').val().length == 0) {
+                    $('#error-empty_name').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-phone').val().length == 0) {
+                    $('#error-empty_phone').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-stop_time').val().length == 0) {
+                    $('#error-empty_stop_time').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#select-dept_names').val() == null) {
+                    $('#error-empty_dept_names').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#select-visa_types').val() == null) {
+                    $('#error-empty_visa_types').show();
+                    isValidSignup = false;
+                }
+
+                if ($('#input-working_email').val() != '' && !isValidEmail($('#input-working_email').val())) {
+                    $('#error-invalid_working_email').show();
+                    isValidSignup = false;
+                }
+                if ($('#input-supervisor_email').val() != '' && !isValidEmail($('#input-supervisor_email').val())) {
+                    $('#error-invalid_supervisor_email').show();
+                    isValidSignup = false;
+                }
+
+                return isValidSignup;
+            };
+        </script>
+        <script>
+            // resource prepare
+            var emails = usersToEmails(JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText));
+            // TODO sync -> async
+        </script>
+        <script>
+            // input check
+            $('#input-email').change(function() {
+                $('#field-email .error').hide();
+                if ($('#input-email').val().length == 0) {
+                    $('#error-empty_email').show();
+                } else if (!isValidEmail($('#input-email').val())) {
+                    $('#error-invalid_email').show();
+                } else if ($.inArray($('#input-email').val(), emails) != -1) {
+                    $('#error-email_exists').show();
+                }
+            });
+
+            $('#input-password').change(function() {
+                $('#field-password .error').hide();
+                if ($('#input-password').val().length == 0) {
+                    $('#error-empty_password').show();
+                } else if (!isValidPassword($('#input-password').val())) {
+                    $('#error-short_password').show();
+                }
+             });
+
+             $('#input-password-retype').change(function() {
+                 $('#field-password-retype .error').hide();
+                 if ($('#input-password-retype').val() != $('#input-password').val()) {
+                     $('#error-password_mismatch').show();
+                 }
+             });
+
+             $('#input-name').change(function() {
+                 $('#field-name .error').hide();
+                 if ($('#input-name').val().length == 0) {
+                     $('#error-empty_name').show();
+                 }
+             });
+
+             $('#input-phone').change(function() {
+                 $('#field-phone .error').hide();
+                 if ($('#input-phone').val().length == 0) {
+                     $('#error-empty_phone').show();
+                 }
+             });
+
+             $('#input-stop_time').change(function() {
+                 $('#field-stop_time .error').hide();
+                 if ($('#input-stop_time').val().length == 0) {
+                     $('#error-empty_stop_time').show();
+                 }
+             });
+
+             $('#select-dept_names').change(function() {
+                 $('#field-dept_names .error').hide();
+                 if ($('#select-dept_names').val() == null) {
+                     $('#error-empty_dept_names').show();
+                 }
+             });
+
+             $('#select-visa_types').change(function() {
+                 $('#field-visa_types .error').hide();
+                 if ($('#select-visa_types').val() == null) {
+                     $('#error-empty_visa_types').show();
+                 }
+             });
+
+             $('#input-working_email').change(function() {
+                 $('#field-working_email .error').hide();
+                 if ($('#input-working_email').val() != '' && !isValidEmail($('#input-working_email').val())) {
+                     $('#error-invalid_working_email').show();
+                 }
+             });
+
+             $('#input-supervisor_email').change(function() {
+                 $('#field-supervisor_email .error').hide();
+                 if ($('#input-supervisor_email').val() != '' && !isValidEmail($('#input-supervisor_email').val())) {
+                     $('#error-invalid_supervisor_email').show();
+                 }
+             });
+
+             $('.error').hide();
+        </script>
+        <script>
+            // ini switch
+            var signupToLogin = function() {
+                $('div[ng-controller="controller-signup"]').hide();
+                $('div[ng-controller="controller-login"]').show();
+            };
+            var loginToSignup = function() {
+                $('div[ng-controller="controller-signup"]').show();
+                $('div[ng-controller="controller-login"]').hide();
+            };
+            $('div[ng-controller="controller-login"]').hide();
+            $('#anchor-signup_to_login').click(function() {
+                signupToLogin();
+            });
+            $('#anchor-login_to_signup').click(function() {
+                loginToSignup();
+            });
+        </script>
+        <script>
+            // ini daterangepicker
+            var curTime = new Time();
+            var endTime = new Time(curTime).setMonthGap(6);
+            var maxTime = new Time(curTime).setYearGap(1);
+            $('#input-stop_time').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                },
+                singleDatePicker: true,
+                startDate: endTime.getDate(), // startDate == endDate, both used as endDate with startDate fixed
+                endDate: endTime.getDate(),
+                minDate: curTime.getDate(),
+                maxDate: maxTime.getDate()
+            });
+            // daterangepicker botton setup
+            var setMonthGap = function(months) {
+                var endTime = new Time(curTime);
+                endTime.setMonthGap(months);
+                var dateRangePicker = $('#input-stop_time').data('daterangepicker');
+                dateRangePicker.setStartDate(endTime.getDate());
+                dateRangePicker.setEndDate(endTime.getDate());
+            }
+        </script>
+        <script>
+            app.controller('controller-signup', function($scope, $http) {
+                // ini deptNameChoices, visaTypeChoices
+                $scope.deptNameChoices = deptNames;
+                $scope.visaTypeChoices = visaTypes;
+                $scope.signup = function() {
+                    // form validation
+                    $('#error-invalid_signup').hide();
+                    if (!signupValidate()) {
+                        $('#error-invalid_signup').show();
+                        return;
+                    }
+                    // extract data
+                    var dataUser = dataUserInScope($scope);
+                    // http
+                    $http({
+                        method: 'POST',
+                        url: `users`,
+                        data: dataUser
+                    }).then(function(res) {
+                        console.log(res.data._id); // TODO: redirection
+                    }, function(err) {
+                        throw err;
+                    });
+                };
+            });
+        </script>
+        <script>
+            $('.error-login').hide();
+        </script>
+        <script>
+            app.controller('controller-login', function($scope, $http) {
+                $scope.login = function() {
+                    $('.error-login').hide();
+                    var key = keyInScope($scope);
+                    $http({
+                        method: 'GET',
+                        url: `users`
+                    }).then(function(res) {
+                        validateUser(res.data, key, function() {
+                            console.log('OK'); // TODO: redirection
+                            document.cookie = "Authorization=token_goes_here;";
+                            window.location.replace('redirect.html');
+                        }, function() {
+                            $('#error-no_user').show();
+                        }, function() {
+                            $('#error-wrong_password').show();
+                        });
+                    }, function(err) {
+                        throw err;
+                    });
+                };
+            });
+        </script>
+    </body>
+</html>
