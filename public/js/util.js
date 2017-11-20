@@ -1,5 +1,9 @@
 // TODO test with data
 
+var cookieOf = function(cname, cvalue) {
+    return `${cname}=${cvalue};`;
+};
+
 var nameOf = function(depts) {
     var deptNames = [];
     for (var dept of depts) {

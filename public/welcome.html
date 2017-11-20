@@ -414,7 +414,7 @@
                     }).then(function(res) {
                         validateUser(res.data, key, function() {
                             console.log('OK'); // TODO: redirection
-                            document.cookie = "Authorization=token_goes_here;";
+                            document.cookie = cookieOf('usr', 'token_goes_here');
                             window.location.replace('redirect.html');
                         }, function() {
                             $('#error-no_user').show();
