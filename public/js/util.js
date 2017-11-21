@@ -29,7 +29,7 @@ var validateUser = function(users, key, okCallback, noUserCallback, wrongPasswor
     } else if (user[0].password != key.password) {
         wrongPasswordCallback();
     } else {
-        okCallback();
+        okCallback(user[0].email, user[0]._id);
     }
 };
 

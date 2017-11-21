@@ -5,11 +5,27 @@
         <title>Redirect - Debug</title>
     </head>
     <body>
+        <script>
+            var getIdInCookie = function(cookie) {
+                var id = undefined;
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var decodedCookieArray = decodedCookie.split(';');
+                for (var decodedCookieStr in decodedCookieArray) {
+                    if (decodedCookieStr.length >= 4 && decodedCookieStr.substring(0, 4) == 'usr=') {
+                        id = decodedCookieStr.substring(4);
+                    }
+                }
+                return id;
+            };
+            var cookie = document.cookie;
+            if (cookie == undefined) {
+                console.log('redirect to welcome page');
+            }
+            console.log(cookie);
+            console.log(getIdInCookie(cookie));
+        </script>
         <div id="head">
 
         </div>
-        <script>
-            console.log(document.referrer);
-        </script>
     </body>
 </html>

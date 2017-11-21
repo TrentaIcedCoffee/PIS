@@ -417,9 +417,8 @@
                         method: 'GET',
                         url: `users`
                     }).then(function(res) {
-                        validateUser(res.data, key, function() {
-                            console.log('OK'); // TODO: redirection
-                            document.cookie = cookieOf('usr', 'token_goes_here');
+                        validateUser(res.data, key, function(email, _id) {
+                            document.cookie = cookieOf('usr', getJwt('{"typ": "JWT", "alg": "HS256"}', `{email: "${email}"}`, _id)); // TODO: potential risk
                             window.location.replace('redirect.html');
                         }, function() {
                             $('#error-no_user').show();
