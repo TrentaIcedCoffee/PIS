@@ -1,4 +1,22 @@
 // TODO test with data
+var getIdOfEmail = function(email) {
+    var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText).filter(function(user) {
+        return user.email == email;
+    });
+    console.log(users);
+};
+
+var getJwtInCookie = function(cookie) {
+    var email = undefined;
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var decodedCookieArray = decodedCookie.split(';');
+    for (var decodedCookieStr of decodedCookieArray) {
+        if (decodedCookieStr.length >= 4 && decodedCookieStr.substring(0, 4) == 'usr=') {
+            email = decodedCookieStr.substring(4);
+        }
+    }
+    return email;
+};
 
 var cookieOf = function(cname, cvalue) {
     return `${cname}=${cvalue};`;

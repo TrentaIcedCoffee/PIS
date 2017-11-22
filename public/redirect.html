@@ -2,27 +2,28 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <!-- jQuery 2.0.0 CDN -->
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+        <!-- customized packages -->
+        <script src="js/exceptions.js"></script>
+        <script src="js/date.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/crypto/core.js"></script>
+        <script src="js/crypto/enc-base64.js"></script>
+        <script src="js/crypto/hmac.js"></script>
+        <script src="js/crypto/sha256.js"></script>
+        <script src="js/crypto/util.js"></script>
         <title>Redirect - Debug</title>
     </head>
     <body>
         <script>
-            var getIdInCookie = function(cookie) {
-                var id = undefined;
-                var decodedCookie = decodeURIComponent(document.cookie);
-                var decodedCookieArray = decodedCookie.split(';');
-                for (var decodedCookieStr in decodedCookieArray) {
-                    if (decodedCookieStr.length >= 4 && decodedCookieStr.substring(0, 4) == 'usr=') {
-                        id = decodedCookieStr.substring(4);
-                    }
-                }
-                return id;
-            };
             var cookie = document.cookie;
             if (cookie == undefined) {
-                console.log('redirect to welcome page');
+                console.log('redirect to welcome page'); //TODO redirect to welcome page
             }
-            console.log(cookie);
-            console.log(getIdInCookie(cookie));
+            var emailJwt = getEmailInJwt(getJwtInCookie(cookie));
+            console.log('emailJwt ' + emailJwt);
+            var dummy = getIdOfEmail(emailJwt);
         </script>
         <div id="head">
 
