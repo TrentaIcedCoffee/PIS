@@ -18,12 +18,15 @@
     <body>
         <script>
             var cookie = document.cookie;
-            if (cookie == undefined) {
+            if (cookie == undefined || cookie == "") {
                 console.log('redirect to welcome page'); //TODO redirect to welcome page
             }
-            var emailJwt = getEmailInJwt(getJwtInCookie(cookie));
-            console.log('emailJwt ' + emailJwt);
-            var dummy = getIdOfEmail(emailJwt);
+            var jwt = getJwtInCookie(cookie);
+            var email = getEmailInJwt(jwt);
+            console.log('email ' + email);
+            var jwtMade = jwtOf(JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText).filter(function(user) {
+                return user.email == email;
+            })[0]);
         </script>
         <div id="head">
 

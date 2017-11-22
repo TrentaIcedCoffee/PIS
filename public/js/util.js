@@ -7,15 +7,15 @@ var getIdOfEmail = function(email) {
 };
 
 var getJwtInCookie = function(cookie) {
-    var email = undefined;
+    var jwt = undefined;
     var decodedCookie = decodeURIComponent(document.cookie);
     var decodedCookieArray = decodedCookie.split(';');
     for (var decodedCookieStr of decodedCookieArray) {
         if (decodedCookieStr.length >= 4 && decodedCookieStr.substring(0, 4) == 'usr=') {
-            email = decodedCookieStr.substring(4);
+            jwt = decodedCookieStr.substring(4);
         }
     }
-    return email;
+    return jwt;
 };
 
 var cookieOf = function(cname, cvalue) {
@@ -67,7 +67,7 @@ var dataUserInScope = function($scope) {
         phone: $scope.inputPhone,
         stop_time: $scope.inputStopTime,
         depts: $scope.inputDeptNames,
-        visa_typies: $scope.inputVisaTypes,
+        visa_types: $scope.inputVisaTypes,
         working_email: $scope.inputWorkingEmail,
         supervisor_name: $scope.inputSupervisorName,
         supervisor_email: $scope.inputSupervisorEmail,

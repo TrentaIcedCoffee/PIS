@@ -11,15 +11,32 @@ var getBase64Decoded = function(encStr) {
     return result;
 };
 
-var jwtOf = function(header, payload, secret) {
+var jwtOf = function(...args) {
+    // make header, payload and secret
+    var header = '{"typ": "JWT", "alg": "HS256"}';
+    var payload = undefined;
+    var secret = undefined;
+    if (args.length == 1) {
+        console.log(args);
+        var user = args[0];
+        payload = `{email: ${user.email}}`;
+        secret = user._id;
+    } else if (args.length == 2) {
+        payload = args[0];
+        secret = args[1];
+    } else {
+        throw new DebugException();
+    }
+    // make jwt
     var headerBase64 = getBase64Encoded(header);
     var payloadBase64 = getBase64Encoded(payload);
     var signature = CryptoJS.HmacSHA256(headerBase64 + '.' + payloadBase64, secret);
     var signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
     var jwt = headerBase64 + '.' + payloadBase64 + '.' + signatureBase64;
     return jwt;
-};
+}
 
+// get email value in jwt string
 var getEmailInJwt = function(jwt) {
     var jwtPayloadStr = getBase64Decoded((jwt.split('.'))[1].toString());
     var email = undefined;
