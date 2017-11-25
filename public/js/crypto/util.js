@@ -1,3 +1,5 @@
+// TODO -> strict
+
 // utils for CryptoJS
 var getBase64Encoded = function(rawStr) {
     var wordArray = CryptoJS.enc.Utf8.parse(rawStr);
@@ -17,7 +19,6 @@ var jwtOf = function(...args) {
     var payload = undefined;
     var secret = undefined;
     if (args.length == 1) {
-        console.log(args);
         var user = args[0];
         payload = `{email: ${user.email}}`;
         secret = user._id;
@@ -41,8 +42,10 @@ var getEmailInJwt = function(jwt) {
     var jwtPayloadStr = getBase64Decoded((jwt.split('.'))[1].toString());
     var email = undefined;
     for (var i = 0; i < jwtPayloadStr.length; i++) {
+        // start with 'email'
         if (jwtPayloadStr.substring(i, i + 5) == 'email') {
             for (var j = i; j < jwtPayloadStr.length; j++) {
+                // value btn ""
                 if (jwtPayloadStr.charAt(j) == '"') {
                     for (k = j + 1; k < jwtPayloadStr.length; k++) {
                         if (jwtPayloadStr.charAt(k) == '"') {
@@ -56,6 +59,7 @@ var getEmailInJwt = function(jwt) {
     return email;
 };
 
+// TODO -> strict
 var isValidJwt = function(thatJwt, secret) {
     if (typeof thatJwt != 'string') {
         return false;
