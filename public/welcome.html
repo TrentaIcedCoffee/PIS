@@ -419,7 +419,7 @@
                         url: `users`
                     }).then(function(res) {
                         validateUser(res.data, key, function(email, _id) {
-                            document.cookie = cookieOf('usr', jwtOf(`{email: "${email}"}`, _id)); // TODO: potential risk
+                            document.cookie = cookieOf('usr', jwtOf(`{email: "${email}"}`, _id));
                             window.location.replace('redirect.html');
                         }, function() {
                             $('#error-no_user').show();

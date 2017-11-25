@@ -3,7 +3,11 @@ var getIdOfEmail = function(email) {
     var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText).filter(function(user) {
         return user.email == email;
     });
-    console.log(users);
+    if (users.length > 1) {
+        throw new DebugException();
+    }
+    var user = users[0];
+    return user._id;
 };
 
 var getJwtInCookie = function(cookie) {

@@ -1,35 +1,263 @@
+<!-- TODO welcome -> 404 -->
+<!-- TODO inner -> package -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <!-- jQuery 2.0.0 CDN -->
-        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-        <!-- customized packages -->
-        <script src="js/exceptions.js"></script>
-        <script src="js/date.js"></script>
-        <script src="js/util.js"></script>
-        <script src="js/crypto/core.js"></script>
-        <script src="js/crypto/enc-base64.js"></script>
-        <script src="js/crypto/hmac.js"></script>
-        <script src="js/crypto/sha256.js"></script>
-        <script src="js/crypto/util.js"></script>
-        <title>Redirect - Debug</title>
-    </head>
-    <body>
-        <script>
-            var cookie = document.cookie;
-            if (cookie == undefined || cookie == "") {
-                console.log('redirect to welcome page'); //TODO redirect to welcome page
-            }
-            var jwt = getJwtInCookie(cookie);
-            var email = getEmailInJwt(jwt);
-            console.log('email ' + email);
-            var jwtMade = jwtOf(JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText).filter(function(user) {
-                return user.email == email;
-            })[0]);
-        </script>
-        <div id="head">
+<head>
+    <meta charset="utf-8">
+    <!-- jQuery 2.0.0 CDN -->
+    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+    <!-- Angular CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!-- customized packages -->
+    <script src="js/exceptions.js"></script>
+    <script src="js/date.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/crypto/core.js"></script>
+    <script src="js/crypto/enc-base64.js"></script>
+    <script src="js/crypto/hmac.js"></script>
+    <script src="js/crypto/sha256.js"></script>
+    <script src="js/crypto/util.js"></script>
+    <title>Redirect - Debug</title>
+</head>
+<body id="myPage" ng-app="app">
+    <script>
+        // usr validation
+        var cookie = document.cookie;
+        if (cookie == undefined || cookie == "") {
+            window.location.replace('welcome.html');
+        }
+        var jwt = getJwtInCookie(cookie);
+        var email = getEmailInJwt(jwt);
+        var _id = getIdOfEmail(email);
+        if (!isValidJwt(jwt, _id)) {
+            window.location.replace('welcome.html'); // TODO welcome -> 404
+        }
+    </script>
+	<div>
+		<input type="text" id="myInputName" onkeyup="myFunctionName()" placeholder="Search for names.." title="Type in a name">
+		<input type="text" id="myInputDept" onkeyup="myFunctionDept()" placeholder="Search for departments.." title="Type in a name">
+		<input type="text" id="myInputVisa" onkeyup="myFunctionVisa()" placeholder="Search for Visa.." title="Type in a name">
+		<input type="text" id="myInputPhone" onkeyup="myFunctionPhone()" placeholder="Search for phones.." title="Type in a name">
+		<input type="text" id="myInputEmail" onkeyup="myFunctionEmail()" placeholder="Search for emails.." title="Type in a name">
+		<input type="text" id="myInputWorking" onkeyup="myFunctionWorking()" placeholder="Search for working emails.." title="Type in a name">
+		<input type="text" id="myInputSName" onkeyup="myFunctionSName()" placeholder="Search for supervisor names.." title="Type in a name">
+		<input type="text" id="myInputSEmail" onkeyup="myFunctionSEmail()" placeholder="Search for supervisor emails.." title="Type in a name">
+	</div>
+	<script>
+		var dummy = function (data) {return data;}
+		var publicData = dummy($.ajax({
+			url: 'users',
+		 	async: true,
+			dataType: 'json'}).done(function (res) {
+				createTable(res, function(x) { return true; });
+		}));
 
-        </div>
-    </body>
+		var createTable = function (data, standard) {
+			var dataFilted = data.filter(standard);
+			for (var value of dataFilted) {
+				var row = (document.getElementById("myTable")).insertRow(-1);
+				row.insertCell(-1).innerHTML = value.name;
+				row.insertCell(-1).innerHTML = value.depts;
+				row.insertCell(-1).innerHTML = value.visa_types;
+				row.insertCell(-1).innerHTML = value.phone;
+				row.insertCell(-1).innerHTML = value.email;
+				row.insertCell(-1).innerHTML = value.working_email;
+				row.insertCell(-1).innerHTML = value.supervisor_name;
+				row.insertCell(-1).innerHTML = value.supervisor_email;
+				row.insertCell(-1).innerHTML = value.note;
+			}
+		}
+	</script>
+	<script>
+		var app = angular.module('app', []);
+	</script>
+	<h1 style="margin-left: 20px">UCD Faculty Database</h1>
+	<h2 class="text-center">Information of Department Faculty</h2>
+	<div class="user">
+		<p class="user_info">Name: temp</p> <!-- Here, you need to modify to acquire user information  -->
+		<p class="user_info">Email: temp</p>
+		<p class="user_info">Phone: temp</p>
+		<p class="user_info">Department: temp</p>
+		<p class="user_info">Effective Until: temp</p>
+		<button class="user_info" onclick="document.getElementById('demo').style.display='block'" style="width:auto;">Change Password</button>
+		<div id="demo" class="change_password">
+			<p><b>Password</b></p>
+			<input type="password" placeholder="Enter Password" name="psw" required>
+			<p><b>New Password</b></p>
+			<input type="password" placeholder="Enter Password" name="new_psw" required>
+			<p><b>Repeat New Password</b></p>
+			<input type="password" placeholder="Enter Password" name="new_psw_repeat" required>
+			<button onclick="document.getElementById('demo').style.display='none'" class="confirm">Confirm</button>
+		</div>
+	</div>
+
+	<div class="faculty_info">
+    	<table id="myTable">
+    		<tr class="header">
+    			<th style="">Name</th> <!-- Can change the width if needed -->
+    			<th>Department</th>
+    			<th>Visa Type</th>
+    			<th>Phone</th>
+    			<th>Email</th>
+    			<th>Working Email</th>
+    			<th>Supervisor Name</th>
+    			<th>Supervisor Email</th>
+    			<th>Note</th>
+    		</tr>
+    	</table>
+	</div>
+
+	<script>
+		function myFunctionName() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputName");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[0];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionDept() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputDept");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[1];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionVisa() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputVisa");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[2];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionPhone() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputPhone");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[3];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionEmail() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputEmail");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[4];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionWorking() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputWorking");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[5];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionSName() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputSName");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[6];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+	<script>
+		function myFunctionSEmail() {
+  			var input, filter, table, tr, td, i;
+  			input = document.getElementById("myInputSEmail");
+  			filter = input.value.toUpperCase();
+  			table = document.getElementById("myTable");
+  			tr = table.getElementsByTagName("tr");
+  			for (i = 0; i < tr.length; i++) {
+    			td = tr[i].getElementsByTagName("td")[7];
+    			if (td) {
+      				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        				tr[i].style.display = "";
+      				} else {
+        				tr[i].style.display = "none";
+      				}
+    			}
+ 			}
+		}
+	</script>
+</body>
 </html>
