@@ -8,6 +8,10 @@
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <!-- Angular CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!-- bootstrap 3 CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- customized packages -->
     <script src="js/exceptions.js"></script>
     <script src="js/date.js"></script>
@@ -19,7 +23,7 @@
     <script src="js/crypto/util.js"></script>
     <title>Redirect - Debug</title>
 </head>
-<body id="myPage" ng-app="app">
+<body>
     <script>
         // usr validation
         var cookie = document.cookie;
@@ -33,7 +37,234 @@
             window.location.replace('welcome.html'); // TODO welcome -> 404
         }
     </script>
-	<div>
+    <script>
+        // $.ajax({url: `users/${_id}`, async: true, dataType: 'json'}).done(function(res) {
+        //     var user = res;
+        //     console.log(user);
+        // });
+        var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+        var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+        console.log(user);
+        console.log(users);
+
+        var attrOf = function(attr) {
+            return (attr == null || attr == undefined) ? "" : " " + attr;
+        };
+
+        var liOf = function(attr, text) {
+            return `<li${attrOf(attr)}>${text || ""}</li>`;
+        };
+
+        // Black or white as it catches mice is a good cat
+        var dropDownLiOf = function(attr, label, elements) {
+            var result = "";
+            result += `<li class="dropdown"${attrOf(attr)}>`;
+            result += `<a class="dropdown-toggle" data-toggle="dropdown">${label}<span class="caret"></span></a>`;
+            result += `<ul class="dropdown-menu">`;
+            for (var val of elements) {
+                result += liOf(undefined, val);
+            }
+            result += '</ul></li>'
+            return result;
+        };
+
+        var elementPersonalInfoOf = function(user) {
+            var result = "";
+            result += liOf(undefined, `Email: ${user.email}`);
+            result += liOf(undefined, `Password: ******`);
+            result += liOf(undefined, `Phone: ${user.phone}`);
+            result += liOf(undefined, `End Date: ${user.stop_time}`);
+            result += dropDownLiOf(undefined, 'Departments', user.dept_names);
+            result += dropDownLiOf(undefined, 'Visas', user.visa_types);
+            result += liOf(undefined, `Official University Email: ${user.working_email || ""}`);
+            result += liOf(undefined, `Supervisor's Name: ${user.supervisor_name || ""}`);
+            result += liOf(undefined, `Supervisor's Email: ${user.supervisor_email || ""}`);
+            result += liOf(undefined, `Note: ${user.note || ""}`);
+            return result;
+        };
+
+        $(document).ready(function() {
+            $('#box').html(elementPersonalInfoOf(user));
+        });
+    </script>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">PICS - UC Davis Department Comtacts</a>
+        </div>
+        <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+        </form>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar" id="box">
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Section title</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Header</th>
+                  <th>Header</th>
+                  <th>Header</th>
+                  <th>Header</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1,001</td>
+                  <td>Lorem</td>
+                  <td>ipsum</td>
+                  <td>dolor</td>
+                  <td>sit</td>
+                </tr>
+                <tr>
+                  <td>1,002</td>
+                  <td>amet</td>
+                  <td>consectetur</td>
+                  <td>adipiscing</td>
+                  <td>elit</td>
+                </tr>
+                <tr>
+                  <td>1,003</td>
+                  <td>Integer</td>
+                  <td>nec</td>
+                  <td>odio</td>
+                  <td>Praesent</td>
+                </tr>
+                <tr>
+                  <td>1,003</td>
+                  <td>libero</td>
+                  <td>Sed</td>
+                  <td>cursus</td>
+                  <td>ante</td>
+                </tr>
+                <tr>
+                  <td>1,004</td>
+                  <td>dapibus</td>
+                  <td>diam</td>
+                  <td>Sed</td>
+                  <td>nisi</td>
+                </tr>
+                <tr>
+                  <td>1,005</td>
+                  <td>Nulla</td>
+                  <td>quis</td>
+                  <td>sem</td>
+                  <td>at</td>
+                </tr>
+                <tr>
+                  <td>1,006</td>
+                  <td>nibh</td>
+                  <td>elementum</td>
+                  <td>imperdiet</td>
+                  <td>Duis</td>
+                </tr>
+                <tr>
+                  <td>1,007</td>
+                  <td>sagittis</td>
+                  <td>ipsum</td>
+                  <td>Praesent</td>
+                  <td>mauris</td>
+                </tr>
+                <tr>
+                  <td>1,008</td>
+                  <td>Fusce</td>
+                  <td>nec</td>
+                  <td>tellus</td>
+                  <td>sed</td>
+                </tr>
+                <tr>
+                  <td>1,009</td>
+                  <td>augue</td>
+                  <td>semper</td>
+                  <td>porta</td>
+                  <td>Mauris</td>
+                </tr>
+                <tr>
+                  <td>1,010</td>
+                  <td>massa</td>
+                  <td>Vestibulum</td>
+                  <td>lacinia</td>
+                  <td>arcu</td>
+                </tr>
+                <tr>
+                  <td>1,011</td>
+                  <td>eget</td>
+                  <td>nulla</td>
+                  <td>Class</td>
+                  <td>aptent</td>
+                </tr>
+                <tr>
+                  <td>1,012</td>
+                  <td>taciti</td>
+                  <td>sociosqu</td>
+                  <td>ad</td>
+                  <td>litora</td>
+                </tr>
+                <tr>
+                  <td>1,013</td>
+                  <td>torquent</td>
+                  <td>per</td>
+                  <td>conubia</td>
+                  <td>nostra</td>
+                </tr>
+                <tr>
+                  <td>1,014</td>
+                  <td>per</td>
+                  <td>inceptos</td>
+                  <td>himenaeos</td>
+                  <td>Curabitur</td>
+                </tr>
+                <tr>
+                  <td>1,015</td>
+                  <td>sodales</td>
+                  <td>ligula</td>
+                  <td>in</td>
+                  <td>libero</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+
+      </script>
+	<!-- <div>
 		<input type="text" id="myInputName" onkeyup="myFunctionName()" placeholder="Search for names.." title="Type in a name">
 		<input type="text" id="myInputDept" onkeyup="myFunctionDept()" placeholder="Search for departments.." title="Type in a name">
 		<input type="text" id="myInputVisa" onkeyup="myFunctionVisa()" placeholder="Search for Visa.." title="Type in a name">
@@ -42,8 +273,8 @@
 		<input type="text" id="myInputWorking" onkeyup="myFunctionWorking()" placeholder="Search for working emails.." title="Type in a name">
 		<input type="text" id="myInputSName" onkeyup="myFunctionSName()" placeholder="Search for supervisor names.." title="Type in a name">
 		<input type="text" id="myInputSEmail" onkeyup="myFunctionSEmail()" placeholder="Search for supervisor emails.." title="Type in a name">
-	</div>
-	<script>
+	</div> -->
+	<!-- <script>
 		var dummy = function (data) {return data;}
 		var publicData = dummy($.ajax({
 			url: 'users',
@@ -67,14 +298,14 @@
 				row.insertCell(-1).innerHTML = value.note;
 			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		var app = angular.module('app', []);
 	</script>
 	<h1 style="margin-left: 20px">UCD Faculty Database</h1>
 	<h2 class="text-center">Information of Department Faculty</h2>
 	<div class="user">
-		<p class="user_info">Name: temp</p> <!-- Here, you need to modify to acquire user information  -->
+		<p class="user_info">Name: temp</p>
 		<p class="user_info">Email: temp</p>
 		<p class="user_info">Phone: temp</p>
 		<p class="user_info">Department: temp</p>
@@ -89,12 +320,12 @@
 			<input type="password" placeholder="Enter Password" name="new_psw_repeat" required>
 			<button onclick="document.getElementById('demo').style.display='none'" class="confirm">Confirm</button>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="faculty_info">
+	<!-- <div class="faculty_info">
     	<table id="myTable">
     		<tr class="header">
-    			<th style="">Name</th> <!-- Can change the width if needed -->
+    			<th style="">Name</th>
     			<th>Department</th>
     			<th>Visa Type</th>
     			<th>Phone</th>
@@ -105,9 +336,9 @@
     			<th>Note</th>
     		</tr>
     	</table>
-	</div>
+	</div> -->
 
-	<script>
+	<!-- <script>
 		function myFunctionName() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputName");
@@ -125,8 +356,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionDept() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputDept");
@@ -144,8 +375,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionVisa() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputVisa");
@@ -163,8 +394,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionPhone() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputPhone");
@@ -182,8 +413,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionEmail() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputEmail");
@@ -201,8 +432,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionWorking() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputWorking");
@@ -220,8 +451,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionSName() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputSName");
@@ -239,8 +470,8 @@
     			}
  			}
 		}
-	</script>
-	<script>
+	</script> -->
+	<!-- <script>
 		function myFunctionSEmail() {
   			var input, filter, table, tr, td, i;
   			input = document.getElementById("myInputSEmail");
@@ -258,6 +489,6 @@
     			}
  			}
 		}
-	</script>
+	</script> -->
 </body>
 </html>

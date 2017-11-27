@@ -70,7 +70,7 @@ var dataUserInScope = function($scope) {
         name: $scope.inputName,
         phone: $scope.inputPhone,
         stop_time: $scope.inputStopTime,
-        depts: $scope.inputDeptNames,
+        dept_names: $scope.inputDeptNames,
         visa_types: $scope.inputVisaTypes,
         working_email: $scope.inputWorkingEmail,
         supervisor_name: $scope.inputSupervisorName,
