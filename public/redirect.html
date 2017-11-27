@@ -29,21 +29,34 @@
         #body {
             margin-top: 50px;
         }
-        .li-private {
-        	width: 100%;
+        .input-private {
+            width: 100%;
             background: black;
             border-radius: 15px;
             padding-top: 5px;
             padding-bottom: 10px;
         }
-        .li-private label {
-        	display: block;
-			text-align: center;
-        	color: white;
+        .input-private label {
+            display: block;
+            text-align: center;
+            color: white;
         }
-        .li-private .input-group {
-        	margin-left: 10px;
+        .input-private .input-group {
+            margin-left: 10px;
             margin-right: 10px;
+        }
+        .dropdown-private {
+            background: black;
+            border-radius: 15px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .dropdown-private > div.input-group {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .dropdown-private > div.input-group > button {
+            width: 100%;
         }
     </style>
 </head>
@@ -68,74 +81,73 @@
         // });
         var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
         var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
-        console.log(user);
-        console.log(users);
 
-        var attrOf = function(attr) {
-            return (attr == null || attr == undefined) ? "" : " " + attr;
+        var editInput = function(ele) {
+            // TODO: impl POST
+            console.log('reached');
+            var input = ele.parentElement.previousSibling;
+            input.readOnly = false;
         };
 
-        var liOf = function(attr, text) {
-            return `<li${attrOf(attr)}>${text || ""}</li>`;
+        var editDropdown = function(ele) {
+            // TODO: impl POST
+
+        }
+
+        var privateInfoOf = function(user) {
+            var result = '';
+            result += '<ul class="nav nav-sidebar">';
+            result += inputPrivateOf('Email', user.email);
+            result += inputPrivateOf('Phone', user.phone);
+            result += inputPrivateOf('End Date', user.stop_time);
+            result += dropdownPrivateOf('Departments', user.dept_names);
+            result += dropdownPrivateOf('Visas', user.visa_types);
+            result += inputPrivateOf('Official University Email', `${user.working_email || ""}`);
+            result += inputPrivateOf('Supervisor\'s Name', `${user.supervisor_name || ""}`);
+            result += inputPrivateOf('Supervisor\'s Email', `${user.supervisor_email || ""}`);
+            result += inputPrivateOf('Note', `${user.note || ""}`);
+            result += '</ul>';
+            return result;
         };
 
-        // Black or white as it catches mice is a good cat
+        var inputPrivateOf = function(name, value) {
+            var result = '';
+            result += '<div class="input-private">';
+            result += `<label>${name}</label>`;
+            result += '<div class="input-group">';
+            result += `<input class="form-control" readonly="readonly" value="${value}" />`
+            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>';
+            result += '</div>';
+            result += '</div>';
+            return result;
+        };
 
-
-        var elementPersonalInfoOf = function(user) {
-            var result = "";
-            result += privateLiOf('Email', `${user.email}`);
-            result += privateLiOf('Password', `******`);
-            result += privateLiOf('Phone', `${user.phone}`);
-            result += privateLiOf('End Date', `${user.stop_time}`);
-            result += dropDownLiOf('Departments', 'Departments', user.dept_names);
-            result += dropDownLiOf('Visas', 'Visas', user.visa_types);
-            result += privateLiOf('Official University Email', `${user.working_email || ""}`);
-            result += privateLiOf('Supervisor\'s Name', `${user.supervisor_name || ""}`);
-            result += privateLiOf('Supervisor\'s Email', `${user.supervisor_email || ""}`);
-            result += privateLiOf('Note', `${user.note || ""}`);
+        var dropdownPrivateOf = function(header, eles) {
+            var result = '';
+            result += '<div class="dropdown-private clearfix">';
+            result += '<div class="input-group">';
+            result += '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+            result += `${header}`;
+            result += '<span class="caret"></span>';
+            result += '</button>';
+            result += '<ul class="dropdown-menu">';
+            result += `<li class="dropdown-header">${header}</li>`;
+            for (var ele of eles) {
+                result += `<li>${ele}</li>`;
+            }
+            result += '</ul>';
+            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>';
+            result += '</div>';
+            result += '</div>';
             return result;
         };
 
         $(document).ready(function() {
-            $('#box').html(elementPersonalInfoOf(user));
+            $('#private-info').html(privateInfoOf(user));
         });
 
-        var dropDownLiOf = function(attr, label, elements) {
-            var result = "";
-            result += `<li class="dropdown"${attrOf(attr)}>`;
-            result += `<a class="dropdown-toggle" data-toggle="dropdown">${label}<span class="caret"></span></a>`;
-            result += `<ul class="dropdown-menu">`;
-            for (var val of elements) {
-                result += liOf(undefined, val);
-            }
-            result += '</ul></li>'
-            return result;
-        };
 
-        // <div>
-        // 	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Departments
-        //     	<span class="caret"></span></a>
-        //     	<ul class="dropdown-menu">
-        //         	<li>Music</li>
-        //             <li>East Asian Studies</li>
-        //         </ul>
-        //     </li>
-        // </div>
 
-        // var dropDownLiOf =  
-
-        var privateLiOf = function(label, text) {
-            result = "";
-            result += '<div class="li-private">';
-            result += `<label>${label}</label>`;
-            result += '<div class="input-group">';
-            result += `<input class="form-control" readonly="readonly" value="${text}"/>`;
-            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>';
-            result += '</div>';
-            result += '</div>';
-            return result;
-        };
     </script>
 
     <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
@@ -153,8 +165,7 @@
       <div class="row">
         <!-- private info -->
         <div class="col-md-3 sidebar" id="private-info">
-            <ul class="nav nav-sidebar" id="box">
-            </ul>
+            
         </div>
         <!-- public info -->
         <div class="col-md-offset-3 col-md-9 main">

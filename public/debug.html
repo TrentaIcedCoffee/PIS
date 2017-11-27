@@ -16,88 +16,167 @@
             #body {
                 margin-top: 50px;
             }
-            .li-private {
+            .input-private {
                 width: 100%;
                 background: black;
                 border-radius: 15px;
                 padding-top: 5px;
                 padding-bottom: 10px;
             }
-            .li-private label {
+            .input-private label {
                 display: block;
                 text-align: center;
                 color: white;
             }
-            .li-private .input-group {
+            .input-private .input-group {
                 margin-left: 10px;
                 margin-right: 10px;
+            }
+            .dropdown-private {
+                background: black;
+                border-radius: 15px;
+                padding-top: 15px;
+                padding-bottom: 15px;
+            }
+            .dropdown-private > div.input-group {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .dropdown-private > div.input-group > button {
+                width: 100%;
             }
         </style>
     </head>
     <body>
         <script>
-            var clickEdit = function() {
-                console.log('reached');
+            var editInput = function(ele) {
+                // TODO: impl POST
+                var input = ele.parentElement.previousSibling.previousSibling;
+                input.readOnly = false;
             };
+            var editDropdown = function(ele) {
+                // TODO: impl POST
+
+            }
+            var privateInfoOf = function(user) {
+                var result = '';
+                result += '<ul class="nav nav-sidebar">';
+                result += inputPrivateOf('Email', user.email);
+                result += inputPrivateOf('Phone', user.phone);
+                result += inputPrivateOf('End Date', user.stop_time);
+                result += dropdownPrivateOf('Departments', user.dept_names);
+                result += dropdownPrivateOf('Visas', user.visa_types);
+                result += inputPrivateOf('Official University Email', `${user.working_email || ""}`);
+                result += inputPrivateOf('Supervisor\'s Name', `${user.supervisor_name || ""}`);
+                result += inputPrivateOf('Supervisor\'s Email', `${user.supervisor_email || ""}`);
+                result += inputPrivateOf('Note', `${user.note || ""}`);
+                result += '</ul>';
+            };
+            var inputPrivateOf = function(name, value) {
+                var result = '';
+                result += '<div class="input-private">';
+                result += `<label>${name}</label>`;
+                result += '<div class="input-group">';
+                result += `<input class="form-control" readonly="readonly" value="${value}" />`
+                result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>';
+                result += '</div>';
+                result += '</div>';
+                return result;
+            };
+            var dropdownPrivateOf = function(header, eles) {
+                var result = '';
+                result += '<div class="dropdown-private clearfix">';
+                result += '<div class="input-group">';
+                result += '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                result += `${header}`;
+                result += '<span class="caret"></span>';
+                result += '</button>';
+                result += '<ul class="dropdown-menu">';
+                result += `<li class="dropdown-header">${header}</li>`;
+                for (var ele of eles) {
+                    result += `<li>${ele}</li>`;
+                }
+                result += '</ul>';
+                result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>';
+                result += '</div>';
+                result += '</div>';
+            };
+
         </script>
         <div class="row">
             <!-- private info -->
             <div class="col-md-3 sidebar" id="private-info">
                 <ul class="nav nav-sidebar">
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Email</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="jin@ucdavis.edu" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="clickEdit()"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Phone</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="4155214118" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Name</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="Xin Jin" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>End Date</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="2018-11-25" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <style>
+
+                    </style>
+                    <div class="dropdown clearfix">
+                        <div class="input-group">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Departments <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li class="dropdown-header">Dropdown header</li>
+                              <li>Music</li>
+                              <li>History</li>
+                            </ul>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
+                        </div>
+                    </div>
+                    <div class="input-private">
                         <label>Official University Email</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="group@gamil.com" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Supervisor's Name</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="Jodi Barnhill" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Supervisor's Email</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="jodi@ucdavis.edu" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
-                    <div class="li-private">
+                    <div class="input-private">
                         <label>Note</label>
                         <div class="input-group">
                             <input class="form-control" readonly="readonly" value="" />
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editInput(this)"></i></span>
                         </div>
                     </div>
                 </ul>
