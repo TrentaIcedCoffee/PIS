@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- jQuery 2.0.0 CDN -->
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+        <!-- bootstrap 3 CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <title>Debug page for PICS</title>
+        <style>
+            html, body {
+                width: 100%;
+            }
+            #body {
+                margin-top: 50px;
+            }
+            .li-private {
+                width: 100%;
+                background: black;
+                border-radius: 15px;
+                padding-top: 5px;
+                padding-bottom: 10px;
+            }
+            .li-private label {
+                display: block;
+                text-align: center;
+                color: white;
+            }
+            .li-private .input-group {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            var clickEdit = function() {
+                console.log('reached');
+            };
+        </script>
+        <div class="row">
+            <!-- private info -->
+            <div class="col-md-3 sidebar" id="private-info">
+                <ul class="nav nav-sidebar">
+                    <div class="li-private">
+                        <label>Email</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="jin@ucdavis.edu" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="clickEdit()"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Phone</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="4155214118" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Name</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="Xin Jin" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>End Date</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="2018-11-25" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Official University Email</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="group@gamil.com" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Supervisor's Name</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="Jodi Barnhill" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Supervisor's Email</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="jodi@ucdavis.edu" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                    <div class="li-private">
+                        <label>Note</label>
+                        <div class="input-group">
+                            <input class="form-control" readonly="readonly" value="" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-edit"></i></span>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+            <!-- public info -->
+            <div class="col-md-offset-3 col-md-9 main">
+            </div>
+        </div>
+    </body>
+</html>
