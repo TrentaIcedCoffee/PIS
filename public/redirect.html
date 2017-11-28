@@ -220,12 +220,10 @@
         };
 
         // txt is search text
-        var publicInfoOf = function(users, txt) {
+        var publicInfoOf = function(users, ) {
             var result = '';
             for (var user of users) {
-                if (isSelectedSearch(user, txt)) {
-                    result += trPublicOf(user);
-                }
+                result += trPublicOf(user);
             }
             return result;
         };
@@ -287,17 +285,34 @@
             return false;
         };
 
-        var isSelectedQuery = function(user, index, txt) {
-            if (!txt || txt == '') {
-                return true;
-            }
-
-        }
-
         var search = function(ele) {
             var txt = ele.value;
             $('#public-info').html(publicInfoOf(users, txt));
         }
+
+        var isSelectedQuery = function(user, index, txt) {
+            if (!index || index == '' || !txt || txt == '') {
+                return true;
+            }
+            var inputFields = ['name', 'phone', 'email', 'working_email', 'supervisor_name', 'supervisor_email'];
+            var arrayFields = ['dept_names', 'visa_types'];
+            if (inputFields.includes(index)) {
+                return user[index].containsIgnoreCase(txt);
+            } else {
+                return user[index].containsStrIgnoreCase(txt);
+            }
+        }
+
+        var query = function(ele, index) {
+            var txt = ele.value;
+            for (var user of users) {
+                if (isSelectedQuery(user, index, txt)) {
+
+                }
+            }
+        }
+
+
     </script>
     <div id="body" class="container-fluid">
           <h1 class="page-header">UC Davis Department Contacts</h1>
@@ -307,49 +322,49 @@
                     <tr>
                         <th>Name
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'name')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Phone
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'phone')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Email
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Official University Email<br />(primary contact)
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'working_email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Departments
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'dept_names')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Visa Types
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'visa_types')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Supervisor's Name
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'supervisor_name')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Supervisor's Email
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this)" placeholder="Search for..." />
+                                <input class="form-control" type="text" onchange="query(this, 'supervisor_email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
