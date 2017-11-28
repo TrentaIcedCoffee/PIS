@@ -14,32 +14,100 @@
     <div id="body" class="container-fluid">
         <h1 class="page-header">UC Davis Department Contacts</h1>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-hover">
+                    <style>
+                        #body table th {
+                            text-align: center;
+                        }
+                        #body table td {
+                            text-align: center;
+                        }
+                    </style>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>End Date</th>
-                            <th>Official University Email (primary contact)</th>
-                            <th>Departments</th>
-                            <th>Visa Types</th>
-                            <th>Supervisor's Name</th>
-                            <th>Supervisor's Email</th>
+                            <th>Name
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Phone
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Email
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Official University Email<br />(primary contact)
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Departments
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Visa Types
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Supervisor's Name
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
+                            <th>Supervisor's Email
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="Search for..." />
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <script>
+                        var tdPublicOf = function(val) {
+                            return `<td>${val}</td>`
+                        };
+                        var tdMultiplePublicOf = function(array) {
+                            return array.join(',<br />');
+                        };
+                        var trPublicOf = function(user) {
+                            result = '';
+                            result += tdPublicOf(user.name);
+                            result += tdPublicOf(user.phone);
+                            result += tdPublicOf(user.email);
+                            result += tdPublicOf(`${user.working_email || ""}`);
+                            result += tdMultiplePublicOf(user.dept_names);
+                            result += tdMultiplePublicOf(user.visa_types);
+                            result += tdPublicOf(`${user.supervisor_name || ""}`);
+                            result += tdPublicOf(`${user.supervisor_email || ""}`);
+                            return result;
+                        };
+                    </script>
+                    <tbody id="public-info">
                         <tr>
                             <td>1,001</td>
                             <td>Lorem</td>
-                            <td>ipsum</td>
+                            <td>ipsum,<br />asdfa</td>
                             <td>dolor</td>
                             <td>sit</td>
+                            <span>Note: this is just something interesting</span> 
                         </tr>
                         <tr>
                             <td>1,002</td>
                             <td>amet</td>
-                            <td>consectetur</td>
+                            <td>consectetur<br />adsf</td>
                             <td>adipiscing</td>
                             <td>elit</td>
                         </tr>
