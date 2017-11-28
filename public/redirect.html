@@ -26,6 +26,24 @@
         html, body {
             width: 100%;
         }
+        #header {
+            height: 50px;
+        }
+        #header div a {
+            margin: 0px;
+            float: none;
+            display: block;
+            text-align: center;
+        }
+        #header div form {
+            margin: 0px;
+            padding-top: 8px;
+        }
+        #private-info {
+            position: absolute;
+            top: 50px;
+            display: none;
+        }
         #body {
             margin-top: 50px;
         }
@@ -146,31 +164,47 @@
             $('#private-info').html(privateInfoOf(user));
         });
 
-
+        var togglePrivateInfo = function() {
+            var caret = $('#private_info_toggle_caret');
+            var privateInfo = $('#private-info');
+            if (!caret.hasClass('caret-reversed')) {
+                caret.addClass('caret-reversed');
+                privateInfo.slideDown();
+            } else {
+                caret.removeClass('caret-reversed');
+                privateInfo.slideUp();
+            }
+        };
 
     </script>
-
     <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">PICS - UC Davis Department Comtacts</a>
-        </div>
-        <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-        </form>
+          <div class="row">
+              <div class="col-md-3 navbar-header">
+                  <a class="navbar-brand" onclick="togglePrivateInfo()">My Information <span class="caret" id="private_info_toggle_caret"></span></a>
+                  <div id="private-info">
+
+                  </div>
+              </div>
+              <div class="col-md-6 navbar-header">
+                  <a class="navbar-brand" href="#">PICS - UC Davis Department Comtacts</a>
+              </div>
+              <form class="col-md-3 navbar-form navbar-right">
+                  <input type="text" class="form-control" placeholder="Search...">
+              </form>
+          </div>
       </div>
     </nav>
+    <script>
 
+    </script>
+    <style>
+        #body {
+
+        }
+    </style>
     <div id="body" class="container-fluid">
-      <div class="row">
-        <!-- private info -->
-        <div class="col-md-3 sidebar" id="private-info">
-            
-        </div>
-        <!-- public info -->
-        <div class="col-md-offset-3 col-md-9 main">
-          <h1 class="page-header">Dashboard</h1>
-          <h2 class="sub-header">Section title</h2>
+          <h1 class="page-header">UC Davis Department Contacts</h1>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -299,10 +333,6 @@
             </table>
           </div>
         </div>
-      </div>
-      <script>
-
-      </script>
 	<!-- <div>
 		<input type="text" id="myInputName" onkeyup="myFunctionName()" placeholder="Search for names.." title="Type in a name">
 		<input type="text" id="myInputDept" onkeyup="myFunctionDept()" placeholder="Search for departments.." title="Type in a name">
