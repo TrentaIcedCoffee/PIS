@@ -79,11 +79,19 @@
                         var tdPublicOf = function(val) {
                             return `<td>${val}</td>`
                         };
+                        var trNotePublic = function(val) {
+                            var result = '';
+                            result += '<tr>';
+                            result += `<td colspan="8">Note: ${val}</td>`;
+                            result += '</tr>';
+                            return result;
+                        };
                         var tdMultiplePublicOf = function(array) {
                             return array.join(',<br />');
                         };
                         var trPublicOf = function(user) {
-                            result = '';
+                            var result = '';
+                            result += '<tr>';
                             result += tdPublicOf(user.name);
                             result += tdPublicOf(user.phone);
                             result += tdPublicOf(user.email);
@@ -92,31 +100,55 @@
                             result += tdMultiplePublicOf(user.visa_types);
                             result += tdPublicOf(`${user.supervisor_name || ""}`);
                             result += tdPublicOf(`${user.supervisor_email || ""}`);
+                            result += '</tr>'
+                            if (user.note) {
+                                result += trNotePublic(user.note);
+                            }
+                            return result;
+                        };
+                        var publicInfoOf = function(users) {
+                            var result = '';
+                            for (var user of users) {
+                                result += trPublicOf(user);
+                            }
                             return result;
                         };
                     </script>
+                    <style>
+                        #public-info > tr:nth-child(odd) {
+                            /*background: lightgrey;*/
+                        }
+                    </style>
                     <tbody id="public-info">
                         <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum,<br />asdfa</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                            <span>Note: this is just something interesting</span> 
+                           <td>Xin Jin</td>
+                           <td>4155214118</td>
+                           <td>general@gmail.com</td>
+                           <td>group@gamil.com</td>
+                           <br>Music,<br />East Asian Studies</br><br>J-1,<br />PR</br>
+                           <td>Jodi Barnhill</td>
+                           <td>jodi@ucdavis.edu</td>
                         </tr>
                         <tr>
-                            <td>1,002</td>
-                            <td>amet</td>
-                            <td>consectetur<br />adsf</td>
-                            <td>adipiscing</td>
-                            <td>elit</td>
+                           <td>Xin Jin</td>
+                           <td>4155214118</td>
+                           <td>many@gmail.com</td>
+                           <td>group@gamil.com</td>
+                           <br>Microbiology and Molecular Genetics,<br />Plant Biology,<br />Music,<br />Biological and Agricultural Engineering,<br />Viticulture and Enology,<br />East Asian Studies,<br />Economics,<br />Hemispheric Institute of the Americas</br><br>J-1,<br />PR</br>
+                           <td>Jodi Barnhill</td>
+                           <td>jodi@ucdavis.edu</td>
                         </tr>
                         <tr>
-                            <td>1,003</td>
-                            <td>Integer</td>
-                            <td>nec</td>
-                            <td>odio</td>
-                            <td>Praesent</td>
+                           <td>Xin Jin</td>
+                           <td>4155214118</td>
+                           <td>visa@gmail.com</td>
+                           <td>group@gamil.com</td>
+                           <br>Microbiology and Molecular Genetics,<br />Plant Biology,<br />Music,<br />Biological and Agricultural Engineering,<br />Viticulture and Enology,<br />East Asian Studies,<br />Economics,<br />Hemispheric Institute of the Americas</br><br>J-1,<br />H-1B,<br />O-1,<br />TN,<br />PR,<br />E</br>
+                           <td>Jodi Barnhill</td>
+                           <td>jodi@ucdavis.edu</td>
+                        </tr>
+                        <tr>
+                           <td colspan="8">Note: I just got a lot visa</td>
                         </tr>
                     </tbody>
                 </table>
