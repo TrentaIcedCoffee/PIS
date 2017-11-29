@@ -121,13 +121,39 @@
         var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
 
         var unlockInput = function(ele) {
-            var input = ele.parentElement.previousSibling;
-            input.readOnly = false;
+            ele.parentElement.previousSibling.readOnly = false;
+            ele.parentElement.previousSibling.focus();
         };
+
+        var lockInput = function(ele) {
+            ele.parentElement.previousSibling.readOnly = true;
+            ele.parentElement.previousSibling.blur();
+        }
 
         var editInput = function(ele) {
             ele.readOnly = true;
         }
+
+        $(document).ready(function() {
+            var panelPrivate = $('#input-private');
+            $(document).on('click', function(event) {
+                console.log(panelPrivate);
+                console.log(event);
+                console.log(event.target);
+                console.log(panelPrivate.find(event.target));
+            });
+        });
+
+        var contains = function(parent, child) {
+            var node = child;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentElement;
+            }
+            return false;
+        };
 
         var editDropdown = function(ele) {
             // TODO: impl POST
@@ -155,10 +181,14 @@
             result += `<label>${name}</label>`;
             result += '<div class="input-group">';
             result += `<input class="form-control" onchange="editInput(this)" readonly="readonly" value="${value}" />`
-            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="unlockInput(this)"></i></span>';
+            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span>';
             result += '</div>';
             result += '</div>';
             return result;
+        };
+
+        var passwordPrivateOf = function() {
+
         };
 
         var dropdownPrivateOf = function(header, eles) {

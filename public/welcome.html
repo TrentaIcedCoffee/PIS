@@ -33,6 +33,50 @@
         <script src="js/crypto/sha256.js"></script>
         <script src="js/crypto/util.js"></script>
         <title>PICS - UC Davis department contact</title>
+        <style>
+            html, body {
+                width: 100%;
+                background: lightgrey;
+                color: black;
+                font-size: 16px;
+            }
+            input {
+                font-size: 16px !important;
+            }
+            h1 {
+                text-align: center;
+            }
+            p.intro {
+                text-align: center;
+                font-size: 22px;
+            }
+            form h2 {
+                font-size: 34px;
+                font-weight: bold;
+            }
+            .input-field {
+                margin-top: 8px;
+            }
+            .illustration {
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .error, .error-login {
+                font-size: 16px;
+                color: red;
+                margin-top: 4px;
+            }
+            div.bootstrap-select {
+                width: 80% !important;
+            }
+            button.dropdown-toggle {
+                height: 40px;
+                font-size: 16px;
+            }
+            #field-dept_names div.dropup ul li a {
+                font-size: 16px;
+            }
+        </style>
     </head>
     <body ng-app="app">
         <script>
@@ -45,7 +89,7 @@
             var app = angular.module('app', []);
         </script>
         <h1>UC Davis departmental contact update</h1>
-        <p>Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
+        <p class="intro">Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
         <div ng-controller="controller-signup" class="container">
             <form class="form-signin">
                 <h2 class="form-signin-heading">Create an account</h2>
@@ -174,12 +218,6 @@
                         <input id="input-password-login" ng-model="inputPassword" required type="password" class="form-control" placeholder="User Password" />
                     </div>
                 </div>
-                <!-- TODO impl remember me -->
-                <!--
-                <label class="checkbox">
-                    <input type="checkbox" value="remember_me" id="remember_me" /> Remember me
-                </label>
-                -->
                 <div class="error-login" id="error-no_user">User does not exist, you can <a id="anchor-login_to_signup">Sign Up Here</a></div>
                 <div class="error-login" id="error-wrong_password">Wrong password</div>
                 <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
@@ -399,7 +437,9 @@
                         url: `users`,
                         data: dataUser
                     }).then(function(res) {
-                        console.log(res.data._id); // TODO: redirection
+                        var user = res.data;
+                        document.cookie = cookieOf('usr', jwtOf(`{email: "${user.email}"}`, user._id));
+                        window.location.replace('redirect.html');
                     }, function(err) {
                         throw err;
                     });
