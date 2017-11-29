@@ -220,7 +220,7 @@
         };
 
         // txt is search text
-        var publicInfoOf = function(users, ) {
+        var publicInfoOf = function(users) {
             var result = '';
             for (var user of users) {
                 result += trPublicOf(user);
@@ -287,7 +287,13 @@
 
         var search = function(ele) {
             var txt = ele.value;
-            $('#public-info').html(publicInfoOf(users, txt));
+            var userSeleted = [];
+            for (var user of users) {
+                if (isSelectedSearch(user, txt)) {
+                    userSeleted.push(user);
+                }
+            }
+            $('#public-info').html(publicInfoOf(userSeleted));
         }
 
         var isSelectedQuery = function(user, index, txt) {
@@ -305,14 +311,14 @@
 
         var query = function(ele, index) {
             var txt = ele.value;
+            var userSeleted = [];
             for (var user of users) {
                 if (isSelectedQuery(user, index, txt)) {
-
+                    userSeleted.push(user);
                 }
             }
+            $('#public-info').html(publicInfoOf(userSeleted));
         }
-
-
     </script>
     <div id="body" class="container-fluid">
           <h1 class="page-header">UC Davis Department Contacts</h1>
@@ -322,49 +328,49 @@
                     <tr>
                         <th>Name
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'name')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'name')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Phone
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'phone')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'phone')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Email
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Official University Email<br />(primary contact)
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'working_email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'working_email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Departments
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'dept_names')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'dept_names')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Visa Types
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'visa_types')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'visa_types')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Supervisor's Name
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'supervisor_name')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'supervisor_name')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
                         <th>Supervisor's Email
                             <div class="input-group">
-                                <input class="form-control" type="text" onchange="query(this, 'supervisor_email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this, 'supervisor_email')" placeholder="Search for..." />
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                             </div>
                         </th>
