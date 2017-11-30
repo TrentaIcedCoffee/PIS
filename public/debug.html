@@ -1,287 +1,337 @@
 <html>
-  <head>
-    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
-    <meta charset="utf-8">
-    <!-- jQuery 2.0.0 CDN -->
-    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-    <!-- Angular CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <!-- bootstrap 3 CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!-- font -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <!-- customized packages -->
-    <script src="js/exceptions.js"></script>
-    <script src="js/date.js"></script>
-    <script src="js/util.js"></script>
-    <script src="js/crypto/core.js"></script>
-    <script src="js/crypto/enc-base64.js"></script>
-    <script src="js/crypto/hmac.js"></script>
-    <script src="js/crypto/sha256.js"></script>
-    <script src="js/crypto/util.js"></script>
-    <title>Redirect - Debug</title>
-    <style>
-      .interact {
-      font-size: 14px !important;
-      }
-      .express {
-      color: rgba(235, 235, 235, 1) !important;
-      }
-      .express-inverse {
-      color: rgba(0, 0, 0, 1) !important;
-      }
-      .express-large {
-      font-size: 20px !important;
-      }
-      .express-medium {
-      font-size: 18px !important;
-      }
-      .express-small {
-      font-size: 16px !important;
-      }
-      .input-group {
-      width: 100%;
-      }
-      .btn-full {
-      width: 100%;
-      }
-      html, body {
-      width: 100%;
-      font-family: 'Roboto', sans-serif;
-      }
-      #header {
-      height: 50px;
-      }
-      #header div a {
-      margin: 0px;
-      float: none;
-      display: block;
-      text-align: center;
-      font-size: 20px !important;
-      }
-      #header div input {
-      width: 100%;
-      }
-      body {
-      background: rgba(170, 170, 170, 1);
-      }
-      #private-basic, #private-general, #private-dept_and_visa, #private-supervisor {
-      background: black;
-      border-radius: 20px;
-      border: solid black 4px;
-      padding-bottom: 6px;
-      }
-      #private-basic h2, #private-general h2, #private-dept_and_visa h2, #private-supervisor h2 {
-      margin: 0px;
-      padding-top: 10px;
-      padding-bottom: 8px;
-      padding-left: 2%;
-      text-align: left;
-      }
-      #private-basic div.input-group, #private-general div.input-group, #private-dept_and_visa div.input-group, #private-supervisor div.input-group {
-      width: 96%;
-      margin-left: 2%;
-      }
-      .ul-wide {
-      width: 60%;
-      margin-left: 20%;
-      }
-      .ul-wide li.dropdown-header {
-      padding-left: 4%;
-      }
-      .ul-wide li {
-      padding-left: 6%;
-      }
-    </style>
-  </head>
-  <body style="">
-    <script>
-      // usr validation
-      var cookie = document.cookie;
-      if (cookie == undefined || cookie == "") {
-          window.location.replace('welcome.html');
-      }
-      var jwt = getJwtInCookie(cookie);
-      var email = getEmailInJwt(jwt);
-      var _id = getIdOfEmail(email);
-      if (!isValidJwt(jwt, _id)) {
-          window.location.replace('welcome.html'); // TODO welcome -> 404
-      }
-    </script>
-    <script>
-      // $.ajax({url: `users/${_id}`, async: true, dataType: 'json'}).done(function(res) {
-      //     var user = res;
-      //     console.log(user);
-      // });
-      var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
-      var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
-    </script>
-    <script>
-      var togglePrivateInfo = function(ele) {
-              var privateInfo = $('#private-info');
-              if (ele.hasClass('active')) {
-                  ele.removeClass('active');
-                  privateInfo.slideUp();
-              } else {
-                  ele.addClass('active');
-                  privateInfo.slideDown();
-              }
-          };
-    </script>
-    <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-3 navbar-header">
-            <a class="navbar-brand express express-large active" onclick="togglePrivateInfo(this)">My Information <span class="caret"></span></a>
-            <div id="private-info">
-              <div id="private-basic">
-                <h2 class="express express-medium">Basic Info</h2>
-                <div class="input-group">
-                  <span class="input-group-addon">@</span>
-                  <input class="form-control interact" readonly="readonly" value="general@gmail.com" />
+    <head>
+        <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+        <meta charset="utf-8">
+        <!-- jQuery 2.0.0 CDN -->
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+        <!-- Angular CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <!-- bootstrap 3 CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- font -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <!-- customized packages -->
+        <script src="js/exceptions.js"></script>
+        <script src="js/date.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/crypto/core.js"></script>
+        <script src="js/crypto/enc-base64.js"></script>
+        <script src="js/crypto/hmac.js"></script>
+        <script src="js/crypto/sha256.js"></script>
+        <script src="js/crypto/util.js"></script>
+        <title>Redirect - Debug</title>
+        <style>
+            .interact {
+								font-size: 14px !important;
+            }
+						.express {
+								color: rgba(235, 235, 235, 1) !important;
+            }
+            .express-inverse {
+								color: rgba(0, 0, 0, 1) !important;
+            }
+            .express-large {
+								font-size: 20px !important;
+            }
+            .express-medium {
+								font-size: 18px !important;
+            }
+            .express-small {
+								font-size: 16px !important;
+            }
+            .input-group {
+								width: 100%;
+            }
+            .btn-full {
+								width: 100%;
+            }
+            html, body {
+								width: 100%;
+								font-family: 'Roboto', sans-serif;
+            }
+            #header {
+								height: 50px;
+            }
+            #header div a {
+								margin: 0px;
+								float: none;
+								display: block;
+								text-align: center;
+								font-size: 20px !important;
+            }
+            #header div input {
+								width: 100%;
+            }
+            body {
+								background: rgba(170, 170, 170, 1);
+            }
+            #private-basic, #private-general, #private-dept_and_visa, #private-supervisor {
+								background: black;
+								border-radius: 20px;
+								border: solid black 4px;
+								padding-bottom: 6px;
+            }
+            #private-basic h2, #private-general h2, #private-dept_and_visa h2, #private-supervisor h2 {
+								margin: 0px;
+								padding-top: 10px;
+								padding-bottom: 8px;
+								padding-left: 2%;
+								text-align: left;
+            }
+            #private-basic div.input-group, #private-general div.input-group, #private-dept_and_visa div.input-group, #private-supervisor div.input-group {
+								width: 96%;
+								margin-left: 2%;
+            }
+            .ul-wide {
+								width: 60%;
+								margin-left: 20%;
+            }
+            .ul-wide li.dropdown-header {
+								padding-left: 4%;
+            }
+            .ul-wide li {
+								padding-left: 6%;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            // usr validation
+//            var cookie = document.cookie;
+//            if (cookie == undefined || cookie == "") {
+//            //          window.location.replace('welcome.html');
+//            }
+//            var jwt = getJwtInCookie(cookie);
+//            var email = getEmailInJwt(jwt);
+//            var _id = getIdOfEmail(email);
+//            if (!isValidJwt(jwt, _id)) {
+//            //          window.location.replace('welcome.html'); // TODO welcome -> 404
+//            }
+        </script>
+        <script>
+            // $.ajax({url: `users/${_id}`, async: true, dataType: 'json'}).done(function(res) {
+            //     var user = res;
+            //     console.log(user);
+            // });
+            var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+            var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+        </script>
+        <script>
+            var togglePrivateInfo = function(ele) {
+                    var privateInfo = $('#private-info');
+                    if (ele.hasClass('active')) {
+                        ele.removeClass('active');
+                        privateInfo.slideUp();
+                    } else {
+                        ele.addClass('active');
+                        privateInfo.slideDown();
+                    }
+                };
+        </script>
+        <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 navbar-header">
+                        <a class="navbar-brand express express-large active" onclick="togglePrivateInfo(this)">My Information <span class="caret"></span></a>
+                        <div id="private-info">
+                            <div id="private-basic">
+                                <h2 class="express express-medium">Basic Info</h2>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="general@gmail.com" />
+                                </div>
+                                <div class="input-group">
+									<button class="btn btn-warning btn-full interact" data-toggle="modal" data-target="#change_password" type="button">Change password</button>
+								</div>
+                                <div class="input-group">
+                                    <button class="btn btn-danger btn-full interact" data-toggle="modal" data-target="#delete_user" type="button">Delete this user</button>
+                                </div>
+                            </div>
+                            <div id="private-general">
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="Xin Jin" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="4155214118" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="2018-01-01" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="group@ucdavis.edu" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="I am general case" />
+                                </div>
+                            </div>
+                            <div id="private-dept_and_visa">
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Department and Visa</h2>
+                                <div class="input-group clearfix">
+                                    <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
+                                    <ul class="dropdown-menu ul-wide">
+                                        <li class="dropdown-header express-inverse express-small">Departments</li>
+                                        <li class="interact">Music</li>
+                                        <li class="interact">East Asian Studies</li>
+                                    </ul>
+                                </div>
+                                <div class="input-group clearfix">
+                                    <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
+                                    <ul class="dropdown-menu ul-wide">
+                                        <li class="dropdown-header express-inverse express-small">Visas</li>
+                                        <li class="interact">J-1</li>
+                                        <li class="interact">PR</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="private-supervisor">
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="Jodi Barnhill" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input class="form-control interact" readonly="readonly" value="jodi@ucdavis.edu" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                            <div id="private-info">
+                            <div id="private-basic">
+                            <label>Basic Info</label>
+                            <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input class="form-control" readonly="readonly" value="general@gmail.com" />
+                            </div>
+                            <div class="input-group">
+                            <button class="btn btn-danger" type="button">Delete this user</button>
+                            </div>
+                            </div>
+                                <div class="input-private">
+                                  <label>Email</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="general@gmail.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="password-private">
+                                </div>
+                                <div class="input-private">
+                                  <label>Phone</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="4155214118"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="input-private">
+                                  <label>End Date</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="2018-11-25"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="dropdown-private clearfix">
+                                  <div class="input-group">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                      <li class="dropdown-header">Departments</li>
+                                      <li>Music</li>
+                                      <li>East Asian Studies</li>
+                                    </ul>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
+                                  </div>
+                                </div>
+                                <div class="dropdown-private clearfix">
+                                  <div class="input-group">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                      <li class="dropdown-header">Visas</li>
+                                      <li>J-1</li>
+                                      <li>PR</li>
+                                    </ul>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
+                                  </div>
+                                </div>
+                                <div class="input-private">
+                                  <label>Official University Email</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="group@gamil.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="input-private">
+                                  <label>Supervisor's Name</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="Jodi Barnhill"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="input-private">
+                                  <label>Supervisor's Email</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="jodi@ucdavis.edu"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                                <div class="input-private">
+                                  <label>Note</label>
+                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value=""><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
+                                </div>
+                            </div>
+                            -->
+                    </div>
+                    <div class="col-md-6 navbar-header">
+                        <a class="navbar-brand express express-large">PICS - UC Davis Department Comtacts</a>
+                    </div>
+                    <div class="col-md-3 navbar-right">
+                        <form class="navbar-form">
+                            <input class="form-control interact" oninput="search(this)" type="text" placeholder="Global search...">
+                        </form>
+                    </div>
                 </div>
-                <div class="input-group">
-                  <button class="btn btn-warning btn-full interact" type="button">Change password</button>
-                </div>
-                <div class="input-group">
-                  <button class="btn btn-danger btn-full interact" type="button">Delete this user</button>
-                </div>
-              </div>
-              <div id="private-general">
-                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="Xin Jin" />
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="4155214118" />
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="2018-01-01" />
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="group@ucdavis.edu" />
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="I am general case" />
-                </div>
-              </div>
-              <div id="private-dept_and_visa">
-                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Department and Visa</h2>
-                <div class="input-group clearfix">
-                  <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
-                  <ul class="dropdown-menu ul-wide">
-                    <li class="dropdown-header express-inverse express-small">Departments</li>
-                    <li class="interact">Music</li>
-                    <li class="interact">East Asian Studies</li>
-                  </ul>
-                </div>
-                <div class="input-group clearfix">
-                  <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
-                  <ul class="dropdown-menu ul-wide">
-                    <li class="dropdown-header express-inverse express-small">Visas</li>
-                    <li class="interact">J-1</li>
-                    <li class="interact">PR</li>
-                  </ul>
-                </div>
-              </div>
-              <div id="private-supervisor">
-                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="Jodi Barnhill" />
-                </div>
-                <div class="input-group">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                  <input class="form-control interact" readonly="readonly" value="jodi@ucdavis.edu" />
-                </div>
-              </div>
             </div>
-            <!--
-              <div id="private-info">
-              <div id="private-basic">
-              <label>Basic Info</label>
-              <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input class="form-control" readonly="readonly" value="general@gmail.com" />
-              </div>
-              <div class="input-group">
-              <button class="btn btn-danger" type="button">Delete this user</button>
-              </div>
-              </div>
-                  <div class="input-private">
-                    <label>Email</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="general@gmail.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="password-private">
-                  </div>
-                  <div class="input-private">
-                    <label>Phone</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="4155214118"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="input-private">
-                    <label>End Date</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="2018-11-25"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="dropdown-private clearfix">
-                    <div class="input-group">
-                      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-header">Departments</li>
-                        <li>Music</li>
-                        <li>East Asian Studies</li>
-                      </ul>
-                      <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
-                    </div>
-                  </div>
-                  <div class="dropdown-private clearfix">
-                    <div class="input-group">
-                      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-header">Visas</li>
-                        <li>J-1</li>
-                        <li>PR</li>
-                      </ul>
-                      <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
-                    </div>
-                  </div>
-                  <div class="input-private">
-                    <label>Official University Email</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="group@gamil.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="input-private">
-                    <label>Supervisor's Name</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="Jodi Barnhill"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="input-private">
-                    <label>Supervisor's Email</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="jodi@ucdavis.edu"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-                  <div class="input-private">
-                    <label>Note</label>
-                    <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value=""><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                  </div>
-              </div>
-              -->
-          </div>
-          <div class="col-md-6 navbar-header">
-            <a class="navbar-brand express express-large">PICS - UC Davis Department Comtacts</a>
-          </div>
-          <div class="col-md-3 navbar-right">
-            <form class="navbar-form">
-              <input class="form-control interact" oninput="search(this)" type="text" placeholder="Global search...">
-            </form>
-          </div>
+        </nav>
+        <div id="body" class="container-fluid">
         </div>
-      </div>
-    </nav>
-    <div id="body" class="container-fluid">
-    </div>
-  </body>
+		<div class="modal fade" id="change_password" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Change Password</h4>
+					</div>
+					<div class="modal-body">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input class="form-control interact" placeholder="Old password" />
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input class="form-control interact" placeholder="New password" />
+						</div>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input class="form-control interact" placeholder="Retype new password" />
+						</div>
+						<button class="btn btn-warning btn-full interact" type="button">Change password</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="delete_user" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Delete This User</h4>
+					</div>
+					<div class="modal-body">
+						<p>This action <b>cannot</b> be undone. This will permanently delete all information of this user<br /><br />
+						Please type in the your email to confirm.</p>
+						<div class="input-group">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+							<input class="form-control interact" placeholder="Email" />
+						</div>
+						<button class="btn btn-warning btn-full interact" type="button">Delete this user</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </body>
 </html>
