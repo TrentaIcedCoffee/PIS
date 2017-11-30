@@ -59,7 +59,6 @@
 								float: none;
 								display: block;
 								text-align: center;
-								font-size: 20px !important;
             }
             #header div input {
 								width: 100%;
@@ -67,23 +66,7 @@
             body {
 								background: rgba(170, 170, 170, 1);
             }
-            #private-basic, #private-general, #private-dept_and_visa, #private-supervisor {
-								background: black;
-								border-radius: 20px;
-								border: solid black 4px;
-								padding-bottom: 6px;
-            }
-            #private-basic h2, #private-general h2, #private-dept_and_visa h2, #private-supervisor h2 {
-								margin: 0px;
-								padding-top: 10px;
-								padding-bottom: 8px;
-								padding-left: 2%;
-								text-align: left;
-            }
-            #private-basic div.input-group, #private-general div.input-group, #private-dept_and_visa div.input-group, #private-supervisor div.input-group {
-								width: 96%;
-								margin-left: 2%;
-            }
+            
             .ul-wide {
 								width: 60%;
 								margin-left: 20%;
@@ -98,37 +81,20 @@
     </head>
     <body>
         <script>
-            // usr validation
-//            var cookie = document.cookie;
-//            if (cookie == undefined || cookie == "") {
-//            //          window.location.replace('welcome.html');
-//            }
-//            var jwt = getJwtInCookie(cookie);
-//            var email = getEmailInJwt(jwt);
-//            var _id = getIdOfEmail(email);
-//            if (!isValidJwt(jwt, _id)) {
-//            //          window.location.replace('welcome.html'); // TODO welcome -> 404
-//            }
-        </script>
-        <script>
-            // $.ajax({url: `users/${_id}`, async: true, dataType: 'json'}).done(function(res) {
-            //     var user = res;
-            //     console.log(user);
-            // });
-            var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
-            var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
-        </script>
-        <script>
-            var togglePrivateInfo = function(ele) {
-                    var privateInfo = $('#private-info');
-                    if (ele.hasClass('active')) {
-                        ele.removeClass('active');
-                        privateInfo.slideUp();
-                    } else {
-                        ele.addClass('active');
-                        privateInfo.slideDown();
-                    }
-                };
+					// debug user
+					var user = {
+						_id: '5a19e78768e00a41307e93fe',
+						email: 'general@gmail.com',
+						password: '123123',
+						phone: '4155214118',
+						stop_time: '2018-01-01',
+						dept_names: ['Music', 'Computer Science'],
+						visa_types: ['PR', 'H-1B'],
+						working_email: 'group@ucdaivs.edu',
+						supervisor_name: 'Jodi Barnhill',
+						supervisor_email: 'jodi@ucdavis.edu',
+						note: 'I am nothing but a general case'
+					};
         </script>
         <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
@@ -142,38 +108,55 @@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                     <input class="form-control interact" readonly="readonly" value="general@gmail.com" />
                                 </div>
-                                <div class="input-group">
-									<button class="btn btn-warning btn-full interact" data-toggle="modal" data-target="#change_password" type="button">Change password</button>
-								</div>
-                                <div class="input-group">
-                                    <button class="btn btn-danger btn-full interact" data-toggle="modal" data-target="#delete_user" type="button">Delete this user</button>
-                                </div>
-                            </div>
-                            <div id="private-general">
-                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="Xin Jin" />
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="4155214118" />
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+																<div class="input-group">
+                                    <span class="input-group-addon">End Date</i></span>
                                     <input class="form-control interact" readonly="readonly" value="2018-01-01" />
                                 </div>
                                 <div class="input-group">
+									<button class="btn btn-warning btn-full interact" data-toggle="modal" data-target="#model-change_password" type="button">Change password</button>
+								</div>
+                                <div class="input-group">
+                                    <button class="btn btn-danger btn-full interact" data-toggle="modal" data-target="#model-delete_user" type="button">Delete this user</button>
+                                </div>
+                            </div>
+                            <div id="private-general">
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="Xin Jin" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                    <input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="4155214118" />
+                                </div>
+                                <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="group@ucdavis.edu" />
+                                    <input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="group@ucdavis.edu" />
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="I am general case" />
+                                    <input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="I am general case" />
                                 </div>
                             </div>
-                            <div id="private-dept_and_visa">
-                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Department and Visa</h2>
+														<script>
+															var toggleGeneralInfoLock = function() {
+																var token = $('#private-general h2 button i');
+																if (token.hasClass('glyphicon-lock')) {
+																	token.removeClass('glyphicon-lock');
+																	token.addClass('glyphicon-edit');
+																	$('#private-general input').prop('readonly', false);
+																} else {
+																	token.removeClass('glyphicon-edit');
+																	token.addClass('glyphicon-lock');
+																	$('#private-general input').prop('readonly', true);
+																}
+															}
+															var updateGeneralInfo = function () {
+																// TODO impl POST
+															};
+														</script>
+                            <div id="private-depts_and_visas">
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>
                                 <div class="input-group clearfix">
                                     <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
                                     <ul class="dropdown-menu ul-wide">
@@ -192,83 +175,69 @@
                                 </div>
                             </div>
                             <div id="private-supervisor">
-                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="editLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
+                                <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="Jodi Barnhill" />
+                                    <input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="Jodi Barnhill" />
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                    <input class="form-control interact" readonly="readonly" value="jodi@ucdavis.edu" />
+                                    <input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="jodi@ucdavis.edu" />
                                 </div>
                             </div>
+														<script>
+															var toggleSupervisorLock = function() {
+																var token = $('#private-supervisor h2 button i');
+																if (token.hasClass('glyphicon-lock')) {
+																	token.removeClass('glyphicon-lock');
+																	token.addClass('glyphicon-edit');
+																	$('#private-supervisor input').prop('readonly', false);
+																} else {
+																	token.removeClass('glyphicon-edit');
+																	token.addClass('glyphicon-lock');
+																	$('#private-supervisor input').prop('readonly', true);
+																}
+															};
+															var updateSupervisor = function() {
+																// TODO impl POST
+															};
+														</script>
                         </div>
-                        <!--
-                            <div id="private-info">
-                            <div id="private-basic">
-                            <label>Basic Info</label>
-                            <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input class="form-control" readonly="readonly" value="general@gmail.com" />
-                            </div>
-                            <div class="input-group">
-                            <button class="btn btn-danger" type="button">Delete this user</button>
-                            </div>
-                            </div>
-                                <div class="input-private">
-                                  <label>Email</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="general@gmail.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="password-private">
-                                </div>
-                                <div class="input-private">
-                                  <label>Phone</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="4155214118"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="input-private">
-                                  <label>End Date</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="2018-11-25"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="dropdown-private clearfix">
-                                  <div class="input-group">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                      <li class="dropdown-header">Departments</li>
-                                      <li>Music</li>
-                                      <li>East Asian Studies</li>
-                                    </ul>
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
-                                  </div>
-                                </div>
-                                <div class="dropdown-private clearfix">
-                                  <div class="input-group">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                      <li class="dropdown-header">Visas</li>
-                                      <li>J-1</li>
-                                      <li>PR</li>
-                                    </ul>
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>
-                                  </div>
-                                </div>
-                                <div class="input-private">
-                                  <label>Official University Email</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="group@gamil.com"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="input-private">
-                                  <label>Supervisor's Name</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="Jodi Barnhill"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="input-private">
-                                  <label>Supervisor's Email</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value="jodi@ucdavis.edu"><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                                <div class="input-private">
-                                  <label>Note</label>
-                                  <div class="input-group"><input class="form-control" onchange="editInput(this)" readonly="readonly" value=""><span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span></div>
-                                </div>
-                            </div>
-                            -->
+												<style>
+													#private-info {
+														position: absolute;
+														display: none;
+													}
+													#private-basic, #private-general, #private-depts_and_visas, #private-supervisor {
+															background: black;
+															border-radius: 20px;
+															border: solid black 4px;
+															padding-bottom: 6px;
+													}
+													#private-basic h2, #private-general h2, #private-depts_and_visas h2, #private-supervisor h2 {
+															margin: 0px;
+															padding-top: 10px;
+															padding-bottom: 8px;
+															padding-left: 2%;
+															text-align: left;
+													}
+													#private-basic div.input-group, #private-general div.input-group, #private-depts_and_visas div.input-group, #private-supervisor div.input-group {
+															width: 96%;
+															margin-left: 2%;
+													}
+												</style>
+												<script>
+													var togglePrivateInfo = function(ele) {
+														var trigger = $(ele);
+														if (trigger.hasClass('active')) {
+															trigger.removeClass('active');
+															$('#private-info').slideUp();
+														} else {
+															trigger.addClass('active');
+															$('#private-info').slideDown();
+														}
+													};
+												</script>
                     </div>
                     <div class="col-md-6 navbar-header">
                         <a class="navbar-brand express express-large">PICS - UC Davis Department Comtacts</a>
@@ -283,27 +252,30 @@
         </nav>
         <div id="body" class="container-fluid">
         </div>
-		<div class="modal fade" id="change_password" role="dialog">
+		<div class="modal fade" id="model-change_password" role="dialog">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Change Password</h4>
+						<h4 class="modal-title">Change Password</h4>
 					</div>
 					<div class="modal-body">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input class="form-control interact" placeholder="Old password" />
+							<input id="input-old_password" class="form-control interact" placeholder="Old password" />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input class="form-control interact" placeholder="New password" />
+							<input id="input-new_password" class="form-control interact" placeholder="New password" />
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-							<input class="form-control interact" placeholder="Retype new password" />
+							<input id="input-new_password_retyped" class="form-control interact" placeholder="Retype new password" />
 						</div>
-						<button class="btn btn-warning btn-full interact" type="button">Change password</button>
+						<div class="interact error" id="error-old_password_mismatch">Old password incorrect</div>
+						<div class="interact error" id="error-retyped_password_mismatch">Inconsistent new passwords</div>
+						<div class="interact error" id="error-short_password">New password has to be 6 characters or more</div>
+						<button class="btn btn-warning btn-full interact" onclick="changePassword()" type="button">Change password</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -311,21 +283,68 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="delete_user" role="dialog">
+		<style>
+			.error {
+				color: red;
+				display: none;
+			}
+		</style>
+		<script>
+			var changePassword = function() {
+				// TODO impl changePassword
+			};	
+		</script>
+		<div class="modal fade" id="model-delete_user" role="dialog">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Delete This User</h4>
+						<h4 class="modal-title">Delete This User</h4>
 					</div>
 					<div class="modal-body">
-						<p>This action <b>cannot</b> be undone. This will permanently delete all information of this user<br /><br />
-						Please type in the your email to confirm.</p>
+						<p>This action <b>cannot</b> be undone. This will <b>permanently delete</b> all information of this user<br /><br />
+							Please type in your email <b><span id="span-user_email"></span></b> to confirm.</p>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-							<input class="form-control interact" placeholder="Email" />
+							<input class="form-control interact" oninput="confirmEmail(this)" placeholder="Email" />
 						</div>
-						<button class="btn btn-warning btn-full interact" type="button">Delete this user</button>
+						<button id="btn-delete_user" class="btn btn-danger btn-full interact" onclick="deleteUser()" type="button" disabled>Delete this user</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var user = {
+				_id: '5a19e78768e00a41307e93fe',
+				email: 'general@gmail.com'
+			};
+			$(document).ready(function() {
+				$('#span-user_email').text(user.email);
+			});
+			var confirmEmail = function(ele) {
+				if (ele.value == user.email) {
+					$('#btn-delete_user').prop('disabled', false);
+				} else {
+					$('#btn-delete_user').prop('disabled', true);
+				}
+			};
+			var deleteUser = function() {
+				// TODO: impl DELETE
+			}
+		</script>
+		<div class="modal fade" id="model-update_depts_and_visas" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Edit Departments and Visas</h4>
+					</div>
+					<div class="modal-body">
+						<!-- TODO edit dept_names and visa_types -->
+						<button class="btn btn-warning btn-full interact" onclick="updateDeptNamesAndVisaTypes()" type="button">Update</button>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
