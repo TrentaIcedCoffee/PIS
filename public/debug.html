@@ -69,10 +69,8 @@
             body {
 								background: rgba(170, 170, 170, 1);
             }
-            
             .ul-wide {
-								width: 60%;
-								margin-left: 20%;
+								width: 100%;
             }
             .ul-wide li.dropdown-header {
 								padding-left: 4%;
@@ -80,6 +78,9 @@
             .ul-wide li {
 								padding-left: 6%;
             }
+						.ul-responsive li:hover {
+								background-color: rgba(200, 200, 200, 1);
+						}
         </style>
     </head>
     <body ng-app="app">
@@ -165,7 +166,7 @@
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>
                                 <div class="input-group clearfix">
                                     <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
-                                    <ul class="dropdown-menu ul-wide">
+                                    <ul class="dropdown-menu ul-wide ul-responsive">
                                         <li class="dropdown-header express-inverse express-small">Departments</li>
                                         <li class="interact">Music</li>
                                         <li class="interact">East Asian Studies</li>
@@ -173,7 +174,7 @@
                                 </div>
                                 <div class="input-group clearfix">
                                     <button class="btn btn-info btn-full dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visas<span class="caret"></span></button>
-                                    <ul class="dropdown-menu ul-wide">
+                                    <ul class="dropdown-menu ul-wide ul-responsive">
                                         <li class="dropdown-header express-inverse express-small">Visas</li>
                                         <li class="interact">J-1</li>
                                         <li class="interact">PR</li>
@@ -254,9 +255,69 @@
                         </form>
                     </div>
                 </div>
-            </div>
+						</div>
         </nav>
         <div id="body" class="container-fluid">
+					<h1 class="page-header">UC Davis Department Contacts</h1>
+          <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'name')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Phone
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'phone')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Email
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'email')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Official University Email<br />(primary contact)
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'working_email')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Departments
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'dept_names')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Visa Types
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'visa_types')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Supervisor's Name
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'supervisor_name')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                        <th>Supervisor's Email
+                            <div class="input-group">
+                                <input class="form-control" type="text" oninput="query(this, 'supervisor_email')" placeholder="Search for..." />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+              <tbody id="public-info">
+
+              </tbody>
+            </table>
+          </div>
         </div>
 		<div class="modal fade" id="model-change_password" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -366,7 +427,14 @@
 						<div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
 						<button class="btn btn-warning btn-full interact" onclick="updateDeptNamesAndVisaTypes()" type="button">Update</button>
 					</div>
-					<style>
+					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<style>
 						.select-full {
 							width: 100%;
 						}
@@ -381,11 +449,5 @@
 							// TODO: impl POST
 						})
 					</script>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
     </body>
 </html>
