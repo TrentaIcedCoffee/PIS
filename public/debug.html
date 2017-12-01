@@ -10,6 +10,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+				<!-- bootstrap select CDN -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
         <!-- font -->
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <!-- customized packages -->
@@ -79,7 +82,10 @@
             }
         </style>
     </head>
-    <body>
+    <body ng-app="app">
+			<script>
+				var app = angular.module('app', []);
+			</script>
         <script>
 					// debug user
 					var user = {
@@ -335,7 +341,7 @@
 				// TODO: impl DELETE
 			}
 		</script>
-		<div class="modal fade" id="model-update_depts_and_visas" role="dialog">
+		<div ng-controller="controller-update_depts_and_visas" class="modal fade" id="model-update_depts_and_visas" role="dialog">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -343,9 +349,38 @@
 						<h4 class="modal-title">Edit Departments and Visas</h4>
 					</div>
 					<div class="modal-body">
-						<!-- TODO edit dept_names and visa_types -->
+						<div class="interact">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
+						<div class="input-group">
+								<select class="select-full selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true">
+										<option class="interact" ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
+								</select>
+						</div>
+						<br />
+						<div class="interact">Visa type(s) - Please at least select 1 visa type</div>
+						<div class="input-group">
+								<select class="select-full selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true">
+										<option class="interact" ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
+								</select>
+						</div>
+						<div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
+						<div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
 						<button class="btn btn-warning btn-full interact" onclick="updateDeptNamesAndVisaTypes()" type="button">Update</button>
 					</div>
+					<style>
+						.select-full {
+							width: 100%;
+						}
+					</style>
+					<script>
+						var visaTypes = ['J-1', 'H-1B', 'O-1', 'TN', 'PR', 'E'];
+            var deptNames = ["Evolution & Ecology","Microbiology and Molecular Genetics","Molecular and Cellular Biology","Neurobiology Physiology and Behavior","Plant Biology","Art and Art History","Cinema & Technocultural Studies","Music","Theatre & Dance","Biological and Agricultural Engineering","Food Science and Technology","Textiles and Clothing","Viticulture and Enology","East Asian Studies","Economics","Hemispheric Institute of the Americas","History","Agricultural and Resource Economics","Environmental Science and Policy","Human Ecology","Animal Science","Nutrition","Anthropology","Middle East/South Asia Studies","Sociology","Environmental Toxicology","Land Air and Water Resources","Wildlife Fish and Conservation Biology","Communication","International Relations","Linguistics","Political Science","UC Center Sacramento (UCCS)","Entomology","Nematology","Plant Pathology","African American and African Studies","Agr and Envir Science Office of Dean","Agricultural Issues Center","Agricultural Sustainability Institute","Air Quality Research Center","American Studies","Asian American Studies","Biological Chemistry","Biomedical Engineering","Bodega Marine Laboratory","Budget and Institutional Analysis","California Institute of Food and Agricultural Research","California Lighting Technology Center","Center for Health & Technology","Center for Health and the Environment","Center for Healthcare Policy and Research","Center for Mind and Brain","Center for Molecular and Genomic Imaging","Center for Neuroscience","Center for Regional Change","Center for Science and Innovation Studies","Center for Student Affairs Assessement","Center for Transnational Health","Center for Watershed Sciences","Chancellor and Provost Office","Chemical Engineering and Materials Science","Chemistry","Chicana/o Studies","Civil and Environmental Engineering","Classics Program","Comparative Literature","Computer Science","Counseling and Psychological Services","Davis Language Center","Department of Design","Design and Construction Management","Division of Agriculture and Natural Resources","Earth and Planetary Sciences","East Asian Languages and Cultures","Electrical and Computer Engineering","Energy Institute","English","Facilities Management","French and Italian","Gender, Sexuality and Women's Studies","Genome Center","German Department","Global Affairs Confucius Institute","Global Affairs Fulbright","Global Affairs Humphrey","Global Affairs Sponsored Programs","Global Affairs Staff Exchange","Grad Group in Cultural Studies","Graduate School of Management","Hart Interdisciplinary Programs","Humanities Institute","Humanities, Arts and Cultural Studies","Information and Educational Technology","Institute for Governmental Affairs","Institute for Transportation Studies","Intercollegiate Athletics","International & Community Nutrition","International Law Programs","International Programs of the CA & ES","JMIE Center for Watershed Science","JMIE Road Ecology Center","JMIE Tahoe Environmental Research Center","Law School Dean's Office","Mathematics","McClellan Nuclear Research Center","Mechanical and Aerospace Engineering","MED Anesthesiology and Pain Medicine","MED Biochemistry and Molecular Medicine","MED Cancer Center","MED Cell Biology and Human Anatomy","MED Center for Biophotonics","MED Center for Musculoskeletal Health","MED Center for Reducing Health Disparities","MED Center for Virtual Care","MED Dermatology","MED Emergency Medicine","MED Family and Community Medicine","MED Global Health Sciences","MED Health Information Management","MED Hematology and Oncology","MED IM Aging and Education Center","MED IM Cardiovascular Medicine","MED IM Gastroenterology and Hepatology","MED IM Pulmonary and Critical Care Medicine","MED IM Rheumatology Allergy & Clinical Immunology","MED Imaging Research Center","MED Infectious Diseases","MED Institute for Population Health & Improvement","MED Internal Medicine","MED M.I.N.D. Institute","MED Medical Pathology","MED Microbiology and Immunology","MED Nephrology","MED Neurological Surgery","MED Neurology","MED Obstetrics and Gynecology","MED Office of Medical Education","MED Ophthalmology","MED Orthopaedic Surgery","MED Otolaryngology","MED Pathology and Laboratory Medicine","MED Patient Care Services Emergency Room","MED Pediatrics","MED Pharmacology","MED Physical Medicine and Rehabilitation","MED Physiology and Membrane Biology","MED Primary Care Network Operations","MED Psychiatry and Behavioral Medicine","MED Public Health Sciences","MED Radiation Oncology","MED Radiology","MED Stem Cell Program","MED Surgery","MED Urology","Mondavi Center","Native American Studies","NEAT ORU and Thermochemistry Unit","Nuclear Magnetic Resonance Facility","Office of the Vice Chancellor for Research","Olive Center","Other","Philosophy","Physical Education Program","Physics","Plant Sciences","Psychology","Religious Studies","Safety Services","School of Education","School of Nursing","Science and Technology Studies","Services for International Students and Scholars","Spanish Portuguese","Statistics","Student Health & Counseling Services","UC Cooperative Extension","University Extension","University Writing Program","VM Anatomy Physiology and Cell Biology","VM California Animal Health and Food Safety","VM California National Primate Research Center","VM Center for Companion Animal Health","VM Center for Comparative Medicine","VM Center for Equine Health","VM Center for Lab Animal Science","VM International Laboratory of Molecular Biology","VM Medicine & Epidemiology","VM Molecular Biosciences","VM One Health Institute","VM Pathology Microbiology and Immunology","VM Population Health and Reproduction","VM Surgical and Radiological Sciences","VM Veterinary Genetics Lab","VM Veterinary Medical Teaching Hospital","VM Veterinary Medicine Extension Public Programs","VM Veterinary Medicine Teaching and Research Center","VM Western Institute for Food Safety and Security","VM Wildlife Health Center","Western Cooling Efficiency Center", "Others (please indicate at Note)"];
+						
+						app.controller('controller-update_depts_and_visas', function($scope, $http) {
+							$scope.deptNameChoices = deptNames;
+							$scope.visaTypeChoices = visaTypes;
+							// TODO: impl POST
+						})
+					</script>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
