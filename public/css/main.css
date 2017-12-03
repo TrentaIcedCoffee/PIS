@@ -1,0 +1,95 @@
+.navbar-inverse .navbar-brand {
+    color: rgba(235, 235, 235, 1);
+}
+.interact {
+    font-size: 18px !important;
+}
+.express {
+    color: rgba(235, 235, 235, 1);
+}
+.express-inverse {
+    color: rgba(0, 0, 0, 1) !important;
+}
+.express-large {
+    font-size: 22px !important;
+}
+.express-medium {
+    font-size: 20px !important;
+}
+.express-small {
+    font-size: 18px !important;
+}
+.input-group {
+    width: 100%;
+}
+.btn-full {
+    width: 100%;
+}
+.ul-wide {
+    width: 100%;
+}
+.ul-wide li.dropdown-header {
+    padding-left: 4%;
+}
+.ul-wide li {
+    padding-left: 6%;
+}
+.ul-responsive li:hover {
+    background-color: rgba(200, 200, 200, 1);
+}
+.select-full {
+    width: 100%;
+}
+.error {
+    color: red;
+    display: none;
+}
+html, body {
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    background: rgba(240, 240, 240, 0.3);
+}
+#header {
+    height: 50px;
+}
+#header div a {
+    margin: 0px;
+    float: none;
+    display: block;
+    text-align: center;
+}
+#header div input {
+    width: 100%;
+}
+#header div.col-md-3.navbar-header a:hover {
+    background-color: rgba(80, 80, 80, 0.7);
+    cursor: pointer;
+}
+#private-info {
+    position: absolute;
+    display: none;
+}
+#private-basic, #private-general, #private-depts_and_visas, #private-supervisor {
+    background: black;
+    border-radius: 20px;
+    border: solid black 4px;
+    padding-bottom: 6px;
+}
+#private-basic h2, #private-general h2, #private-depts_and_visas h2, #private-supervisor h2 {
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    padding-left: 2%;
+    text-align: left;
+}
+#private-basic div.input-group, #private-general div.input-group, #private-depts_and_visas div.input-group, #private-supervisor div.input-group {
+    width: 96%;
+    margin-left: 2%;
+}
+#body {
+    margin-top: 50px;
+    padding-top: 30px;
+}
+#public-info tr:hover {
+    background: rgba(255, 255, 255, 1);
+}

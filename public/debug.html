@@ -157,34 +157,6 @@
                         <a class="navbar-brand express express-large active" onclick="togglePrivateInfo(this)">My Information <span class="caret"></span></a>
                         <div id="private-info">
                             <div id="private-basic">
-                                <script>
-                                    var h2PrivateBasic = function() {
-                                        return '<h2 class="express express-medium">Basic Info</h2>';
-                                    };
-                                    var inputPrivateBasic = function(token, value) {
-                                        var result = '';
-                                        result += '<div class="input-group">';
-                                        result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-                                        result += `<input class="form-control interact" readonly="readonly" value="${value}" />`;
-                                        result += '</div>';
-                                        return result;
-                                    }
-                                    var btnPrivateBasic = function(type, target, value) {
-                                        var result = '';
-                                        result += '<div class="input-group">';
-                                        result += `<button class="btn btn-${type} btn-full interact" data-toggle="modal" data-target="${target}" type="button">${value}</button>`
-                                        return result;
-                                    };
-                                    var privateBasic = function(user) {
-                                        var result = '';
-                                        result += h2PrivateBasic();
-                                        result += inputPrivateBasic('user', user.email);
-                                        result += inputPrivateBasic('calendar', user.stop_time);
-                                        result += btnPrivateBasic('warning', '#model-change_password', 'Change password');
-                                        result += btnPrivateBasic('danger', '#model-delete_user', 'Delete this user');
-                                        return result;
-                                    }
-                                    </script>
                                 <h2 class="express express-medium">Basic Info</h2>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -202,28 +174,6 @@
                                 </div>
                             </div>
                             <div id="private-general">
-                                <script>
-                                    var h2PrivateGeneral = function() {
-                                        return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>';
-                                    };
-                                    var inputPrivateGeneral = function(token, value) {
-                                        var result = '';
-                                        result += '<div class="input-group">';
-                                        result +=  `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-                                        result += `<input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="${value}" />`;
-                                        result += '</div>';
-                                        return result;
-                                    };
-                                    var privateGeneral = function(user) {
-                                        var result = '';
-                                        result += h2PrivateGeneral();
-                                        result += inputPrivateGeneral('user', user.name);
-                                        result += inputPrivateGeneral('phone', user.phone);
-                                        result += inputPrivateGeneral('envelope', (user.working_email || ''));
-                                        result += inputPrivateGeneral('comment', (user.note || ''));
-                                        return result;
-                                    }
-                                </script>
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -242,49 +192,8 @@
                                     <input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="I am general case" />
                                 </div>
                             </div>
-                            <script>
-                                var toggleGeneralInfoLock = function() {
-                                	var token = $('#private-general h2 button i');
-                                	if (token.hasClass('glyphicon-lock')) {
-                                		token.removeClass('glyphicon-lock');
-                                		token.addClass('glyphicon-edit');
-                                		$('#private-general input').prop('readonly', false);
-                                	} else {
-                                		token.removeClass('glyphicon-edit');
-                                		token.addClass('glyphicon-lock');
-                                		$('#private-general input').prop('readonly', true);
-                                	}
-                                }
-                                var updateGeneralInfo = function () {
-                                	// TODO impl POST
-                                };
-                            </script>
+                        
                             <div id="private-depts_and_visas">
-                                <script>
-                                    var h2PrivateDeptsAndVisas = function() {
-                                        return '<h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>';
-                                    };
-                                    var dropdownPrivateDeptsAndVisas = function(label, data) {
-                                        var result = '';
-                                        result += '<div class="input-group clearfix">';
-                                        result += `<button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${label}<span class="caret"></span></button>`;
-                                        result += '<ul class="dropdown-menu ul-wide ul-responsive">';
-                                        result += `<li class="dropdown-header express-inverse express-small">${label}</li>`;
-                                        for (var val of data) {
-                                            result += `<li class="interact">${val}</li>`;
-                                        }
-                                        result += '</ul>';
-                                        result += '</div>';
-                                        return result;
-                                    };
-                                    var privateDeptsAndVisas = function(user) {
-                                        var result = '';
-                                        result += h2PrivateDeptsAndVisas();
-                                        result += dropdownPrivateDeptsAndVisas('Departments', user.dept_names);
-                                        result += dropdownPrivateDeptsAndVisas('Visas', user.visa_types);
-                                        return result;
-                                    };
-                                </script>
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>
                                 <div class="input-group clearfix">
                                     <button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
@@ -304,26 +213,6 @@
                                 </div>
                             </div>
                             <div id="private-supervisor">
-                                <script>
-                                    var h2PrivateSupervisor = function() {
-                                        return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>';
-                                    };
-                                    var inputPrivateSupervisor = function(token, value) {
-                                        var result = '';
-                                        result += '<div class="input-group">';
-                                        result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-                                        result += `<input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="${value} />`;
-                                        result += '</div>';
-                                        return result;
-                                    };
-                                    var privateSupervisor = function(user) {
-                                        var result = '';
-                                        result += h2PrivateSupervisor();
-                                        result += inputPrivateSupervisor('user', (user.supervisor_name || ''));
-                                        result += inputPrivateSupervisor('envelope', (user.supervisor_email || ''));
-                                        return result;
-                                    };
-                                </script>
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -334,36 +223,9 @@
                                     <input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="jodi@ucdavis.edu" />
                                 </div>
                             </div>
-                            <script>
-                                var toggleSupervisorLock = function() {
-                                	var token = $('#private-supervisor h2 button i');
-                                	if (token.hasClass('glyphicon-lock')) {
-                                		token.removeClass('glyphicon-lock');
-                                		token.addClass('glyphicon-edit');
-                                		$('#private-supervisor input').prop('readonly', false);
-                                	} else {
-                                		token.removeClass('glyphicon-edit');
-                                		token.addClass('glyphicon-lock');
-                                		$('#private-supervisor input').prop('readonly', true);
-                                	}
-                                };
-                                var updateSupervisor = function() {
-                                	// TODO impl POST
-                                };
-                            </script>
+
                         </div>
-                        <script>
-                            var togglePrivateInfo = function(ele) {
-                            	var trigger = $(ele);
-                            	if (trigger.hasClass('active')) {
-                            		trigger.removeClass('active');
-                            		$('#private-info').slideUp();
-                            	} else {
-                            		trigger.addClass('active');
-                            		$('#private-info').slideDown();
-                            	}
-                            };
-                        </script>
+
                     </div>
                     <div class="col-md-6 navbar-header">
                         <a class="navbar-brand express express-large">PICS - UC Davis Department Comtacts</a>
