@@ -26,11 +26,14 @@
         <script src="js/crypto/util.js"></script>
         <title>Redirect - Debug</title>
         <style>
+            .navbar-inverse .navbar-brand {
+                color: rgba(235, 235, 235, 1);
+            }
             .interact {
                 font-size: 18px !important;
             }
             .express {
-                color: rgba(235, 235, 235, 1) !important;
+                color: rgba(235, 235, 235, 1);
             }
             .express-inverse {
                 color: rgba(0, 0, 0, 1) !important;
@@ -50,9 +53,29 @@
             .btn-full {
                 width: 100%;
             }
+            .ul-wide {
+                width: 100%;
+            }
+            .ul-wide li.dropdown-header {
+                padding-left: 4%;
+            }
+            .ul-wide li {
+                padding-left: 6%;
+            }
+            .ul-responsive li:hover {
+                background-color: rgba(200, 200, 200, 1);
+            }
+            .select-full {
+                width: 100%;
+            }
+            .error {
+                color: red;
+                display: none;
+            }
             html, body {
                 width: 100%;
                 font-family: 'Roboto', sans-serif;
+                background: rgba(240, 240, 240, 0.3);
             }
             #header {
                 height: 50px;
@@ -66,20 +89,37 @@
             #header div input {
                 width: 100%;
             }
-            body {
-                background: rgba(240, 240, 240, 0.3);
+            #header div.col-md-3.navbar-header a:hover {
+                background-color: rgba(80, 80, 80, 0.7);
+                cursor: pointer;
             }
-            .ul-wide {
-                width: 100%;
+            #private-info {
+                position: absolute;
+                display: none;
             }
-            .ul-wide li.dropdown-header {
-                padding-left: 4%;
+            #private-basic, #private-general, #private-depts_and_visas, #private-supervisor {
+                background: black;
+                border-radius: 20px;
+                border: solid black 4px;
+                padding-bottom: 6px;
             }
-            .ul-wide li {
-                padding-left: 6%;
+            #private-basic h2, #private-general h2, #private-depts_and_visas h2, #private-supervisor h2 {
+                margin: 0px;
+                padding-top: 10px;
+                padding-bottom: 8px;
+                padding-left: 2%;
+                text-align: left;
             }
-            .ul-responsive li:hover {
-                background-color: rgba(200, 200, 200, 1);
+            #private-basic div.input-group, #private-general div.input-group, #private-depts_and_visas div.input-group, #private-supervisor div.input-group {
+                width: 96%;
+                margin-left: 2%;
+            }
+            #body {
+				margin-top: 50px;
+				padding-top: 30px;
+			}
+            #public-info tr:hover {
+                background: rgba(255, 255, 255, 1);
             }
         </style>
     </head>
@@ -179,8 +219,8 @@
                                         result += h2PrivateGeneral();
                                         result += inputPrivateGeneral('user', user.name);
                                         result += inputPrivateGeneral('phone', user.phone);
-                                        result += inputPrivateGeneral('envelope', user.working_email);
-                                        result += inputPrivateGeneral('comment', user.note);
+                                        result += inputPrivateGeneral('envelope', (user.working_email || ''));
+                                        result += inputPrivateGeneral('comment', (user.note || ''));
                                         return result;
                                     }
                                 </script>
@@ -220,6 +260,31 @@
                                 };
                             </script>
                             <div id="private-depts_and_visas">
+                                <script>
+                                    var h2PrivateDeptsAndVisas = function() {
+                                        return '<h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>';
+                                    };
+                                    var dropdownPrivateDeptsAndVisas = function(label, data) {
+                                        var result = '';
+                                        result += '<div class="input-group clearfix">';
+                                        result += `<button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${label}<span class="caret"></span></button>`;
+                                        result += '<ul class="dropdown-menu ul-wide ul-responsive">';
+                                        result += `<li class="dropdown-header express-inverse express-small">${label}</li>`;
+                                        for (var val of data) {
+                                            result += `<li class="interact">${val}</li>`;
+                                        }
+                                        result += '</ul>';
+                                        result += '</div>';
+                                        return result;
+                                    };
+                                    var privateDeptsAndVisas = function(user) {
+                                        var result = '';
+                                        result += h2PrivateDeptsAndVisas();
+                                        result += dropdownPrivateDeptsAndVisas('Departments', user.dept_names);
+                                        result += dropdownPrivateDeptsAndVisas('Visas', user.visa_types);
+                                        return result;
+                                    };
+                                </script>
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>
                                 <div class="input-group clearfix">
                                     <button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Departments<span class="caret"></span></button>
@@ -239,6 +304,26 @@
                                 </div>
                             </div>
                             <div id="private-supervisor">
+                                <script>
+                                    var h2PrivateSupervisor = function() {
+                                        return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>';
+                                    };
+                                    var inputPrivateSupervisor = function(token, value) {
+                                        var result = '';
+                                        result += '<div class="input-group">';
+                                        result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
+                                        result += `<input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="${value} />`;
+                                        result += '</div>';
+                                        return result;
+                                    };
+                                    var privateSupervisor = function(user) {
+                                        var result = '';
+                                        result += h2PrivateSupervisor();
+                                        result += inputPrivateSupervisor('user', (user.supervisor_name || ''));
+                                        result += inputPrivateSupervisor('envelope', (user.supervisor_email || ''));
+                                        return result;
+                                    };
+                                </script>
                                 <h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -267,29 +352,6 @@
                                 };
                             </script>
                         </div>
-                        <style>
-                            #private-info {
-                                position: absolute;
-                                display: none;
-                            }
-                            #private-basic, #private-general, #private-depts_and_visas, #private-supervisor {
-                                background: black;
-                                border-radius: 20px;
-                                border: solid black 4px;
-                                padding-bottom: 6px;
-                            }
-                            #private-basic h2, #private-general h2, #private-depts_and_visas h2, #private-supervisor h2 {
-                                margin: 0px;
-                                padding-top: 10px;
-                                padding-bottom: 8px;
-                                padding-left: 2%;
-                                text-align: left;
-                            }
-                            #private-basic div.input-group, #private-general div.input-group, #private-depts_and_visas div.input-group, #private-supervisor div.input-group {
-                                width: 96%;
-                                margin-left: 2%;
-                            }
-                        </style>
                         <script>
                             var togglePrivateInfo = function(ele) {
                             	var trigger = $(ele);
@@ -382,6 +444,42 @@
                         </tr>
                     </thead>
                     <tbody id="public-info">
+                        <script>
+                            var td = function(value) {
+                                if (typeof value == 'string') {
+                                    return `<td class="interact">${value}</td>`;
+                                } else {
+                                    return `<td class="interact">${value.join(',<br />')}</td>`;
+                                }
+                            };
+                            var tr = function(user) {
+                                var result = '';
+                                result += '<tr>';
+                                result += td(user.name);
+                                result += td(user.phone);
+                                result += td(user.email);
+                                result += td(user.working_email || '');
+                                result += td(user.dept_names);
+                                result += td(user.visa_types);
+                                result += td(user.supervisor_name || '');
+                                result += td(user.supervisor_email || '');
+                                result += '</tr>';
+                                if (user.note) {
+                                    result += '<tr>';
+                                    result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
+                                    result += '</tr>';
+                                }
+                                return result;
+                            }
+                            var publicInfo = function(users, filter) {
+                                var usersSelected = filter(users);
+                                var result = '';
+                                for (var user of usersSelected) {
+                                    result += tr(user);
+                                }
+                                return result;
+                            }
+                        </script>
 						<tr>
 							<td class="interact">Xin Jin</td>
 							<td class="interact">4155214118</td>
@@ -542,20 +640,9 @@
 							<td class="interact"></td>
 						</tr>
                     </tbody>
-					<style>
-						#public-info tr:hover {
-							background: rgba(255, 255, 255, 1);
-						}
-					</style>
                 </table>
             </div>
         </div>
-		<style>
-			#body {
-				margin-top: 50px;
-				padding-top: 30px;
-			}
-		</style>
         <div class="modal fade" id="model-change_password" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -587,12 +674,6 @@
                 </div>
             </div>
         </div>
-        <style>
-            .error {
-                color: red;
-                display: none;
-            }
-        </style>
         <script>
             var changePassword = function() {
             	// TODO impl changePassword
@@ -667,11 +748,6 @@
                 </div>
             </div>
         </div>
-        <style>
-            .select-full {
-                width: 100%;
-            }
-        </style>
         <script>
             var visaTypes = ['J-1', 'H-1B', 'O-1', 'TN', 'PR', 'E'];
 			var deptNames = ["Evolution & Ecology","Microbiology and Molecular Genetics","Molecular and Cellular Biology","Neurobiology Physiology and Behavior","Plant Biology","Art and Art History","Cinema & Technocultural Studies","Music","Theatre & Dance","Biological and Agricultural Engineering","Food Science and Technology","Textiles and Clothing","Viticulture and Enology","East Asian Studies","Economics","Hemispheric Institute of the Americas","History","Agricultural and Resource Economics","Environmental Science and Policy","Human Ecology","Animal Science","Nutrition","Anthropology","Middle East/South Asia Studies","Sociology","Environmental Toxicology","Land Air and Water Resources","Wildlife Fish and Conservation Biology","Communication","International Relations","Linguistics","Political Science","UC Center Sacramento (UCCS)","Entomology","Nematology","Plant Pathology","African American and African Studies","Agr and Envir Science Office of Dean","Agricultural Issues Center","Agricultural Sustainability Institute","Air Quality Research Center","American Studies","Asian American Studies","Biological Chemistry","Biomedical Engineering","Bodega Marine Laboratory","Budget and Institutional Analysis","California Institute of Food and Agricultural Research","California Lighting Technology Center","Center for Health & Technology","Center for Health and the Environment","Center for Healthcare Policy and Research","Center for Mind and Brain","Center for Molecular and Genomic Imaging","Center for Neuroscience","Center for Regional Change","Center for Science and Innovation Studies","Center for Student Affairs Assessement","Center for Transnational Health","Center for Watershed Sciences","Chancellor and Provost Office","Chemical Engineering and Materials Science","Chemistry","Chicana/o Studies","Civil and Environmental Engineering","Classics Program","Comparative Literature","Computer Science","Counseling and Psychological Services","Davis Language Center","Department of Design","Design and Construction Management","Division of Agriculture and Natural Resources","Earth and Planetary Sciences","East Asian Languages and Cultures","Electrical and Computer Engineering","Energy Institute","English","Facilities Management","French and Italian","Gender, Sexuality and Women's Studies","Genome Center","German Department","Global Affairs Confucius Institute","Global Affairs Fulbright","Global Affairs Humphrey","Global Affairs Sponsored Programs","Global Affairs Staff Exchange","Grad Group in Cultural Studies","Graduate School of Management","Hart Interdisciplinary Programs","Humanities Institute","Humanities, Arts and Cultural Studies","Information and Educational Technology","Institute for Governmental Affairs","Institute for Transportation Studies","Intercollegiate Athletics","International & Community Nutrition","International Law Programs","International Programs of the CA & ES","JMIE Center for Watershed Science","JMIE Road Ecology Center","JMIE Tahoe Environmental Research Center","Law School Dean's Office","Mathematics","McClellan Nuclear Research Center","Mechanical and Aerospace Engineering","MED Anesthesiology and Pain Medicine","MED Biochemistry and Molecular Medicine","MED Cancer Center","MED Cell Biology and Human Anatomy","MED Center for Biophotonics","MED Center for Musculoskeletal Health","MED Center for Reducing Health Disparities","MED Center for Virtual Care","MED Dermatology","MED Emergency Medicine","MED Family and Community Medicine","MED Global Health Sciences","MED Health Information Management","MED Hematology and Oncology","MED IM Aging and Education Center","MED IM Cardiovascular Medicine","MED IM Gastroenterology and Hepatology","MED IM Pulmonary and Critical Care Medicine","MED IM Rheumatology Allergy & Clinical Immunology","MED Imaging Research Center","MED Infectious Diseases","MED Institute for Population Health & Improvement","MED Internal Medicine","MED M.I.N.D. Institute","MED Medical Pathology","MED Microbiology and Immunology","MED Nephrology","MED Neurological Surgery","MED Neurology","MED Obstetrics and Gynecology","MED Office of Medical Education","MED Ophthalmology","MED Orthopaedic Surgery","MED Otolaryngology","MED Pathology and Laboratory Medicine","MED Patient Care Services Emergency Room","MED Pediatrics","MED Pharmacology","MED Physical Medicine and Rehabilitation","MED Physiology and Membrane Biology","MED Primary Care Network Operations","MED Psychiatry and Behavioral Medicine","MED Public Health Sciences","MED Radiation Oncology","MED Radiology","MED Stem Cell Program","MED Surgery","MED Urology","Mondavi Center","Native American Studies","NEAT ORU and Thermochemistry Unit","Nuclear Magnetic Resonance Facility","Office of the Vice Chancellor for Research","Olive Center","Other","Philosophy","Physical Education Program","Physics","Plant Sciences","Psychology","Religious Studies","Safety Services","School of Education","School of Nursing","Science and Technology Studies","Services for International Students and Scholars","Spanish Portuguese","Statistics","Student Health & Counseling Services","UC Cooperative Extension","University Extension","University Writing Program","VM Anatomy Physiology and Cell Biology","VM California Animal Health and Food Safety","VM California National Primate Research Center","VM Center for Companion Animal Health","VM Center for Comparative Medicine","VM Center for Equine Health","VM Center for Lab Animal Science","VM International Laboratory of Molecular Biology","VM Medicine & Epidemiology","VM Molecular Biosciences","VM One Health Institute","VM Pathology Microbiology and Immunology","VM Population Health and Reproduction","VM Surgical and Radiological Sciences","VM Veterinary Genetics Lab","VM Veterinary Medical Teaching Hospital","VM Veterinary Medicine Extension Public Programs","VM Veterinary Medicine Teaching and Research Center","VM Western Institute for Food Safety and Security","VM Wildlife Health Center","Western Cooling Efficiency Center", "Others (please indicate at Note)"];

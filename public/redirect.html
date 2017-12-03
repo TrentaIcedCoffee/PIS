@@ -25,9 +25,56 @@
     <script src="js/crypto/util.js"></script>
     <title>Redirect - Debug</title>
     <style>
+        .navbar-inverse .navbar-brand {
+            color: rgba(235, 235, 235, 1);
+        }
+        .interact {
+            font-size: 18px !important;
+        }
+        .express {
+            color: rgba(235, 235, 235, 1);
+        }
+        .express-inverse {
+            color: rgba(0, 0, 0, 1) !important;
+        }
+        .express-large {
+            font-size: 22px !important;
+        }
+        .express-medium {
+            font-size: 20px !important;
+        }
+        .express-small {
+            font-size: 18px !important;
+        }
+        .input-group {
+            width: 100%;
+        }
+        .btn-full {
+            width: 100%;
+        }
+        .ul-wide {
+            width: 100%;
+        }
+        .ul-wide li.dropdown-header {
+            padding-left: 4%;
+        }
+        .ul-wide li {
+            padding-left: 6%;
+        }
+        .ul-responsive li:hover {
+            background-color: rgba(200, 200, 200, 1);
+        }
+        .select-full {
+            width: 100%;
+        }
+        .error {
+            color: red;
+            display: none;
+        }
         html, body {
             width: 100%;
             font-family: 'Roboto', sans-serif;
+            background: rgba(240, 240, 240, 0.3);
         }
         #header {
             height: 50px;
@@ -38,65 +85,42 @@
             display: block;
             text-align: center;
         }
-        #header div form {
-            margin: 0px;
-            padding-top: 8px;
+        #header div input {
+            width: 100%;
+        }
+        #header div.col-md-3.navbar-header a:hover {
+            background-color: rgba(80, 80, 80, 0.7);
+            cursor: pointer;
         }
         #private-info {
             position: absolute;
-            top: 50px;
             display: none;
         }
-        .input-private {
-            width: 100%;
+        #private-basic, #private-general, #private-depts_and_visas, #private-supervisor {
             background: black;
-            border-radius: 15px;
-            padding-top: 5px;
-            padding-bottom: 10px;
+            border-radius: 20px;
+            border: solid black 4px;
+            padding-bottom: 6px;
         }
-        .input-private label {
-            display: block;
-            text-align: center;
-            color: white;
-        }
-        .input-private .input-group {
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-        .input-private .input-group input {
-            font-size: 16px;
-        }
-        .dropdown-private {
-            background: black;
-            border-radius: 15px;
-            padding-top: 15px;
-            padding-bottom: 15px;
-        }
-        .dropdown-private > div.input-group {
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-        .dropdown-private > div.input-group > button {
-            width: 100%;
-            font-size: 16px;
-        }
-        .dropdown-menu li {
-            padding-left: 10%;
-            font-size: 16px;
-        }
-        #body {
-            margin-top: 50px;
-        }
-        #body table th {
-            text-align: center;
-        }
-        #body table td {
-            text-align: center;
-        }
-        #body table td.note-public {
+        #private-basic h2, #private-general h2, #private-depts_and_visas h2, #private-supervisor h2 {
+            margin: 0px;
+            padding-top: 10px;
+            padding-bottom: 8px;
+            padding-left: 2%;
             text-align: left;
         }
-    </style>
+        #private-basic div.input-group, #private-general div.input-group, #private-depts_and_visas div.input-group, #private-supervisor div.input-group {
+            width: 96%;
+            margin-left: 2%;
+        }
+        #body {
+			margin-top: 50px;
+			padding-top: 30px;
+		}
+        #public-info tr:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+</style>
 </head>
 <body>
     <script>
@@ -119,170 +143,176 @@
         // });
         var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
         var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
-
-        var unlockInput = function(ele) {
-            ele.parentElement.previousSibling.readOnly = false;
-            ele.parentElement.previousSibling.focus();
-        };
-
-        var lockInput = function(ele) {
-            ele.parentElement.previousSibling.readOnly = true;
-            ele.parentElement.previousSibling.blur();
-        }
-
-        var editInput = function(ele) {
-            ele.readOnly = true;
-        }
-
-        $(document).ready(function() {
-            var panelPrivate = $('#input-private');
-            $(document).on('click', function(event) {
-                console.log(panelPrivate);
-                console.log(event);
-                console.log(event.target);
-                console.log(panelPrivate.find(event.target));
-            });
-        });
-
-        var contains = function(parent, child) {
-            var node = child;
-            while (node != null) {
-                if (node == parent) {
-                    return true;
-                }
-                node = node.parentElement;
-            }
-            return false;
-        };
-
-        var editDropdown = function(ele) {
-            // TODO: impl POST
-        }
-
-        var privateInfoOf = function(user) {
-            var result = '';
-            result += '<ul class="nav nav-sidebar">';
-            result += inputPrivateOf('Email', user.email);
-            result += inputPrivateOf('Phone', user.phone);
-            result += inputPrivateOf('End Date', user.stop_time);
-            result += dropdownPrivateOf('Departments', user.dept_names);
-            result += dropdownPrivateOf('Visas', user.visa_types);
-            result += inputPrivateOf('Official University Email', `${user.working_email || ""}`);
-            result += inputPrivateOf('Supervisor\'s Name', `${user.supervisor_name || ""}`);
-            result += inputPrivateOf('Supervisor\'s Email', `${user.supervisor_email || ""}`);
-            result += inputPrivateOf('Note', `${user.note || ""}`);
-            result += '</ul>';
-            return result;
-        };
-
-        var inputPrivateOf = function(name, value) {
-            var result = '';
-            result += '<div class="input-private">';
-            result += `<label>${name}</label>`;
-            result += '<div class="input-group">';
-            result += `<input class="form-control" onchange="editInput(this)" readonly="readonly" value="${value}" />`
-            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onmouseover="unlockInput(this)" onmouseout="lockInput(this)"></i></span>';
-            result += '</div>';
-            result += '</div>';
-            return result;
-        };
-
-        var passwordPrivateOf = function() {
-
-        };
-
-        var dropdownPrivateOf = function(header, eles) {
-            var result = '';
-            result += '<div class="dropdown-private clearfix">';
-            result += '<div class="input-group">';
-            result += '<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-            result += `${header}`;
-            result += '<span class="caret"></span>';
-            result += '</button>';
-            result += '<ul class="dropdown-menu">';
-            result += `<li class="dropdown-header">${header}</li>`;
-            for (var ele of eles) {
-                result += `<li>${ele}</li>`;
-            }
-            result += '</ul>';
-            result += '<span class="input-group-addon"><i class="glyphicon glyphicon-edit" onclick="editDropdown(this)"></i></span>';
-            result += '</div>';
-            result += '</div>';
-            return result;
-        };
-
-        $(document).ready(function() {
-            $('#private-info').html(privateInfoOf(user));
-        });
-
-        var togglePrivateInfo = function() {
-            var caret = $('#private_info_toggle_caret');
-            var privateInfo = $('#private-info');
-            if (!caret.hasClass('caret-reversed')) {
-                caret.addClass('caret-reversed');
-                privateInfo.slideDown();
-            } else {
-                caret.removeClass('caret-reversed');
-                privateInfo.slideUp();
-            }
-        };
-
-        var tdPublicOf = function(val) {
-            return `<td>${val}</td>`
-        };
-
-        var trNotePublic = function(val) {
-            var result = '';
-            result += '<tr>';
-            result += `<td class="note-public" colspan="8">Note: ${val}</td>`;
-            result += '</tr>';
-            return result;
-        };
-
-        var tdMultiplePublicOf = function(array) {
-            return '<td>' + array.join(',<br />') + '</td>';
-        };
-
-        var trPublicOf = function(user) {
-            var result = '';
-            result += '<tr>';
-            result += tdPublicOf(user.name);
-            result += tdPublicOf(user.phone);
-            result += tdPublicOf(user.email);
-            result += tdPublicOf(`${user.working_email || ""}`);
-            result += tdMultiplePublicOf(user.dept_names);
-            result += tdMultiplePublicOf(user.visa_types);
-            result += tdPublicOf(`${user.supervisor_name || ""}`);
-            result += tdPublicOf(`${user.supervisor_email || ""}`);
-            result += '</tr>'
-            if (user.note) {
-                result += trNotePublic(user.note);
-            }
-            return result;
-        };
-
-        // txt is search text
-        var publicInfoOf = function(users) {
-            var result = '';
-            for (var user of users) {
-                result += trPublicOf(user);
-            }
-            return result;
-        };
-
-        $(document).ready(function() {
-            $('#public-info').html(publicInfoOf(users));
-        });
     </script>
     <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
           <div class="row">
               <div class="col-md-3 navbar-header">
-                  <a class="navbar-brand" onclick="togglePrivateInfo()">My Information <span class="caret" id="private_info_toggle_caret"></span></a>
-                  <div id="private-info">
+              <a class="navbar-brand express express-large active" onclick="togglePrivateInfo(this)">My Information <span class="caret"></span></a>
+            <script>
+                // private-basic
+                var h2PrivateBasic = function() {
+                    return '<h2 class="express express-medium">Basic Info</h2>';
+                };
+                var inputPrivateBasic = function(token, value) {
+                    var result = '';
+                    result += '<div class="input-group">';
+                    result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
+                    result += `<input class="form-control interact" readonly="readonly" value="${value}" />`;
+                    result += '</div>';
+                    return result;
+                }
+                var btnPrivateBasic = function(type, target, value) {
+                    var result = '';
+                    result += '<div class="input-group">';
+                    result += `<button class="btn btn-${type} btn-full interact" data-toggle="modal" data-target="${target}" type="button">${value}</button>`
+                    result += '</div>';
+                    return result;
+                };
+                var privateBasic = function(user) {
+                    var result = '';
+                    result += '<div id="private-basic">';
+                    result += h2PrivateBasic();
+                    result += inputPrivateBasic('user', user.email);
+                    result += inputPrivateBasic('calendar', user.stop_time);
+                    result += btnPrivateBasic('warning', '#model-change_password', 'Change password');
+                    result += btnPrivateBasic('danger', '#model-delete_user', 'Delete this user');
+                    result += '</div>';
+                    return result;
+                }
 
-                  </div>
-              </div>
+                // private-general
+                var h2PrivateGeneral = function() {
+                    return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>';
+                };
+                var inputPrivateGeneral = function(token, value) {
+                    var result = '';
+                    result += '<div class="input-group">';
+                    result +=  `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
+                    result += `<input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="${value}" />`;
+                    result += '</div>';
+                    return result;
+                };
+                var privateGeneral = function(user) {
+                    var result = '';
+                    result += '<div id="private-general">';
+                    result += h2PrivateGeneral();
+                    result += inputPrivateGeneral('user', user.name);
+                    result += inputPrivateGeneral('phone', user.phone);
+                    result += inputPrivateGeneral('envelope', (user.working_email || ''));
+                    result += inputPrivateGeneral('comment', (user.note || ''));
+                    result += '</div>';
+                    return result;
+                }
+
+                // private-depts_and_visas
+                var h2PrivateDeptsAndVisas = function() {
+                    return '<h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>';
+                };
+                var dropdownPrivateDeptsAndVisas = function(label, data) {
+                    var result = '';
+                    result += '<div class="input-group clearfix">';
+                    result += `<button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${label}<span class="caret"></span></button>`;
+                    result += '<ul class="dropdown-menu ul-wide ul-responsive">';
+                    result += `<li class="dropdown-header express-inverse express-small">${label}</li>`;
+                    for (var val of data) {
+                        result += `<li class="interact">${val}</li>`;
+                    }
+                    result += '</ul>';
+                    result += '</div>';
+                    return result;
+                };
+                var privateDeptsAndVisas = function(user) {
+                    var result = '';
+                    result += '<div id="private-depts_and_visas">';
+                    result += h2PrivateDeptsAndVisas();
+                    result += dropdownPrivateDeptsAndVisas('Departments', user.dept_names);
+                    result += dropdownPrivateDeptsAndVisas('Visas', user.visa_types);
+                    result += '</div>';
+                    return result;
+                };
+
+                // private-supervisor
+                var h2PrivateSupervisor = function() {
+                    return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>';
+                };
+                var inputPrivateSupervisor = function(token, value) {
+                    var result = '';
+                    result += '<div class="input-group">';
+                    result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
+                    result += `<input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="${value}" />`;
+                    result += '</div>';
+                    return result;
+                };
+                var privateSupervisor = function(user) {
+                    var result = '';
+                    result += '<div id="private-supervisor">';
+                    result += h2PrivateSupervisor();
+                    result += inputPrivateSupervisor('user', (user.supervisor_name || ''));
+                    result += inputPrivateSupervisor('envelope', (user.supervisor_email || ''));
+                    result += '</div>';
+                    return result;
+                };
+
+                // private-info
+                var privateInfo = function(user) {
+                    var result = '';
+                    result += privateBasic(user);
+                    result += privateGeneral(user);
+                    result += privateDeptsAndVisas(user);
+                    result += privateSupervisor(user);
+                    return result;
+                };
+
+                $(document).ready(function() {
+                    $('#private-info').html(privateInfo(user));
+                });
+            </script>
+            <div id="private-info">
+            </div>
+            <script>
+                var toggleGeneralInfoLock = function() {
+                    var token = $('#private-general h2 button i');
+                    if (token.hasClass('glyphicon-lock')) {
+                        token.removeClass('glyphicon-lock');
+                        token.addClass('glyphicon-edit');
+                        $('#private-general input').prop('readonly', false);
+                    } else {
+                        token.removeClass('glyphicon-edit');
+                        token.addClass('glyphicon-lock');
+                        $('#private-general input').prop('readonly', true);
+                    }
+                }
+                var updateGeneralInfo = function () {
+                    // TODO impl POST
+                };
+                var toggleSupervisorLock = function() {
+                    var token = $('#private-supervisor h2 button i');
+                    if (token.hasClass('glyphicon-lock')) {
+                        token.removeClass('glyphicon-lock');
+                        token.addClass('glyphicon-edit');
+                        $('#private-supervisor input').prop('readonly', false);
+                    } else {
+                        token.removeClass('glyphicon-edit');
+                        token.addClass('glyphicon-lock');
+                        $('#private-supervisor input').prop('readonly', true);
+                    }
+                };
+                var updateSupervisor = function() {
+                    // TODO impl POST
+                };
+                var togglePrivateInfo = function(ele) {
+                	var trigger = $(ele);
+                	if (trigger.hasClass('active')) {
+                		trigger.removeClass('active');
+                		$('#private-info').slideUp();
+                	} else {
+                		trigger.addClass('active');
+                		$('#private-info').slideDown();
+                	}
+                };
+            </script>
+            </div>
               <div class="col-md-6 navbar-header">
                   <a class="navbar-brand" href="#">PICS - UC Davis Department Comtacts</a>
               </div>
@@ -418,6 +448,43 @@
                         </th>
                     </tr>
                 </thead>
+                <script>
+                    var td = function(value) {
+                        if (typeof value == 'string') {
+                            return `<td class="interact">${value}</td>`;
+                        } else {
+                            return `<td class="interact">${value.join(',<br />')}</td>`;
+                        }
+                    };
+                    var tr = function(user) {
+                        var result = '';
+                        result += '<tr>';
+                        result += td(user.name);
+                        result += td(user.phone);
+                        result += td(user.email);
+                        result += td(user.working_email || '');
+                        result += td(user.dept_names);
+                        result += td(user.visa_types);
+                        result += td(user.supervisor_name || '');
+                        result += td(user.supervisor_email || '');
+                        result += '</tr>';
+                        if (user.note) {
+                            result += '<tr>';
+                            result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
+                            result += '</tr>';
+                        }
+                        return result;
+                    }
+                    var publicInfo = function(users, filter) {
+                        var usersSelected = filter(users);
+                        var result = '';
+                        for (var user of usersSelected) {
+                            result += tr(user);
+                        }
+                        return result;
+                    }
+                    
+                </script>
               <tbody id="public-info">
 
               </tbody>
