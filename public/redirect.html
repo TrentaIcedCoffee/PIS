@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- bootstrap select CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- customized packages -->
@@ -330,7 +333,7 @@
                         </div>
                         <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
                         <div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
-                        <button class="btn btn-warning btn-full interact" onclick="updateDeptNamesAndVisaTypes()" type="button">Update</button>
+                        <button class="btn btn-warning btn-full interact" ng-click="updateDeptNamesAndVisaTypes()" type="button">Update</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -345,8 +348,22 @@
             app.controller('controller-update_depts_and_visas', function($scope, $http) {
             	$scope.deptNameChoices = deptNames;
             	$scope.visaTypeChoices = visaTypes;
-            	// TODO: impl POST
-            })
+                $scope.updateDeptNamesAndVisaTypes = function() {
+                    var errorEmptyDeptNames = $('#error-empty_dept_names');
+                    var errorEmptyVisaTypes = $('#empty_visa_types');
+
+                    errorEmptyDeptNames.hide();
+                    errorEmptyVisaTypes.hide();
+
+                    if (!$scope.inputDeptNames) {
+                        errorEmptyDeptNames.show();
+                    } else if (!$scope.inputVisaTypes) {
+                        errorEmptyVisaTypes.show();
+                    } else {
+                        console.log('POST');
+                    }
+                };
+            });
         </script>
 </body>
 </html>
