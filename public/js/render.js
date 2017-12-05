@@ -120,3 +120,41 @@ var privateInfo = function(user) {
     result += privateSupervisor(user);
     return result;
 };
+
+// public-info
+var td = function(value) {
+    if (typeof value == 'string') {
+        return `<td class="interact">${value}</td>`;
+    } else {
+        return `<td class="interact">${value.join(',<br />')}</td>`;
+    }
+};
+
+var tr = function(user) {
+    var result = '';
+    result += '<tr>';
+    result += td(user.name);
+    result += td(user.phone);
+    result += td(user.email);
+    result += td(user.working_email || '');
+    result += td(user.dept_names);
+    result += td(user.visa_types);
+    result += td(user.supervisor_name || '');
+    result += td(user.supervisor_email || '');
+    result += '</tr>';
+    if (user.note) {
+        result += '<tr>';
+        result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
+        result += '</tr>';
+    }
+    return result;
+}
+
+var publicInfo = function(users, filter) {
+    var usersSelected = filter(users);
+    var result = '';
+    for (var user of usersSelected) {
+        result += tr(user);
+    }
+    return result;
+}

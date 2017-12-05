@@ -27,7 +27,10 @@
     <link rel="stylesheet" href="css/main.css">
     <title>Redirect - Debug</title>
 </head>
-<body>
+<body ng-app="app">
+    <script>
+        var app = angular.module('app', []);
+    </script>
     <script>
         // usr validation
         var cookie = document.cookie;
@@ -200,43 +203,6 @@
                     </tr>
                 </thead>
                 <script>
-                    var td = function(value) {
-                        if (typeof value == 'string') {
-                            return `<td class="interact">${value}</td>`;
-                        } else {
-                            return `<td class="interact">${value.join(',<br />')}</td>`;
-                        }
-                    };
-
-                    var tr = function(user) {
-                        var result = '';
-                        result += '<tr>';
-                        result += td(user.name);
-                        result += td(user.phone);
-                        result += td(user.email);
-                        result += td(user.working_email || '');
-                        result += td(user.dept_names);
-                        result += td(user.visa_types);
-                        result += td(user.supervisor_name || '');
-                        result += td(user.supervisor_email || '');
-                        result += '</tr>';
-                        if (user.note) {
-                            result += '<tr>';
-                            result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
-                            result += '</tr>';
-                        }
-                        return result;
-                    }
-
-                    var publicInfo = function(users, filter) {
-                        var usersSelected = filter(users);
-                        var result = '';
-                        for (var user of usersSelected) {
-                            result += tr(user);
-                        }
-                        return result;
-                    }
-
                     $(document).ready(function() {
                         $('#public-info').html(publicInfo(users, function(users) {
                             return users;
@@ -244,7 +210,6 @@
                     });
                 </script>
               <tbody id="public-info">
-
               </tbody>
             </table>
           </div>
@@ -259,19 +224,19 @@
                     <div class="modal-body">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-old_password" class="form-control interact" placeholder="Old password" />
+                            <input id="input-old_password" class="form-control interact" type="password" placeholder="Old password" />
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-new_password" class="form-control interact" placeholder="New password" />
+                            <input id="input-new_password" class="form-control interact" type="password" placeholder="New password" />
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-new_password_retyped" class="form-control interact" placeholder="Retype new password" />
+                            <input id="input-new_password_retyped" class="form-control interact" type="password" placeholder="Retype new password" />
                         </div>
                         <div class="interact error" id="error-old_password_mismatch">Old password incorrect</div>
-                        <div class="interact error" id="error-retyped_password_mismatch">Inconsistent new passwords</div>
                         <div class="interact error" id="error-short_password">New password has to be 6 characters or more</div>
+                        <div class="interact error" id="error-retyped_password_mismatch">Inconsistent new passwords</div>
                         <button class="btn btn-warning btn-full interact" onclick="changePassword()" type="button">Change password</button>
                     </div>
                     <div class="modal-footer">
@@ -282,7 +247,26 @@
         </div>
         <script>
             var changePassword = function() {
-            	// TODO impl changePassword
+            	var oldPasswordInput = $('#input-old_password').val();
+                var newPasswordInput = $('#input-new_password').val();
+                var newPasswordRetypedInput = $('#input-new_password_retyped').val();
+                var errorOldPasswordMismatch = $('#error-old_password_mismatch');
+                var errorShortPassword = $('#error-short_password');
+                var errorRetypedPasswordMismatch = $('#error-retyped_password_mismatch');
+
+                errorOldPasswordMismatch.hide();
+                errorShortPassword.hide();
+                errorRetypedPasswordMismatch.hide();
+
+                if (oldPasswordInput != user.password) {
+                    errorOldPasswordMismatch.show();
+                } else if (!isValidPassword(newPasswordInput)) {
+                    errorShortPassword.show();
+                } else if (newPasswordInput != newPasswordRetypedInput) {
+                    errorRetypedPasswordMismatch.show();
+                } else {
+                    console.log('POST');
+                }
             };
         </script>
         <div class="modal fade" id="model-delete_user" role="dialog">
