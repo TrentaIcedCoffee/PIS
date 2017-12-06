@@ -35,6 +35,7 @@
         <script src="js/crypto/util.js"></script>
         <link rel="stylesheet" href="css/welcome.css" />
         <script src="js/welcome.js"></script>
+        <script src="js/welcome-http.js"></script>
         <title>PICS - UC Davis department contact</title>
     </head>
     <body ng-app="app">
@@ -50,6 +51,7 @@
         </script>
         <h1>UC Davis departmental contact update</h1>
         <p class="intro">Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
+        <!-- sign up -->
         <div ng-controller="controller-signup" class="container">
             <form class="form-signin">
                 <h2 class="form-signin-heading">Create an account</h2>
@@ -159,7 +161,7 @@
                 <button ng-click="signup()" type="submit" class="btn btn-lg btn-primary btn-block">Create my account</button>
             </form>
         </div>
-
+        <!-- login -->
         <div ng-controller="controller-login" class="container">
             <form class="form-signin">
                 <h2 class="form-signin-heading">Login</h2>
@@ -182,56 +184,5 @@
                 <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
             </form>
         </div>
-        <script>
-            app.controller('controller-signup', function($scope, $http) {
-                // ini deptNameChoices, visaTypeChoices
-                $scope.deptNameChoices = deptNames;
-                $scope.visaTypeChoices = visaTypes;
-                $scope.signup = function() {
-                    // form validation
-                    $('#error-invalid_signup').hide();
-                    if (!signupValidate()) {
-                        $('#error-invalid_signup').show();
-                        return;
-                    }
-                    // extract data
-                    var dataUser = dataUserInScope($scope);
-                    // http
-                    $http({
-                        method: 'POST',
-                        url: `users`,
-                        data: dataUser
-                    }).then(function(res) {
-                        var user = res.data;
-                        document.cookie = cookieOf('usr', jwtOf(`{email: "${user.email}"}`, user._id));
-                        window.location.replace('ui.html');
-                    }, function(err) {
-                        throw err;
-                    });
-                };
-            });
-        </script>
-        <script>
-            app.controller('controller-login', function($scope, $http) {
-                $scope.login = function() {
-                    $('.error-login').hide();
-                    var key = keyInScope($scope);
-                    $http({
-                        method: 'POST',
-                        url: 'login',
-                        data: key
-                    }).then(function(res) {
-                        if (!res.data._id) {
-                            $('#error-incorrect').show();
-                        } else {
-                            document.cookie = cookieOf('usr', jwtOf(`{email: "${key.email}"}`, res.data._id));
-                            window.location.replace('ui.html');
-                        }
-                    }, function(err) {
-                        throw err;
-                    });
-                };
-            });
-        </script>
     </body>
 </html>

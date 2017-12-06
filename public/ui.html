@@ -35,18 +35,22 @@
         String.prototype.contains = function(that) {
             return this.indexOf(that) != -1;
         };
-
         String.prototype.containsIgnoreCase = function(that) {
             var thisLowerCase = this.toLowerCase();
             var thatLowerCase = that.toLowerCase();
             return thisLowerCase.indexOf(thatLowerCase) != -1;
         };
-
-        Array.prototype.containsStr = function
-
-        Array.prototype.containsStrIgnoreCase = function(that) {
-            for (var str of this) {
-                if (str.containsIgnoreCase(that)) {
+        Array.prototype.containsStr = function(str) {
+            for (var thisStr of this) {
+                if (thisStr.containsStr(str)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        Array.prototype.containsStrIgnoreCase = function(str) {
+            for (var thisStr of this) {
+                if (thisStr.containsIgnoreCase(str)) {
                     return true;
                 }
             }
@@ -62,13 +66,13 @@
     <script>
         // usr validation
         var cookieContainsUsr = function(cookie) {
-            return cookie.contains
+            return cookie.containsStr('usr=');
         };
         var cookie = document.cookie;
-        if (!cookie) {
+        if (!cookie || cookieContainsUsr(cookie)) {
             window.location.replace('welcome.html');
         }
-        var jwt = getJwtInCookie(cookie);
+        var jwt = jwtInCookie(cookie);
         var email = getEmailInJwt(jwt);
         var _id = getIdOfEmail(email);
         if (!isValidJwt(jwt, _id)) {
