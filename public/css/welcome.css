@@ -26,12 +26,13 @@ form h2 {
     font-weight: bold;
 }
 .error, .error-login {
+    display: none;
     font-size: 16px;
     color: red;
     margin-top: 4px;
 }
 div.bootstrap-select {
-    width: 80% !important;
+    width: 100% !important;
 }
 button.dropdown-toggle {
     height: 40px;
@@ -39,4 +40,13 @@ button.dropdown-toggle {
 }
 #field-dept_names div.dropup ul li a {
     font-size: 16px;
+}
+#field-stop_time div.btn-group {
+    margin-top: 6px;
+}
+form.form-signin button {
+    margin-top: 12px;
+}
+div[ng-controller='controller-login'] {
+    display: none;
 }
