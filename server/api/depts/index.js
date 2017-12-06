@@ -11,7 +11,14 @@ var Data = function(req) {
     this.name = req.body.name;
     this.college = req.body.college;
     this.cluster = req.body.cluster;
-}
+};
+
+var goPublic = function(data) {
+    delete data['_id'];
+    delete data['college'];
+    delete data['cluster'];
+    return data;
+};
 
 deptsRouter.route('/')
     .get(function(req, res) {
@@ -24,33 +31,16 @@ deptsRouter.route('/')
                 if (err) {
                     throw err;
                 }
+                results = results.map(function(val) {
+                    return goPublic(val);
+                });
                 res.json(results);
                 db.close();
             });
         })
     })
     .post(function(req, res) {
-        console.log('POST localhost:3000/depts');
-        console.log(req.body);
-        var data = new Data(req);
-        MongoClient.connect(config.dbUri, function(err, db) {
-            if (err) {
-                throw err;
-            }
-            db.collection(config.dbDepts).insertOne(data, function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                data._id = result.insertedId; // data._id: ObjectId
-                db.collection(config.dbDepts).findOne({_id: data._id}, function(err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.json(result);
-                    db.close();
-                });
-            });
-        })
+        res.status(405).end() // not supported
     })
     .put(function(req, res) {
         res.status(405).end() // not supported
@@ -61,8 +51,7 @@ deptsRouter.route('/')
 
 deptsRouter.route('/:id')
     .get(function(req, res) {
-        console.log('GET localhost:3000/depts/id');
-        console.log(req.params.id);
+        console.log(`GET localhost:3000/depts/${req.params.id}`);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -71,6 +60,7 @@ deptsRouter.route('/:id')
                 if (err) {
                     throw err;
                 }
+                result = goPublic(result);
                 res.json(result);
                 db.close();
             });
@@ -80,48 +70,10 @@ deptsRouter.route('/:id')
         res.status(405).end() // not supported
     })
     .put(function(req, res) {
-        console.log('PUT localhost:3000/depts/id');
-        console.log(req.params.id);
-        var data = util.solidFields(new Data(req)); // remove all null/undefined fields for update
-        MongoClient.connect(config.dbUri, function(err, db) {
-            if (err) {
-                throw err;
-            }
-            db.collection(config.dbDepts).updateOne({_id: new ObjectId(req.params.id)}, {$set: data}, function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                db.collection(config.dbDepts).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.json(result);
-                    db.close();
-                });
-            });
-        });
+        res.status(405).end() // not supported
     })
     .delete(function(req, res) {
-        console.log('DELETE localhost:3000/depts/id');
-        console.log(req.params.id);
-        MongoClient.connect(config.dbUri, function(err, db) {
-            if (err) {
-                throw err;
-            }
-            db.collection(config.dbDepts).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
-                if (err) {
-                    throw err;
-                }
-                var data = result;
-                db.collection(config.dbDepts).removeOne({_id: new ObjectId(req.params.id)}, function(err, result) {
-                    if (err) {
-                        throw err;
-                    }
-                    res.json(data);
-                    db.close();
-                });
-            });
-        });
+        res.status(405).end() // not supported
     });
 
 module.exports = deptsRouter;
