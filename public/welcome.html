@@ -178,8 +178,7 @@
                         <input id="input-password-login" ng-model="inputPassword" required type="password" class="form-control" placeholder="User Password" />
                     </div>
                 </div>
-                <div class="error-login" id="error-no_user">User does not exist, you can <a id="anchor-login_to_signup">Sign Up Here</a></div>
-                <div class="error-login" id="error-wrong_password">Wrong password</div>
+                <div class="error-login" id="error-incorrect">Wrong email/password</div>
                 <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
             </form>
         </div>
@@ -213,27 +212,26 @@
             });
         </script>
         <script>
-            // app.controller('controller-login', function($scope, $http) {
-            //     $scope.login = function() {
-            //         $('.error-login').hide();
-            //         var key = keyInScope($scope);
-            //         $http({
-            //             method: 'GET',
-            //             url: `users`
-            //         }).then(function(res) {
-            //             validateUser(res.data, key, function(email, _id) {
-            //                 document.cookie = cookieOf('usr', jwtOf(`{email: "${email}"}`, _id));
-            //                 window.location.replace('redirect.html');
-            //             }, function() {
-            //                 $('#error-no_user').show();
-            //             }, function() {
-            //                 $('#error-wrong_password').show();
-            //             });
-            //         }, function(err) {
-            //             throw err;
-            //         });
-            //     };
-            // });
+            app.controller('controller-login', function($scope, $http) {
+                $scope.login = function() {
+                    $('.error-login').hide();
+                    var key = keyInScope($scope);
+                    $http({
+                        method: 'POST',
+                        url: 'login',
+                        data: key
+                    }).then(function(res) {
+                        if (!res.data._id) {
+                            $('#error-incorrect').show();
+                        } else {
+                            document.cookie = cookieOf('usr', jwtOf(`{email: "${key.email}"}`, res.data._id));
+                            window.location.replace('ui.html');
+                        }
+                    }, function(err) {
+                        throw err;
+                    });
+                };
+            });
         </script>
     </body>
 </html>

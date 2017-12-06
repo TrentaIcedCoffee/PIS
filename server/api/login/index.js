@@ -1,5 +1,7 @@
 // TODO console -> log
 
+"use strict";
+
 var loginRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -38,9 +40,11 @@ var goPublic = function(data) {
 
 loginRouter.route('/')
     .get(function(req, res) {
-        console.log(`GET localhost:3000/login`);
-        console.log(req.body.email);
-        console.log(req.body.password);
+        res.status(405).end(); // not supported
+    })
+    .post(function(req, res) {
+        console.log('POST localhost:3000/login');
+        console.log(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -49,20 +53,21 @@ loginRouter.route('/')
                 if (err) {
                     throw err;
                 }
-                result = goPublic(result);
-                res.json(result);
+                if (!result) {
+                    res.json('{}');
+                } else {
+                    result = goPublic(result);
+                    res.json(result);
+                }
                 db.close();
             });
         });
     })
-    .post(function(req, res) {
-        res.status(405).end() // not supported
-    })
     .put(function(req, res) {
-        res.status(405).end() // not supported
+        res.status(405).end(); // not supported
     })
     .delete(function(req, res) {
-        res.status(405).end() // not supported
+        res.status(405).end(); // not supported
     });
 
 module.exports = loginRouter;

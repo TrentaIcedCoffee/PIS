@@ -7,11 +7,13 @@ var loginToSignup = function() {
     $('div[ng-controller="controller-signup"]').show();
     $('div[ng-controller="controller-login"]').hide();
 };
-$('#anchor-signup_to_login').click(function() {
-    signupToLogin();
-});
-$('#anchor-login_to_signup').click(function() {
-    loginToSignup();
+$(document).ready(function() {
+    $('#anchor-signup_to_login').click(function() {
+        signupToLogin();
+    });
+    $('#anchor-login_to_signup').click(function() {
+        loginToSignup();
+    });
 });
 
 // ini daterangepicker
