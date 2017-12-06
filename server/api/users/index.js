@@ -19,7 +19,13 @@ var Data = function(req) {
     this.supervisor_name = req.body.supervisor_name;
     this.supervisor_email = req.body.supervisor_email;
     this.note = req.body.note;
-}
+};
+
+var goPublic = function(data) {
+    delete data['_id'];
+    delete data['password'];
+    return data;
+};
 
 usersRouter.route('/')
     .get(function(req, res) {
@@ -32,6 +38,9 @@ usersRouter.route('/')
                 if (err) {
                     throw err;
                 }
+                results = results.map(function(val) {
+                    return goPublic(val);
+                });
                 res.json(results);
                 db.close();
             });
@@ -125,8 +134,6 @@ usersRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    // res.setHeader('Content-Type', 'application/json');
-                    // res.setHeader('Access-Control-Allow-Origin', '*'); // TODO possible fix for security
                     res.json(data);
                     db.close();
                 });

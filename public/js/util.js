@@ -36,10 +36,26 @@ var nameOf = function(depts) {
 
 var usersToEmails = function(users) {
     emails = [];
-    for (var val of users) {
-        emails.push(val.email);
-    }
+    users.forEach(function(user) {
+        emails.push(user['email']);
+    });
     return emails;
+};
+
+var visasToVisaNames = function(visas) {
+    visaNames = [];
+    visas.forEach(function(visa) {
+        visaNames.push(visa['name']);
+    });
+    return visaNames;
+};
+
+var deptsToDeptNames = function(depts) {
+    deptNames = [];
+    depts.forEach(function(dept) {
+        deptNames.push(dept['name']);
+    });
+    return deptNames;
 };
 
 var validateUser = function(users, key, okCallback, noUserCallback, wrongPasswordCallback) {
