@@ -21,6 +21,25 @@ var Data = function(req) {
     this.note = req.body.note;
 };
 
+var Data = function(...args) {
+    var _id = undefined;
+    var email = undefined;
+    var name = undefined;
+    var phone = undefined;
+    var stop_time = undefined;
+    var dept_names = undefined;
+    var visa_types = undefined;
+    var working_email = undefined;
+    var supervisor_name = undefined;
+    var supervisor_email = undefined;
+    var note = undefined;
+
+    if (args.length == 1 && args[0] instanceof Data) {
+
+    }
+
+};
+
 var goPublic = function(data) {
     delete data['_id'];
     delete data['password'];
