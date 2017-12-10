@@ -77,8 +77,7 @@ usersRouter.route('/')
 
 usersRouter.route('/:id')
     .get(function(req, res) {
-        console.log('GET localhost:3000/users/id');
-        console.log(req.params.id);
+        console.log(`GET localhost:3000/users/${req.params.id}`);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -96,30 +95,36 @@ usersRouter.route('/:id')
         res.status(405).end() // not supported
     })
     .put(function(req, res) {
-        console.log('PUT localhost:3000/users/id');
-        console.log(req.params.id);
+        console.log(`PUT localhost:3000/users/${req.params.id}`);
+        console.log(req.body);
         var data = new Data(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
             }
-            db.collection(config.dbUsers).updateOne({_id: new ObjectId(req.params.id)}, data, function(err, result) {
+            db.collection(config.dbUsers).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
                 if (err) {
                     throw err;
                 }
-                db.collection(config.dbUsers).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
+                Object.assign(result, util.goSolid(data));
+                data = result;
+                db.collection(config.dbUsers).updateOne({_id: new ObjectId(req.params.id)}, data, function(err, result) {
                     if (err) {
                         throw err;
                     }
-                    res.json(result);
-                    db.close();
+                    db.collection(config.dbUsers).findOne({_id: new ObjectId(req.params.id)}, function(err, result) {
+                        if (err) {
+                            throw err;
+                        }
+                        res.json(result);
+                        db.close();
+                    });
                 });
             });
         });
     })
     .delete(function(req, res) {
-        console.log('DELETE localhost:3000/users/id');
-        console.log(req.params.id);
+        console.log(`DELETE localhost:3000/users/${req.params.id}`);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;

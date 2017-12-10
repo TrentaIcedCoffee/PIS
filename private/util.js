@@ -28,14 +28,13 @@ util.getCounter = function() {
 };
 
 // remove all fields with value null or undefined
-util.solidFields = function(object) {
-    var objectSolidFields = {};
-    for (var index in object) {
-        if (object[index] !== null && object[index] !== undefined) {
-            objectSolidFields[index] = object[index];
+util.goSolid = function(obj) {
+    for (var index in obj) {
+        if (!obj[index]) {
+            delete obj[index];
         }
     }
-    return objectSolidFields;
+    return obj;
 };
 
 module.exports = util;

@@ -7,23 +7,6 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-// var Data = function(...args) {
-//     var _id = undefined;
-//     var name = undefined;
-//
-//     if (args.length == 1 && args[0] instanceof Data) {
-//         var that = args[0];
-//         _id = that._id;
-//         name = that.name;
-//     } else if (args.length == 2) {
-//         _id = args[0];
-//         name = args[1];
-//     }
-//
-//     this._id = _id;
-//     this.name = name;
-// };
-
 var goPublic = function(data) {
     delete data['_id'];
     return data;
@@ -31,6 +14,7 @@ var goPublic = function(data) {
 
 visasRouter.route('/')
     .get(function(req, res) {
+        console.log('GET localhost:3000/visas');
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;

@@ -7,12 +7,6 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-// var Data = function(reqBody) {
-//     this.name = reqBody.name;
-//     this.college = reqBody.college;
-//     this.cluster = reqBody.cluster;
-// };
-
 var goPublic = function(data) {
     delete data['_id'];
     delete data['college'];

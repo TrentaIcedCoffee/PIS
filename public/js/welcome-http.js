@@ -27,7 +27,7 @@ app.controller('controller-signup', function($scope, $http) {
             data: dataUser
         }).then(function(res) {
             var user = res.data;
-            document.cookie = cookieOf('usr', jwtOf(user._id, user.email, dataUser.password));
+            document.cookie = cookieOf('usr', jwtOf(user.email, user._id, dataUser.password));
             window.location.replace('ui.html');
         }, function(err) {
             throw err;
@@ -47,7 +47,7 @@ app.controller('controller-login', function($scope, $http) {
             if (!res.data._id) {
                 $('#error-incorrect').show();
             } else {
-                document.cookie = cookieOf('usr', jwtOf(res.data._id, key.email, key.password));
+                document.cookie = cookieOf('usr', jwtOf(key.email, res.data._id, key.password));
                 window.location.replace('ui.html');
             }
         }, function(err) {

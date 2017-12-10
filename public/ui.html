@@ -26,7 +26,7 @@
     <script src="js/crypto/hmac.js"></script>
     <script src="js/crypto/sha256.js"></script>
     <script src="js/crypto/util.js"></script>
-    <script src="js/render.js"></script>
+    <script src="js/ui.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Redirect - Debug</title>
 </head>
@@ -47,7 +47,7 @@
                 }
             }
             return false;
-        }
+        };
         Array.prototype.containsStrIgnoreCase = function(str) {
             for (var thisStr of this) {
                 if (thisStr.containsIgnoreCase(str)) {
@@ -61,32 +61,20 @@
         // sync resourse prepare
         var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
         var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));
-        var emails = usersToEmails(JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText));
     </script>
     <script>
         // usr validation
-        var cookieContainsUsr = function(cookie) {
-            return cookie.containsStr('usr=');
-        };
-        var cookie = document.cookie;
-        if (!cookie || cookieContainsUsr(cookie)) {
+        var jwt = jwtInCookie(document.cookie);
+        if (!jwt) {
             window.location.replace('welcome.html');
         }
-        var jwt = jwtInCookie(cookie);
         var email = getEmailInJwt(jwt);
-        var _id = getIdOfEmail(email);
-        if (!isValidJwt(jwt, _id)) {
-            window.location.replace('welcome.html'); // TODO welcome -> 404
-        }
+        var _id = getIdInJwt(jwt);
     </script>
     <script>
         var app = angular.module('app', []);
     </script>
     <script>
-        // $.ajax({url: `users/${_id}`, async: true, dataType: 'json'}).done(function(res) {
-        //     var user = res;
-        //     console.log(user);
-        // });
         var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
         var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
     </script>
@@ -95,13 +83,13 @@
           <div class="row">
               <div class="col-md-3 navbar-header">
               <a class="navbar-brand express express-large active" onclick="togglePrivateInfo(this)">My Information <span class="caret"></span></a>
+                <div id="private-info">
+                </div>
                 <script>
                     $(document).ready(function() {
                         $('#private-info').html(privateInfo(user));
                     });
                 </script>
-            <div id="private-info">
-            </div>
             <script>
                 var toggleGeneralInfoLock = function() {
                     var token = $('#private-general h2 button i');
@@ -223,15 +211,15 @@
                         </th>
                     </tr>
                 </thead>
-                <script>
-                    $(document).ready(function() {
-                        $('#public-info').html(publicInfo(users, function(users) {
-                            return users;
-                        }));
-                    });
-                </script>
               <tbody id="public-info">
               </tbody>
+              <script>
+                  $(document).ready(function() {
+                      $('#public-info').html(publicInfo(users, function(users) {
+                          return users;
+                      }));
+                  });
+              </script>
             </table>
           </div>
         </div>
