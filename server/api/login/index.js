@@ -9,20 +9,6 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-var Data = function(req) {
-    this.email = req.body.email;
-    this.password = req.body.password;
-    this.name = req.body.name;
-    this.phone = req.body.phone;
-    this.stop_time = req.body.stop_time;
-    this.dept_names = req.body.dept_names;
-    this.visa_types = req.body.visa_types;
-    this.working_email = req.body.working_email;
-    this.supervisor_name = req.body.supervisor_name;
-    this.supervisor_email = req.body.supervisor_email;
-    this.note = req.body.note;
-};
-
 var goPublic = function(data) {
     delete data['email'];
     delete data['password'];
@@ -57,7 +43,7 @@ loginRouter.route('/')
                     res.json('{}');
                 } else {
                     result = goPublic(result);
-                    res.json(result);
+                    res.json(`{_id: ${result._id}}`);
                 }
                 db.close();
             });
