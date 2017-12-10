@@ -35,20 +35,11 @@
         <script src="js/crypto/util.js"></script>
         <link rel="stylesheet" href="css/welcome.css" />
         <script src="js/welcome.js"></script>
-        <script src="js/welcome-http.js"></script>
+
         <title>PICS - UC Davis department contact</title>
     </head>
     <body ng-app="app">
-        <script>
-            // sync resourse prepare
-            var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
-            var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));
-            var emails = usersToEmails(JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText));
-        </script>
-        <script>
-            // register angular modulo
-            var app = angular.module('app', []);
-        </script>
+        <script src="js/welcome-http.js"></script>
         <h1>UC Davis departmental contact update</h1>
         <p class="intro">Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
         <!-- sign up -->

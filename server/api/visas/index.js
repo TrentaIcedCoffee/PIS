@@ -7,43 +7,39 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-var Data = function(...args) {
-    var _id = undefined;
-    var name = undefined;
-
-    if (args.length == 1 && args[0] instanceof Data) {
-        var that = args[0];
-        _id = that._id;
-        name = that.name;
-    } else if (args.length == 2) {
-        _id = args[0];
-        name = args[1];
-    }
-    
-    this._id = _id;
-    this.name = name;
-};
+// var Data = function(...args) {
+//     var _id = undefined;
+//     var name = undefined;
+//
+//     if (args.length == 1 && args[0] instanceof Data) {
+//         var that = args[0];
+//         _id = that._id;
+//         name = that.name;
+//     } else if (args.length == 2) {
+//         _id = args[0];
+//         name = args[1];
+//     }
+//
+//     this._id = _id;
+//     this.name = name;
+// };
 
 var goPublic = function(data) {
-    var dataPublic = new Data(data);
-    delete dataPublic['_id'];
-    return dataPublic;
+    delete data['_id'];
+    return data;
 };
 
 visasRouter.route('/')
     .get(function(req, res) {
-        console.log('GET localhost:3000/visas');
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
             }
-            db.collection(config.dbVisas).find().toArray(function(err, results) {
+            db.collection(config.dbVisas).find().toArray(function(err, resultsRedundant) {
                 if (err) {
                     throw err;
                 }
-                results = results.map(function(val) {
-                    return goPublic(val);
-                });
+                var results = resultsRedundant.map(goPublic);
                 res.json(results);
                 db.close();
             });

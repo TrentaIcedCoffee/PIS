@@ -7,37 +7,19 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-var Data = function(req) {
-    this.email = req.body.email;
-    this.password = req.body.password;
-    this.name = req.body.name;
-    this.phone = req.body.phone;
-    this.stop_time = req.body.stop_time;
-    this.dept_names = req.body.dept_names;
-    this.visa_types = req.body.visa_types;
-    this.working_email = req.body.working_email;
-    this.supervisor_name = req.body.supervisor_name;
-    this.supervisor_email = req.body.supervisor_email;
-    this.note = req.body.note;
-};
-
-var Data = function(...args) {
-    var _id = undefined;
-    var email = undefined;
-    var name = undefined;
-    var phone = undefined;
-    var stop_time = undefined;
-    var dept_names = undefined;
-    var visa_types = undefined;
-    var working_email = undefined;
-    var supervisor_name = undefined;
-    var supervisor_email = undefined;
-    var note = undefined;
-
-    if (args.length == 1 && args[0] instanceof Data) {
-
-    }
-
+var Data = function(reqBody) {
+    // this._id generated after inserted to db
+    this.email = reqBody.email;
+    this.password = reqBody.password;
+    this.name = reqBody.name;
+    this.phone = reqBody.phone;
+    this.stop_time = reqBody.stop_time;
+    this.dept_names = reqBody.dept_names;
+    this.visa_types = reqBody.visa_types;
+    this.working_email = reqBody.working_email;
+    this.supervisor_name = reqBody.supervisor_name;
+    this.supervisor_email = reqBody.supervisor_email;
+    this.note = reqBody.note;
 };
 
 var goPublic = function(data) {
@@ -57,9 +39,7 @@ usersRouter.route('/')
                 if (err) {
                     throw err;
                 }
-                results = results.map(function(val) {
-                    return goPublic(val);
-                });
+                results = results.map(goPublic);
                 res.json(results);
                 db.close();
             });
@@ -68,7 +48,7 @@ usersRouter.route('/')
     .post(function(req, res) {
         console.log('POST localhost:3000/users');
         console.log(req.body);
-        var data = new Data(req);
+        var data = new Data(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -118,7 +98,7 @@ usersRouter.route('/:id')
     .put(function(req, res) {
         console.log('PUT localhost:3000/users/id');
         console.log(req.params.id);
-        var data = new Data(req);
+        var data = new Data(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
