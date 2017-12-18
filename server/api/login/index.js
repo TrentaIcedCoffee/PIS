@@ -25,9 +25,9 @@ loginRouter.route('/')
                     throw err;
                 }
                 if (!result) {
-                    res.json('{}');
+                    res.json({});
                 } else {
-                    res.json(`{"_id": "${result._id}"}`);
+                    res.json({_id: result._id});
                 }
                 db.close();
             });

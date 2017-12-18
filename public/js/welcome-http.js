@@ -44,7 +44,7 @@ app.controller('controller-login', function($scope, $http) {
             url: 'login',
             data: key
         }).then(function(res) {
-            var resData = JSON.parse(res.data);
+            var resData = res.data;
             if (!resData._id) {
                 $('#error-incorrect').show();
             } else {

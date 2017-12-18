@@ -23,7 +23,6 @@ var Data = function(reqBody) {
 };
 
 var goPublic = function(data) {
-    delete data['_id'];
     delete data['password'];
     return data;
 };
@@ -62,6 +61,7 @@ usersRouter.route('/')
                     if (err) {
                         throw err;
                     }
+                    result = goPublic(result);
                     res.json(result);
                     db.close();
                 });
@@ -86,6 +86,7 @@ usersRouter.route('/:id')
                 if (err) {
                     throw err;
                 }
+                result = goPublic(result);
                 res.json(result);
                 db.close();
             });
@@ -116,6 +117,7 @@ usersRouter.route('/:id')
                         if (err) {
                             throw err;
                         }
+                        result = goPublic(result);
                         res.json(result);
                         db.close();
                     });
@@ -138,7 +140,8 @@ usersRouter.route('/:id')
                     if (err) {
                         throw err;
                     }
-                    res.json(data);
+                    result = goPublic(result);
+                    res.json(result);
                     db.close();
                 });
             });

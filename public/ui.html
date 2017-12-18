@@ -4,6 +4,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <title>Redirect - Debug</title>
     <!-- jQuery 2.0.0 CDN -->
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <!-- Angular CDN -->
@@ -28,7 +29,6 @@
     <script src="js/crypto/util.js"></script>
     <script src="js/ui.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <title>Redirect - Debug</title>
 </head>
 <body ng-app="app">
     <script>
@@ -103,6 +103,13 @@
                         $('#private-general input').prop('readonly', true);
                     }
                 }
+                var getGeneralInfo = function() {
+                    var valueArray = $('#private-general input').map(function(ele) {
+                        console.log(ele);
+                        return !ele ? null : $(ele).val();
+                    });
+                    // BREAKPOINT
+                };
                 var updateGeneralInfo = function () {
                     // TODO impl POST
                 };
@@ -267,14 +274,22 @@
                 errorShortPassword.hide();
                 errorRetypedPasswordMismatch.hide();
 
-                if (oldPasswordInput != user.password) {
+                // http oldPasswordInput
+                var keyInput = {email: user.email, password: oldPasswordInput};
+                var keyResponse = JSON.parse($.ajax({url: 'login', method: 'POST', async: false, dataType: 'json', data: keyInput}).responseText);
+
+                if (!keyResponse._id || keyResponse._id != _id) {
                     errorOldPasswordMismatch.show();
                 } else if (!isValidPassword(newPasswordInput)) {
                     errorShortPassword.show();
                 } else if (newPasswordInput != newPasswordRetypedInput) {
                     errorRetypedPasswordMismatch.show();
                 } else {
-                    console.log('POST');
+                    $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: {password: newPasswordInput}}).done(function() {
+                        document.cookie = cookieOf('usr', jwtOf(email, _id, newPasswordInput));
+                        window.location.replace('ui.html');
+                        // TODO: middle page
+                    });
                 }
             };
         </script>
@@ -313,7 +328,11 @@
             	}
             };
             var deleteUser = function() {
-            	// TODO: impl DELETE
+                $.ajax({url: `users/${_id}`, method: 'DELETE', async: true, dataType: 'json'}).done(function() {
+                    document.cookie += ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+                    window.location.replace('welcome.html');
+                    // TODO: middle page
+                });
             }
         </script>
         <div ng-controller="controller-update_depts_and_visas" class="modal fade" id="model-update_depts_and_visas" role="dialog">
