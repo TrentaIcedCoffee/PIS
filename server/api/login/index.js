@@ -9,21 +9,6 @@ var logger = require(`${rootUri}/private/logger`);
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);
 
-var goPublic = function(data) {
-    delete data['email'];
-    delete data['password'];
-    delete data['name'];
-    delete data['phone'];
-    delete data['stop_time'];
-    delete data['dept_names'];
-    delete data['visa_types'];
-    delete data['working_email'];
-    delete data['supervisor_name'];
-    delete data['supervisor_email'];
-    delete data['note'];
-    return data;
-};
-
 loginRouter.route('/')
     .get(function(req, res) {
         res.status(405).end(); // not supported
@@ -42,8 +27,7 @@ loginRouter.route('/')
                 if (!result) {
                     res.json('{}');
                 } else {
-                    result = goPublic(result);
-                    res.json(`{_id: ${result._id}}`);
+                    res.json(`{"_id": "${result._id}"}`);
                 }
                 db.close();
             });

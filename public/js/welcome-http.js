@@ -44,10 +44,11 @@ app.controller('controller-login', function($scope, $http) {
             url: 'login',
             data: key
         }).then(function(res) {
-            if (!res.data._id) {
+            var resData = JSON.parse(res.data);
+            if (!resData._id) {
                 $('#error-incorrect').show();
             } else {
-                document.cookie = cookieOf('usr', jwtOf(key.email, res.data._id, key.password));
+                document.cookie = cookieOf('usr', jwtOf(key.email, resData._id, key.password));
                 window.location.replace('ui.html');
             }
         }, function(err) {
