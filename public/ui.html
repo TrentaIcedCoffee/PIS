@@ -16,6 +16,8 @@
     <!-- bootstrap select CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <!-- bootstrap form -->
+    <script src="js/bootstrap-formhelpers.min.js"></script>
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- customized packages -->
@@ -104,10 +106,15 @@
                     }
                 }
                 var getGeneralInfo = function() {
-                    var valueArray = $('#private-general input').map(function(ele) {
-                        console.log(ele);
-                        return !ele ? null : $(ele).val();
-                    });
+                    var valueArray = $('#private-general input').map(function() {
+                        return this.value;
+                    }).get();
+                    var dataInput = {
+                        name: valueArray[0],
+                        phone: valueArray[1],
+                        working_email: valueArray[2],
+                        note: valueArray[3]
+                    };
                     // BREAKPOINT
                 };
                 var updateGeneralInfo = function () {
