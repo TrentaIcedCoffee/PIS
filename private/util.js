@@ -30,7 +30,7 @@ util.getCounter = function() {
 // remove all fields with value null or undefined
 util.goSolid = function(obj) {
     for (var index in obj) {
-        if (!obj[index]) {
+        if (obj[index] == null || obj[index] == undefined) {
             delete obj[index];
         }
     }

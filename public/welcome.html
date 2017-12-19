@@ -105,14 +105,14 @@
                 </div>
                 <div class="input-field" id="field-dept_names">
                     <div class="illustration">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
-                    <select class="selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true">
+                    <select class="selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true" data-selected-text-format="count > 3">
                         <option ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
                     </select>
                     <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
                 </div>
                 <div class="input-field" id="field-visa_types">
                     <div class="illustration">Visa type(s) - Please at least select 1 visa type</div>
-                    <select class="selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true">
+                    <select class="selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true" data-selected-text-format="count > 3">
                         <option ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
                     </select>
                     <div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>

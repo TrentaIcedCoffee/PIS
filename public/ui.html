@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <!-- bootstrap form -->
-    <script src="js/bootstrap-formhelpers.min.js"></script>
+    <script src="js/bootstrap-formhelpers.min.js" defer="defer"></script>
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <!-- customized packages -->
@@ -115,10 +115,17 @@
                         working_email: valueArray[2],
                         note: valueArray[3]
                     };
-                    // BREAKPOINT
+                    return dataInput;
                 };
                 var updateGeneralInfo = function () {
-                    // TODO impl POST
+                    var dataInput = getGeneralInfo();
+                    $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: dataInput}).done(function() {
+                        user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+                        users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+                        $('#public-info').html(publicInfo(users, function(users) {
+                            return users;
+                        }));
+                    });
                 };
                 var toggleSupervisorLock = function() {
                     var token = $('#private-supervisor h2 button i');
@@ -132,8 +139,25 @@
                         $('#private-supervisor input').prop('readonly', true);
                     }
                 };
+                var getSupervisorInfo = function() {
+                    var valueArray = $('#private-supervisor input').map(function() {
+                        return this.value;
+                    }).get();
+                    var dataInput = {
+                        supervisor_name: valueArray[0],
+                        supervisor_email: valueArray[1]
+                    };
+                    return dataInput;
+                };
                 var updateSupervisor = function() {
-                    // TODO impl POST
+                    var dataInput = getSupervisorInfo();
+                    $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: dataInput}).done(function() {
+                        user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+                        users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+                        $('#public-info').html(publicInfo(users, function(users) {
+                            return users;
+                        }));
+                    });
                 };
                 var togglePrivateInfo = function(ele) {
                 	var trigger = $(ele);
@@ -352,14 +376,14 @@
                     <div class="modal-body">
                         <div class="interact">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
                         <div class="input-group">
-                            <select class="select-full selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true">
+                            <select class="select-full selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true" data-selected-text-format="count > 3">
                                 <option class="interact" ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
                             </select>
                         </div>
                         <br />
                         <div class="interact">Visa type(s) - Please at least select 1 visa type</div>
                         <div class="input-group">
-                            <select class="select-full selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true">
+                            <select class="select-full selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true" data-selected-text-format="count > 3">
                                 <option class="interact" ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
                             </select>
                         </div>
@@ -379,7 +403,7 @@
             	$scope.visaTypeChoices = visaTypes;
                 $scope.updateDeptNamesAndVisaTypes = function() {
                     var errorEmptyDeptNames = $('#error-empty_dept_names');
-                    var errorEmptyVisaTypes = $('#empty_visa_types');
+                    var errorEmptyVisaTypes = $('#error-empty_visa_types');
 
                     errorEmptyDeptNames.hide();
                     errorEmptyVisaTypes.hide();
@@ -389,7 +413,24 @@
                     } else if (!$scope.inputVisaTypes) {
                         errorEmptyVisaTypes.show();
                     } else {
-                        console.log('POST');
+                        var dataInput = {
+                            dept_names: $scope.inputDeptNames,
+                            visa_types: $scope.inputVisaTypes
+                        };
+                        $http({
+                            method: 'PUT',
+                            url: `users/${_id}`,
+                            data: dataInput
+                        }).then(function(res) {
+                            $('#model-update_depts_and_visas').modal('hide');
+                            user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+                            users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+                            $('#public-info').html(publicInfo(users, function(users) {
+                                return users;
+                            }));
+                        }, function(err) {
+                            throw err;
+                        });
                     }
                 };
             });
