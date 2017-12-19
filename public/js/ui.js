@@ -147,6 +147,9 @@ var tr = function(user) {
     }
     return result;
 };
+var toHighlight = function(context) {
+    return `<span class="highlight">${context}</span>`;
+};
 var publicInfo = function(users, filter) {
     var usersSelected = filter(users);
     var result = '';

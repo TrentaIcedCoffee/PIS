@@ -44,6 +44,9 @@
     color: red;
     display: none;
 }
+.highlight {
+    background-color: yellow
+}
 html, body {
     width: 100%;
     font-family: 'Roboto', sans-serif;

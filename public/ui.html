@@ -60,6 +60,17 @@
         };
     </script>
     <script>
+        var searchAndHighlight = function(user) {
+            
+        }
+        // search(this.value)
+        var search = function(text) {
+            for (var user of users) {
+
+            }
+        };
+    </script>
+    <script>
         // sync resourse prepare
         var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
         var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));
@@ -178,7 +189,7 @@
                 <form class="navbar-form">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                        <input class="form-control interact" oninput="search(this)" type="text" placeholder="Global search...">
+                        <input class="form-control interact" oninput="search(this.value)" type="text" placeholder="Global search...">
                     </div>
                 </form>
             </div>
