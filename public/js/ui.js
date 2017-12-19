@@ -62,22 +62,6 @@ var privateGeneral = function(user) {
     result += '</div>';
     return result;
 };
-var privateGeneralDebug = function() {
-    var result = '';
-    result += '<div id="private-general">'
-    result += '<form class="ng-pristine ng-valid ng-submitted">'
-    result += '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>'
-    result += '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input class="form-control interact" onchange="updateGeneralInfo()" value="Xin Jin"></div>'
-    result += '<div class="input-group">'
-    result += '<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>'
-    result += '<input class="form-control interact bfh-phone" data-format="(ddd) ddd-dddd" onchange="updateGeneralInfo()" value="(415) 521-4118">'
-    result += '</div>'
-    result += '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span><input class="form-control interact" onchange="updateGeneralInfo()" value=""></div>'
-    result += '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span><input class="form-control interact" onchange="updateGeneralInfo()" value=""></div>'
-    result += '</form>'
-    result += '</div>'
-    return result;
-};
 // private-depts_and_visas
 var h2PrivateDeptsAndVisas = function() {
     return '<h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>';
@@ -131,7 +115,6 @@ var privateInfo = function(user) {
     var result = '';
     result += privateBasic(user);
     result += privateGeneral(user);
-    // result += privateGeneralDebug();
     result += privateDeptsAndVisas(user);
     result += privateSupervisor(user);
     return result;
