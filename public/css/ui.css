@@ -90,6 +90,9 @@ html, body {
     margin-top: 50px;
     padding-top: 30px;
 }
+#public-info tr:nth-child(even) {
+    background: rgba(200, 200, 200, 0.7);
+}
 #public-info tr:hover {
-    background: rgba(255, 255, 255, 1);
+    background: rgba(220, 220, 220, 0.5);
 }
