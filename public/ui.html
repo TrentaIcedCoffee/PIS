@@ -31,6 +31,8 @@
     <script src="js/crypto/util.js"></script>
     <script src="js/ui.js"></script>
     <link rel="stylesheet" href="css/ui.css">
+    <!-- jQuery highlight -->
+    <script src="https://bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
 </head>
 <body ng-app="app">
     <script>
@@ -60,14 +62,87 @@
         };
     </script>
     <script>
-        var searchAndHighlight = function(user) {
-            
-        }
+        var isSearchedFactory = function(text) {
+            var isSearched = function(user) {
+                var result = false;
+                for (var index in user) {
+                    if (index == '_id') {
+                        continue;
+                    }
+
+                    if (user[index] == null || user[index] == undefined) {
+                    } else if (typeof user[index] == 'string') {
+                        if (user[index].containsIgnoreCase(text)) {
+                            result = true;
+                            return result;
+                        }
+                    } else if (typeof user[index] == 'object') {
+                        if (user[index].containsStrIgnoreCase(text)) {
+                            result = true;
+                            return result;
+                        }
+                    } else {
+                        throw new DebugException();
+                    }
+                }
+                return result;
+            };
+            return isSearched;
+        };
         // search(this.value)
         var search = function(text) {
-            for (var user of users) {
-
-            }
+            var isSearched = isSearchedFactory(text);
+            var divPublicInfo = $('#public-info');
+            divPublicInfo.html(publicInfo(users, function(users) {
+                return users.filter(isSearched);
+            }));
+            divPublicInfo.unhighlight();
+            divPublicInfo.highlight(text);
+        };
+        var isQueriedFactory = function(text, index) {
+            var isQueried = function(user) {
+                var result = false;
+                if (user[index] == null || user[index] == undefined) {
+                } else if (typeof user[index] == 'string') {
+                    if (user[index].containsIgnoreCase(text)) {
+                        result = true;
+                        return result;
+                    }
+                } else if (typeof user[index] == 'object') {
+                    if (user[index].containsStrIgnoreCase(text)) {
+                        result = true;
+                        return result;
+                    }
+                } else {
+                    throw new DebugException();
+                }
+                return result;
+            };
+            return isQueried;
+        };
+        // query(this.value, 'name')
+        var query = function(text, index) {
+            var mapIndexToNth = {
+                'name': 0,
+                'phone': 1,
+                'email': 2,
+                'working_email': 3,
+                'dept_names': 4,
+                'visa_types': 5,
+                'supervisor_name': 6,
+                'supervisor_email': 7
+            };
+            var isQueried = isQueriedFactory(text, index);
+            var divPublicInfo = $('#public-info');
+            var tdsPublicInfoCol = $(`#public-info td:nth-child(${mapIndexToNth[index]})`);
+            divPublicInfo.html(publicInfo(users, function(users) {
+                return users.filter(isQueried);
+            }));
+            // BREAKPOINT highlight
+            // divPublicInfo.unhighlight();
+            // tdsPublicInfoCol.forEach(function() {
+            //     $(this).highlight(text);
+            // });
         };
     </script>
     <script>
@@ -206,56 +281,56 @@
                             Name
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'name')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'name')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Phone
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'phone')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'phone')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Email
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'email')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Official University Email<br />(primary contact)
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'working_email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'working_email')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Departments
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'dept_names')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'dept_names')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Visa Types
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'visa_types')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'visa_types')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Supervisor's Name
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'supervisor_name')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'supervisor_name')" placeholder="Search for..." />
                             </div>
                         </th>
                         <th class="express-inverse express-medium">
                             Supervisor's Email
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                                <input class="form-control" type="text" oninput="query(this, 'supervisor_email')" placeholder="Search for..." />
+                                <input class="form-control" type="text" oninput="query(this.value, 'supervisor_email')" placeholder="Search for..." />
                             </div>
                         </th>
                     </tr>
