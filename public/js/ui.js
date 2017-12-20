@@ -152,7 +152,7 @@ var toHighlight = function(context) {
 };
 var publicInfo = function(users, filter) {
     var usersSelected = filter(users);
-    console.log(usersSelected);
+    // console.log(usersSelected);
     var result = '';
     for (var user of usersSelected) {
         result += tr(user);

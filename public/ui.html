@@ -122,27 +122,11 @@
         };
         // query(this.value, 'name')
         var query = function(text, index) {
-            var mapIndexToNth = {
-                'name': 0,
-                'phone': 1,
-                'email': 2,
-                'working_email': 3,
-                'dept_names': 4,
-                'visa_types': 5,
-                'supervisor_name': 6,
-                'supervisor_email': 7
-            };
             var isQueried = isQueriedFactory(text, index);
             var divPublicInfo = $('#public-info');
-            var tdsPublicInfoCol = $(`#public-info td:nth-child(${mapIndexToNth[index]})`);
             divPublicInfo.html(publicInfo(users, function(users) {
                 return users.filter(isQueried);
             }));
-            // BREAKPOINT highlight
-            // divPublicInfo.unhighlight();
-            // tdsPublicInfoCol.forEach(function() {
-            //     $(this).highlight(text);
-            // });
         };
     </script>
     <script>
