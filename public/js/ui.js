@@ -1,161 +1,167 @@
-// private-basic
-var h2PrivateBasic = function() {
-    return '<h2 class="express express-medium">Basic Info</h2>';
+// origin extends
+String.prototype.contains = function(that) {
+    return this.indexOf(that) != -1;
 };
-var inputPrivateBasic = function(token, value) {
-    var result = '';
-    result += '<div class="input-group">';
-    result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-    result += `<input class="form-control interact" readonly="readonly" value="${value}" />`;
-    result += '</div>';
-    return result;
+String.prototype.containsIgnoreCase = function(that) {
+    var thisLowerCase = this.toLowerCase();
+    var thatLowerCase = that.toLowerCase();
+    return thisLowerCase.indexOf(thatLowerCase) != -1;
 };
-var btnPrivateBasic = function(type, target, value) {
-    var result = '';
-    result += '<div class="input-group">';
-    result += `<button class="btn btn-${type} btn-full interact" data-toggle="modal" data-target="${target}" type="button">${value}</button>`
-    result += '</div>';
-    return result;
-};
-var privateBasic = function(user) {
-    var result = '';
-    result += '<div id="private-basic">';
-    result += h2PrivateBasic();
-    result += inputPrivateBasic('user', user.email);
-    result += inputPrivateBasic('calendar', user.stop_time);
-    result += btnPrivateBasic('warning', '#model-change_password', 'Change password');
-    result += btnPrivateBasic('danger', '#model-delete_user', 'Delete this user');
-    result += '</div>';
-    return result;
-};
-
-// private-general
-var h2PrivateGeneral = function() {
-    return '<h2 class="express express-medium"><span><button type="button" class="btn btn-primary" onclick="toggleGeneralInfoLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;General Info</h2>';
-};
-var inputPrivateGeneral = function(token, value) {
-    var result = '';
-    result += '<div class="input-group">';
-    result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-    result += `<input class="form-control interact" readonly="readonly" onchange="updateGeneralInfo()" value="${value}" />`;
-    result += '</div>';
-    return result;
-};
-var inputPrivateGeneralPhone = function(value) {
-    var result = '';
-    result += '<div class="input-group">';
-    result += '<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>';
-    result += `<input type="tel" class="form-control interact bfh-phone" data-format="(ddd) ddd-dddd" readonly="readonly" onchange="updateGeneralInfo()" value="${value}" />`;
-    result += '</div>';
-    return result;
-};
-var privateGeneral = function(user) {
-    var result = '';
-    result += '<div id="private-general">';
-    result += '<form>';
-    result += h2PrivateGeneral();
-    result += inputPrivateGeneral('user', user.name);
-    result += inputPrivateGeneralPhone(user.phone);
-    result += inputPrivateGeneral('envelope', (user.working_email || ''));
-    result += inputPrivateGeneral('comment', (user.note || ''));
-    result += '</form>';
-    result += '</div>';
-    return result;
-};
-// private-depts_and_visas
-var h2PrivateDeptsAndVisas = function() {
-    return '<h2 class="express express-medium"><span><button class="btn btn-primary" data-toggle="modal" data-target="#model-update_depts_and_visas"><i class="glyphicon glyphicon-edit"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Departments and Visas</h2>';
-};
-var dropdownPrivateDeptsAndVisas = function(label, data) {
-    var result = '';
-    result += '<div class="input-group clearfix">';
-    result += `<button class="btn btn-info btn-full dropdown-toggle interact" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${label}<span class="caret"></span></button>`;
-    result += '<ul class="dropdown-menu ul-wide ul-responsive">';
-    result += `<li class="dropdown-header express-inverse express-small">${label}</li>`;
-    for (var val of data) {
-        result += `<li class="interact">${val}</li>`;
+Array.prototype.containsStr = function(str) {
+    for (var thisStr of this) {
+        if (thisStr.containsStr(str)) {
+            return true;
+        }
     }
-    result += '</ul>';
-    result += '</div>';
-    return result;
+    return false;
 };
-var privateDeptsAndVisas = function(user) {
-    var result = '';
-    result += '<div id="private-depts_and_visas">';
-    result += h2PrivateDeptsAndVisas();
-    result += dropdownPrivateDeptsAndVisas('Departments', user.dept_names);
-    result += dropdownPrivateDeptsAndVisas('Visas', user.visa_types);
-    result += '</div>';
-    return result;
+Array.prototype.containsStrIgnoreCase = function(str) {
+    for (var thisStr of this) {
+        if (thisStr.containsIgnoreCase(str)) {
+            return true;
+        }
+    }
+    return false;
 };
 
-// private-supervisor
-var h2PrivateSupervisor = function() {
-    return '<h2 class="express express-medium"><span><button class="btn btn-primary" onclick="toggleSupervisorLock()"><i class="glyphicon glyphicon-lock"></i></button></span>&nbsp;&nbsp;&nbsp;&nbsp;Supervisor Info</h2>';
+// search and query
+var isSearchedFactory = function(text) {
+    var isSearched = function(user) {
+        var result = false;
+        for (var index in user) {
+            if (index == '_id') {
+                continue;
+            }
+
+            if (user[index] == null || user[index] == undefined) {
+            } else if (typeof user[index] == 'string') {
+                if (user[index].containsIgnoreCase(text)) {
+                    result = true;
+                    return result;
+                }
+            } else if (typeof user[index] == 'object') {
+                if (user[index].containsStrIgnoreCase(text)) {
+                    result = true;
+                    return result;
+                }
+            } else {
+                throw new DebugException();
+            }
+        }
+        return result;
+    };
+    return isSearched;
 };
-var inputPrivateSupervisor = function(token, value) {
-    var result = '';
-    result += '<div class="input-group">';
-    result += `<span class="input-group-addon"><i class="glyphicon glyphicon-${token}"></i></span>`;
-    result += `<input class="form-control interact" readonly="readonly" onchange="updateSupervisor()" value="${value}" />`;
-    result += '</div>';
-    return result;
+// search(this.value)
+var search = function(text) {
+    var isSearched = isSearchedFactory(text);
+    var divPublicInfo = $('#public-info');
+    divPublicInfo.html(publicInfo(users, function(users) {
+        return users.filter(isSearched);
+    }));
+    divPublicInfo.unhighlight();
+    divPublicInfo.highlight(text);
 };
-var privateSupervisor = function(user) {
-    var result = '';
-    result += '<div id="private-supervisor">';
-    result += h2PrivateSupervisor();
-    result += inputPrivateSupervisor('user', (user.supervisor_name || ''));
-    result += inputPrivateSupervisor('envelope', (user.supervisor_email || ''));
-    result += '</div>';
-    return result;
+var isQueriedFactory = function(text, index) {
+    var isQueried = function(user) {
+        var result = false;
+        if (user[index] == null || user[index] == undefined) {
+        } else if (typeof user[index] == 'string') {
+            if (user[index].containsIgnoreCase(text)) {
+                result = true;
+                return result;
+            }
+        } else if (typeof user[index] == 'object') {
+            if (user[index].containsStrIgnoreCase(text)) {
+                result = true;
+                return result;
+            }
+        } else {
+            throw new DebugException();
+        }
+        return result;
+    };
+    return isQueried;
 };
-// private-info
-var privateInfo = function(user) {
-    var result = '';
-    result += privateBasic(user);
-    result += privateGeneral(user);
-    result += privateDeptsAndVisas(user);
-    result += privateSupervisor(user);
-    return result;
+// query(this.value, 'name')
+var query = function(text, index) {
+    var isQueried = isQueriedFactory(text, index);
+    var divPublicInfo = $('#public-info');
+    divPublicInfo.html(publicInfo(users, function(users) {
+        return users.filter(isQueried);
+    }));
 };
 
-// public-info
-var td = function(value) {
-    if (typeof value == 'string') {
-        return `<td class="interact">${value}</td>`;
+// privateInfo
+var togglePrivateInfo = function(ele) {
+    var trigger = $(ele);
+    var privateInfo = $('#private-info');
+    if (trigger.hasClass('active')) {
+        trigger.removeClass('active');
+        privateInfo.slideUp();
     } else {
-        return `<td class="interact">${value.join(',<br />')}</td>`;
+        trigger.addClass('active');
+        privateInfo.slideDown();
     }
 };
-var tr = function(user) {
-    var result = '';
-    result += '<tr>';
-    result += td(user.name);
-    result += td(user.phone);
-    result += td(user.email);
-    result += td(user.working_email || '');
-    result += td(user.dept_names);
-    result += td(user.visa_types);
-    result += td(user.supervisor_name || '');
-    result += td(user.supervisor_email || '');
-    result += '</tr>';
-    if (user.note) {
-        result += '<tr>';
-        result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
-        result += '</tr>';
+var toggleGeneralInfoLock = function() {
+    var token = $('#private-general h2 button i');
+    var input = $('#private-general input');
+    if (token.hasClass('glyphicon-lock')) {
+        token.removeClass('glyphicon-lock');
+        token.addClass('glyphicon-edit');
+        input.prop('readonly', false);
+    } else {
+        token.removeClass('glyphicon-edit');
+        token.addClass('glyphicon-lock');
+        input.prop('readonly', true);
     }
-    return result;
 };
-var toHighlight = function(context) {
-    return `<span class="highlight">${context}</span>`;
+var getGeneralInfo = function() {
+    var valueArray = $('#private-general input').map(function() {
+        return this.value;
+    }).get();
+    var dataInput = {
+        name: valueArray[0],
+        phone: valueArray[1],
+        working_email: valueArray[2],
+        note: valueArray[3]
+    };
+    return dataInput;
 };
-var publicInfo = function(users, filter) {
-    var usersSelected = filter(users);
-    // console.log(usersSelected);
-    var result = '';
-    for (var user of usersSelected) {
-        result += tr(user);
+var toggleSupervisorLock = function() {
+    var token = $('#private-supervisor h2 button i');
+    var input = $('#private-supervisor input');
+    if (token.hasClass('glyphicon-lock')) {
+        token.removeClass('glyphicon-lock');
+        token.addClass('glyphicon-edit');
+        input.prop('readonly', false);
+    } else {
+        token.removeClass('glyphicon-edit');
+        token.addClass('glyphicon-lock');
+        input.prop('readonly', true);
     }
-    return result;
+};
+var getSupervisorInfo = function() {
+    var valueArray = $('#private-supervisor input').map(function() {
+        return this.value;
+    }).get();
+    var dataInput = {
+        supervisor_name: valueArray[0],
+        supervisor_email: valueArray[1]
+    };
+    return dataInput;
+};
+
+// delete user
+$(document).ready(function() {
+    $('#span-user_email').text(user.email);
+});
+var confirmEmail = function(ele) {
+    var btnDeleteUser = $('#btn-delete_user');
+    if (ele.value == user.email) {
+        btnDeleteUser.prop('disabled', false);
+    } else {
+        btnDeleteUser.prop('disabled', true);
+    }
 };

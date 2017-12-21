@@ -7,6 +7,8 @@
     <title>Redirect - Debug</title>
     <!-- jQuery 2.0.0 CDN -->
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+    <!-- jQuery highlight -->
+    <script src="https://bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
     <!-- Angular CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <!-- bootstrap 3 CDN -->
@@ -29,111 +31,11 @@
     <script src="js/crypto/hmac.js"></script>
     <script src="js/crypto/sha256.js"></script>
     <script src="js/crypto/util.js"></script>
+    <script src="js/ui-context.js"></script>
     <script src="js/ui.js"></script>
     <link rel="stylesheet" href="css/ui.css">
-    <!-- jQuery highlight -->
-    <script src="https://bartaz.github.io/sandbox.js/jquery.highlight.js"></script>
 </head>
 <body ng-app="app">
-    <script>
-        String.prototype.contains = function(that) {
-            return this.indexOf(that) != -1;
-        };
-        String.prototype.containsIgnoreCase = function(that) {
-            var thisLowerCase = this.toLowerCase();
-            var thatLowerCase = that.toLowerCase();
-            return thisLowerCase.indexOf(thatLowerCase) != -1;
-        };
-        Array.prototype.containsStr = function(str) {
-            for (var thisStr of this) {
-                if (thisStr.containsStr(str)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-        Array.prototype.containsStrIgnoreCase = function(str) {
-            for (var thisStr of this) {
-                if (thisStr.containsIgnoreCase(str)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-    </script>
-    <script>
-        var isSearchedFactory = function(text) {
-            var isSearched = function(user) {
-                var result = false;
-                for (var index in user) {
-                    if (index == '_id') {
-                        continue;
-                    }
-
-                    if (user[index] == null || user[index] == undefined) {
-                    } else if (typeof user[index] == 'string') {
-                        if (user[index].containsIgnoreCase(text)) {
-                            result = true;
-                            return result;
-                        }
-                    } else if (typeof user[index] == 'object') {
-                        if (user[index].containsStrIgnoreCase(text)) {
-                            result = true;
-                            return result;
-                        }
-                    } else {
-                        throw new DebugException();
-                    }
-                }
-                return result;
-            };
-            return isSearched;
-        };
-        // search(this.value)
-        var search = function(text) {
-            var isSearched = isSearchedFactory(text);
-            var divPublicInfo = $('#public-info');
-            divPublicInfo.html(publicInfo(users, function(users) {
-                return users.filter(isSearched);
-            }));
-            divPublicInfo.unhighlight();
-            divPublicInfo.highlight(text);
-        };
-        var isQueriedFactory = function(text, index) {
-            var isQueried = function(user) {
-                var result = false;
-                if (user[index] == null || user[index] == undefined) {
-                } else if (typeof user[index] == 'string') {
-                    if (user[index].containsIgnoreCase(text)) {
-                        result = true;
-                        return result;
-                    }
-                } else if (typeof user[index] == 'object') {
-                    if (user[index].containsStrIgnoreCase(text)) {
-                        result = true;
-                        return result;
-                    }
-                } else {
-                    throw new DebugException();
-                }
-                return result;
-            };
-            return isQueried;
-        };
-        // query(this.value, 'name')
-        var query = function(text, index) {
-            var isQueried = isQueriedFactory(text, index);
-            var divPublicInfo = $('#public-info');
-            divPublicInfo.html(publicInfo(users, function(users) {
-                return users.filter(isQueried);
-            }));
-        };
-    </script>
-    <script>
-        // sync resourse prepare
-        var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
-        var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));
-    </script>
     <script>
         // usr validation
         var jwt = jwtInCookie(document.cookie);
@@ -147,6 +49,9 @@
         var app = angular.module('app', []);
     </script>
     <script>
+        // sync resourse prepare
+        var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
+        var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));
         var user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
         var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
     </script>
@@ -163,30 +68,7 @@
                     });
                 </script>
             <script>
-                var toggleGeneralInfoLock = function() {
-                    var token = $('#private-general h2 button i');
-                    if (token.hasClass('glyphicon-lock')) {
-                        token.removeClass('glyphicon-lock');
-                        token.addClass('glyphicon-edit');
-                        $('#private-general input').prop('readonly', false);
-                    } else {
-                        token.removeClass('glyphicon-edit');
-                        token.addClass('glyphicon-lock');
-                        $('#private-general input').prop('readonly', true);
-                    }
-                }
-                var getGeneralInfo = function() {
-                    var valueArray = $('#private-general input').map(function() {
-                        return this.value;
-                    }).get();
-                    var dataInput = {
-                        name: valueArray[0],
-                        phone: valueArray[1],
-                        working_email: valueArray[2],
-                        note: valueArray[3]
-                    };
-                    return dataInput;
-                };
+                // privateInfo https
                 var updateGeneralInfo = function () {
                     var dataInput = getGeneralInfo();
                     $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: dataInput}).done(function() {
@@ -197,28 +79,6 @@
                         }));
                     });
                 };
-                var toggleSupervisorLock = function() {
-                    var token = $('#private-supervisor h2 button i');
-                    if (token.hasClass('glyphicon-lock')) {
-                        token.removeClass('glyphicon-lock');
-                        token.addClass('glyphicon-edit');
-                        $('#private-supervisor input').prop('readonly', false);
-                    } else {
-                        token.removeClass('glyphicon-edit');
-                        token.addClass('glyphicon-lock');
-                        $('#private-supervisor input').prop('readonly', true);
-                    }
-                };
-                var getSupervisorInfo = function() {
-                    var valueArray = $('#private-supervisor input').map(function() {
-                        return this.value;
-                    }).get();
-                    var dataInput = {
-                        supervisor_name: valueArray[0],
-                        supervisor_email: valueArray[1]
-                    };
-                    return dataInput;
-                };
                 var updateSupervisor = function() {
                     var dataInput = getSupervisorInfo();
                     $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: dataInput}).done(function() {
@@ -228,16 +88,6 @@
                             return users;
                         }));
                     });
-                };
-                var togglePrivateInfo = function(ele) {
-                	var trigger = $(ele);
-                	if (trigger.hasClass('active')) {
-                		trigger.removeClass('active');
-                		$('#private-info').slideUp();
-                	} else {
-                		trigger.addClass('active');
-                		$('#private-info').slideDown();
-                	}
                 };
             </script>
             </div>
@@ -363,6 +213,7 @@
             </div>
         </div>
         <script>
+            // change password http
             var changePassword = function() {
             	var oldPasswordInput = $('#input-old_password').val();
                 var newPasswordInput = $('#input-new_password').val();
@@ -418,23 +269,14 @@
             </div>
         </div>
         <script>
-            $(document).ready(function() {
-            	$('#span-user_email').text(user.email);
-            });
-            var confirmEmail = function(ele) {
-            	if (ele.value == user.email) {
-            		$('#btn-delete_user').prop('disabled', false);
-            	} else {
-            		$('#btn-delete_user').prop('disabled', true);
-            	}
-            };
+            // delete user http
             var deleteUser = function() {
                 $.ajax({url: `users/${_id}`, method: 'DELETE', async: true, dataType: 'json'}).done(function() {
                     document.cookie += ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
                     window.location.replace('welcome.html');
                     // TODO: middle page
                 });
-            }
+            };
         </script>
         <div ng-controller="controller-update_depts_and_visas" class="modal fade" id="model-update_depts_and_visas" role="dialog">
             <div class="modal-dialog modal-lg">
@@ -468,6 +310,7 @@
             </div>
         </div>
         <script>
+            // change depts and visas https
             app.controller('controller-update_depts_and_visas', function($scope, $http) {
             	$scope.deptNameChoices = deptNames;
             	$scope.visaTypeChoices = visaTypes;
