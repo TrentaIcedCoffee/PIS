@@ -1,43 +1,43 @@
 <!-- TODO password retrive -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="Public Information Collecting Service - sissdata" />
-        <meta name="author" content="Xin Jin" />
-        <link rel="icon" href="img/favicon.ico" />
-        <title>PICS - UC Davis department contact</title>
-        <!-- jQuery 2.0.0 CDN -->
-        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-        <!-- Angular CDN -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <!-- bootstrap 3 CDN -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <!-- daterangepicker CDN -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-        <!-- bootstrap select CDN -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-        <!-- bootstrap form -->
-        <script src="js/bootstrap-formhelpers.min.js"></script>
-        <!-- customized packages -->
-        <script src="js/exceptions.js"></script>
-        <script src="js/date.js"></script>
-        <script src="js/util.js"></script>
-        <script src="js/crypto/core.js"></script>
-        <script src="js/crypto/enc-base64.js"></script>
-        <script src="js/crypto/hmac.js"></script>
-        <script src="js/crypto/sha256.js"></script>
-        <script src="js/crypto/util.js"></script>
-        <script src="js/welcome.js"></script>
-        <link rel="stylesheet" href="css/util.css" />
-        <link rel="stylesheet" href="css/welcome.css" />
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Public Information Collecting Service - sissdata" />
+    <meta name="author" content="Xin Jin" />
+    <link rel="icon" href="img/favicon.ico" />
+    <title>PICS - UC Davis department contact</title>
+    <!-- jQuery 2.0.0 CDN -->
+    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+    <!-- Angular CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!-- bootstrap 3 CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- daterangepicker CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <!-- bootstrap select CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <!-- bootstrap form -->
+    <script src="js/bootstrap-formhelpers.min.js"></script>
+    <!-- customized packages -->
+    <script src="js/exceptions.js"></script>
+    <script src="js/date.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/crypto/core.js"></script>
+    <script src="js/crypto/enc-base64.js"></script>
+    <script src="js/crypto/hmac.js"></script>
+    <script src="js/crypto/sha256.js"></script>
+    <script src="js/crypto/util.js"></script>
+    <script src="js/welcome.js"></script>
+    <link rel="stylesheet" href="css/util.css" />
+    <link rel="stylesheet" href="css/welcome.css" />
+</head>
     <body ng-app="app">
         <script src="js/welcome-http.js"></script>
         <h1>UC Davis departmental contact update</h1>
