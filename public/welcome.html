@@ -34,8 +34,9 @@
         <script src="js/crypto/hmac.js"></script>
         <script src="js/crypto/sha256.js"></script>
         <script src="js/crypto/util.js"></script>
-        <link rel="stylesheet" href="css/welcome.css" />
         <script src="js/welcome.js"></script>
+        <link rel="stylesheet" href="css/util.css" />
+        <link rel="stylesheet" href="css/welcome.css" />
     </head>
     <body ng-app="app">
         <script src="js/welcome-http.js"></script>
@@ -156,6 +157,7 @@
             <form class="form-signin">
                 <h2 class="form-signin-heading">Login</h2>
                 <p>Back to <a id="anchor-login_to_signup">Sign Up</a></p>
+                <p><a data-toggle="modal" data-target="#model-retrieve_password">Forgot password?</a></p>
                 <div class="input-field" id="field-email-login">
                     <div class="illustration">User Email</div>
                     <div class="input-group">
@@ -174,5 +176,39 @@
                 <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
             </form>
         </div>
+        <div class="modal fade" id="model-retrieve_password" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Retrieve Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="interact">You may retrieve your password through email</div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input class="form-control interact" placeholder="Email" />
+                        </div>
+                        <div class="error" id="error-no_email">No such user</div>
+                        <button class="btn btn-warning btn-full interact" onclick="retrievePassword()" type="button">Update</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // password retrieve toggle
+            $(document).ready(function() {
+                $('#anchor-forgot_password').click(function() {
+                    $('#model-forgot_password').modal('show');
+                });
+            });
+            // password retrieve service
+            var retrievePassword = function() {
+                // TODO impl email
+            };
+        </script>
     </body>
 </html>

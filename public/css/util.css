@@ -1,0 +1,55 @@
+.navbar-inverse .navbar-brand {
+    color: rgba(235, 235, 235, 1);
+}
+.interact {
+    font-size: 18px;
+}
+.note-public {
+    font-size: 16px;
+}
+.express {
+    color: rgba(235, 235, 235, 1);
+}
+.express-inverse {
+    color: rgba(0, 0, 0, 1);
+}
+.express-large {
+    font-size: 22px;
+}
+.express-medium {
+    font-size: 20px;
+}
+.express-small {
+    font-size: 18px;
+}
+.input-group {
+    width: 100%;
+}
+.modal .input-group {
+    margin-top: 4px;
+}
+.btn-full {
+    width: 100%;
+}
+.modal .btn-full {
+    margin-top: 12px;
+}
+.ul-wide {
+    width: 100%;
+}
+.ul-wide li.dropdown-header {
+    padding-left: 4%;
+}
+.ul-wide li {
+    padding-left: 6%;
+}
+.ul-responsive li:hover {
+    background-color: rgba(200, 200, 200, 1);
+}
+.select-full {
+    width: 100%;
+}
+.error {
+    color: red;
+    display: none;
+}
