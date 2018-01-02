@@ -1,5 +1,3 @@
-<!-- TODO welcome -> 404 -->
-<!-- TODO inner -> package -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -280,7 +278,6 @@
                 $.ajax({url: `users/${_id}`, method: 'DELETE', async: true, dataType: 'json'}).done(function() {
                     document.cookie += ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
                     window.location.replace('welcome.html');
-                    // TODO: middle page
                 });
             };
         </script>
