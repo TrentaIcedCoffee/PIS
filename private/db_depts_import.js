@@ -2,6 +2,9 @@
     This script imports data from MySQL to Mongo
     NOTE use with care
 */
+
+'use strict'
+
 var mongoUser = '*'; // config.dbUser
 var mongoPwd = '*'; // config.dbPwd
 var mysqlHost = '*';

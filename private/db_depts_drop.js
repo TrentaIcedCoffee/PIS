@@ -1,7 +1,10 @@
-/*
+/**
     This script drops all data in Mongo
     NOTE use with care
 */
+
+'use strict'
+
 var mongoUser = '*'; // config.dbUser
 var mongoPwd = '*'; // config.dbPwd
 

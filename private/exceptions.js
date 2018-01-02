@@ -1,3 +1,5 @@
+'use strict'
+
 var exceptions = {};
 
 class DebugException extends Error {

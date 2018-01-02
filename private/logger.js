@@ -1,3 +1,5 @@
+'use strict'
+
 var fs = require('fs');
 var config = require(`${rootUri}/private/config`);
 var util = require(`${rootUri}/private/util`);

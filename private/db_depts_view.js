@@ -1,6 +1,9 @@
-/*
+/**
     This script views all data in Mongo
 */
+
+'use strict'
+
 var mongoUser = '*'; // config.dbUser
 var mongoPwd = '*'; // config.dbPwd
 
