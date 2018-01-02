@@ -2,12 +2,12 @@
 	"api": {
 		"/users": {
 			"GET": "array, all user with public fields",
-			"POST": "user posted"
+			"POST": "user, posted"
 		},
 		"/users/:id": {
-			"GET": "user with id",
-			"PUT": "user updated",
-			"DELETE": "user deleted"
+			"GET": "user, with id",
+			"PUT": "user, updated",
+			"DELETE": "user, deleted"
 		},
 		"/depts": {
 			"GET": "array, all dept with public fields"
