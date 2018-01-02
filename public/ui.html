@@ -243,8 +243,7 @@
                     $('#model-change_password').modal('hide');
                     $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: {password: newPasswordInput}}).done(function() {
                         document.cookie = cookieOf('usr', jwtOf(email, _id, newPasswordInput));
-                        window.location.replace('ui.html');
-                        // TODO: middle page
+                        alert('your password has been successfully changed');
                     });
                 }
             };
