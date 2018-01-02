@@ -1,46 +1,48 @@
-api: {
-    "/users": {
-        "GET": ["all data"],
-        "POST": "posted json"
-    },
-    "/depts": {
-        "GET": ["all data"],
-        "POST": "posted json"
-    },
-    "/users/id" {
-        "GET": "json",
-        "PUT": "merged json",
-        "DELETE": "deleted json"
-    },
-    "/depts/id" {
-        "GET": "json",
-        "PUT": "merged json",
-        "DELETE": "deleted json"
-    }
+{
+	"api": {
+		"/users": {
+			"GET": "array, all user with public fields",
+			"POST": "user posted"
+		},
+		"/users/:id": {
+			"GET": "user with id",
+			"PUT": "user updated",
+			"DELETE": "user deleted"
+		},
+		"/depts": {
+			"GET": "array, all dept with public fields"
+		},
+		"/visas": {
+			"GET": "array, all visa with public fields"
+		},
+		"/login": {
+			"POST": "object, object contains user _id if ok"
+		}
+	},
+	"data": {
+		"user": {
+			"_id": "generated, ObjectId",
+			"email": "required, string",
+			"password": "required, string",
+			"name": "required, string",
+			"phone": "required, string",
+			"stop_time": "required, string",
+			"dept_names": "len > 0, array",
+			"visa_types": "len > 0, array",
+			"working_email": "optional, string",
+			"supervisor_name": "optional, string",
+			"supervisor_email": "optional, string",
+			"note": "optional, string"
+		},
+		"dept": {
+			"_id": "generated, ObjectId",
+			"name": "required, string",
+			"college": "optional, string",
+			"cluster": "optional, string"
+		},
+		"visa": {
+			"_id": "generated, ObjectId",
+			"name": "required, string"
+		}
+	}
 }
-
-user: {
-    "_id": "default",
-    "email": "required",
-    "password": "required",
-    "name": "required",
-    "phone": "required",
-    "stop_time": "required",
-    "dept_names": ["len > 0"],
-    "visa_types": ["len > 0"],
-    "working_email": "optional",
-    "supervisor_name": "optional",
-    "supervisor_email": "optional",
-    "note": "optional"
-}
-
-dept: {
-    "_id": "default",
-    "name": "required",
-    "college": "optional",
-    "cluster": "optional"
-}
-
-visa_typies : ["J-1", "H-1B", "O-1", "TN", "PR", "E"]
-
-note: impl query and search on list, speed and that's it.
