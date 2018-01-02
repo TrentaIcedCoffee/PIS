@@ -11,17 +11,17 @@ If you need a new account, please go to the [website](TODO), and fill in all you
 > ![end_date](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/end_date.JPG)  
 
 ### Login
-click blue "login" link to login page
+click blue "login" link to login page    
 ![login](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/login.JPG)
 
 ### Change Record
-After you login to website, you can open My Information, click blue lock button, unlock your information, change it, and lock it back
+After you login to website, you can open My Information, click blue lock button, unlock your information, change it, and lock it back    
 ![change](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/change.JPG)
 
 ### Search and Query
-You can type keywords on in Global search, and it will filter all information related to keywords.
+You can type keywords on in Global search, and it will filter all information related to keywords.    
 ![search](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search.JPG)
-You can type keywords into search box of each column, and it will filter information related to keywords in that specific field.
+You can type keywords into search box of each column, and it will filter information related to keywords in that specific field.    
 ![query](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/query.JPG)
 
 #### Any further problems? Please send an email to (TODO)
