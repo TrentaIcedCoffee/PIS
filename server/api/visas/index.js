@@ -19,7 +19,7 @@ visasRouter.route('/')
             if (err) {
                 throw err;
             }
-            db.collection(config.dbVisas).find().toArray(function(err, resultsRedundant) {
+            db.collection(config.dbVisas).find().sort({'name': 1}).toArray(function(err, resultsRedundant) {
                 if (err) {
                     throw err;
                 }

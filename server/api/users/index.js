@@ -34,7 +34,7 @@ usersRouter.route('/')
             if (err) {
                 throw err;
             }
-            db.collection(config.dbUsers).find().toArray(function(err, results) {
+            db.collection(config.dbUsers).find().sort({'name': 1}).toArray(function(err, results) {
                 if (err) {
                     throw err;
                 }

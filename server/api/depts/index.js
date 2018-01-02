@@ -21,7 +21,7 @@ deptsRouter.route('/')
             if (err) {
                 throw err;
             }
-            db.collection(config.dbDepts).find().toArray(function(err, results) {
+            db.collection(config.dbDepts).find().sort({'name': 1}).toArray(function(err, results) {
                 if (err) {
                     throw err;
                 }
