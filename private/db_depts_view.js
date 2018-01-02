@@ -1,5 +1,5 @@
 /**
-    This script views all data in Mongo
+    This script views all dept in Mongo
 */
 
 'use strict'

@@ -1,5 +1,5 @@
-/*
-    This script imports data from MySQL to Mongo
+/**
+    This script imports all dept from MySQL to Mongo
     NOTE use with care
 */
 

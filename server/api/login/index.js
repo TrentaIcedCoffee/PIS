@@ -1,5 +1,3 @@
-// TODO console -> log
-
 "use strict";
 
 var loginRouter = require('express').Router();

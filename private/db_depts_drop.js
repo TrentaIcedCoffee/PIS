@@ -1,5 +1,5 @@
 /**
-    This script drops all data in Mongo
+    This script drops all dept in Mongo
     NOTE use with care
 */
 

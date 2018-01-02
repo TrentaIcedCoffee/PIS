@@ -1,4 +1,4 @@
-/*
+/**
     This script is used to empty log
     NOTE use with care
 */

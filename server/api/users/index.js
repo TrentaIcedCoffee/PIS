@@ -1,5 +1,3 @@
-// TODO console -> log
-
 'use strict'
 
 var usersRouter = require('express').Router();

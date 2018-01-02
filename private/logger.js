@@ -1,12 +1,11 @@
 // TODO: debug on server
 
-'use strict'
-
 /**
- * logger maintains a log on server
- *
- * logger.log(req, uri, method, data), it logs time, ip, uri, method, data
- */
+    logger maintains a log on server
+    logger.log(req, uri, method, data), it logs time, ip, uri, method, data
+*/
+
+'use strict'
 
 var fs = require('fs');
 var config = require(`${rootUri}/private/config`);
