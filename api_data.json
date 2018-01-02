@@ -1,0 +1,48 @@
+{
+	"api": {
+		"/users": {
+			"GET": "array, all user with public fields",
+			"POST": "user posted"
+		},
+		"/users/:id": {
+			"GET": "user with id",
+			"PUT": "user updated",
+			"DELETE": "user deleted"
+		},
+		"/depts": {
+			"GET": "array, all dept with public fields"
+		},
+		"/visas": {
+			"GET": "array, all visa with public fields"
+		},
+		"/login": {
+			"POST": "object, object contains user _id if ok"
+		}
+	},
+	"data": {
+		"user": {
+			"_id": "generated, ObjectId",
+			"email": "required, string",
+			"password": "required, string",
+			"name": "required, string",
+			"phone": "required, string",
+			"stop_time": "required, string",
+			"dept_names": "len > 0, array",
+			"visa_types": "len > 0, array",
+			"working_email": "optional, string",
+			"supervisor_name": "optional, string",
+			"supervisor_email": "optional, string",
+			"note": "optional, string"
+		},
+		"dept": {
+			"_id": "generated, ObjectId",
+			"name": "required, string",
+			"college": "optional, string",
+			"cluster": "optional, string"
+		},
+		"visa": {
+			"_id": "generated, ObjectId",
+			"name": "required, string"
+		}
+	}
+}
