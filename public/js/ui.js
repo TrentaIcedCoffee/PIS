@@ -1,3 +1,5 @@
+'use strict'
+
 // origin extends
 String.prototype.contains = function(that) {
     return this.indexOf(that) != -1;
@@ -26,6 +28,13 @@ Array.prototype.containsStrIgnoreCase = function(str) {
 
 // search and query
 var isSearchedFactory = function(text) {
+    // no search text
+    if (text == null || text == undefined || text == '') {
+        return function(user) {
+            return true;
+        };
+    }
+
     var isSearched = function(user) {
         var result = false;
         for (var index in user) {
@@ -63,6 +72,13 @@ var search = function(text) {
     divPublicInfo.highlight(text);
 };
 var isQueriedFactory = function(text, index) {
+    // no query text
+    if (text == null || text == undefined || text == '') {
+        return function(user) {
+            return true;
+        };
+    }
+
     var isQueried = function(user) {
         var result = false;
         if (user[index] == null || user[index] == undefined) {
