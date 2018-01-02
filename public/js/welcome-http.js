@@ -1,3 +1,5 @@
+'use strict'
+
 // sync resourse
 var deptNames = deptsToDeptNames(JSON.parse($.ajax({url: 'depts', async: false, dataType: 'json'}).responseText));
 var visaTypes = visasToVisaNames(JSON.parse($.ajax({url: 'visas', async: false, dataType: 'json'}).responseText));

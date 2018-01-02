@@ -1,3 +1,5 @@
+'use strict'
+
 var api = require('express').Router();
 var deptsRouter = require(`${rootUri}/server/api/depts`);
 var visasRouter = require(`${rootUri}/server/api/visas`);

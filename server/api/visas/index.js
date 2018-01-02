@@ -1,5 +1,7 @@
 // TODO console -> log
 
+'use strict'
+
 var visasRouter = require('express').Router();
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;

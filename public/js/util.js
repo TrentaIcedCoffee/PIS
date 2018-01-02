@@ -1,4 +1,5 @@
-// TODO test with data
+'use strict'
+
 var getIdOfEmail = function(email) {
     var users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText).filter(function(user) {
         return user.email == email;
@@ -35,7 +36,7 @@ var nameOf = function(depts) {
 };
 
 var usersToEmails = function(users) {
-    emails = [];
+    var emails = [];
     users.forEach(function(user) {
         emails.push(user['email']);
     });
@@ -43,7 +44,7 @@ var usersToEmails = function(users) {
 };
 
 var visasToVisaNames = function(visas) {
-    visaNames = [];
+    var visaNames = [];
     visas.forEach(function(visa) {
         visaNames.push(visa['name']);
     });
@@ -51,7 +52,7 @@ var visasToVisaNames = function(visas) {
 };
 
 var deptsToDeptNames = function(depts) {
-    deptNames = [];
+    var deptNames = [];
     depts.forEach(function(dept) {
         deptNames.push(dept['name']);
     });
@@ -59,7 +60,7 @@ var deptsToDeptNames = function(depts) {
 };
 
 var validateUser = function(users, key, okCallback, noUserCallback, wrongPasswordCallback) {
-    user = users.filter(function(item) {
+    var user = users.filter(function(item) {
         return item.email == key.email;
     });
     if (user.length == 0) {
@@ -107,7 +108,6 @@ var isValidId = function(id) {
     return id.length == 24;
 };
 
-// TODO test with data
 // RFC 2822 simplified form, credit to Esteban Kuber
 var isValidEmail = function(email) {
     // email in regex
