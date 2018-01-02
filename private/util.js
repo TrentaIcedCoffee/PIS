@@ -2,6 +2,13 @@
 
 var util = {};
 
+util.getIp = function(req) {
+    return (req.headers["X-Forwarded-For"] ||
+            req.headers["x-forwarded-for"] ||
+            '').split(',')[0] ||
+            req.client.remoteAddress;
+};
+
 util.getTime = function() {
     var date = new Date();
     var year = date.getFullYear();

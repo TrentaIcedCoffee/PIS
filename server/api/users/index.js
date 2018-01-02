@@ -31,7 +31,7 @@ var goPublic = function(data) {
 
 usersRouter.route('/')
     .get(function(req, res) {
-        console.log('GET localhost:3000/users');
+        logger.log(req, 'GET', '/users/', {});
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -47,8 +47,7 @@ usersRouter.route('/')
         });
     })
     .post(function(req, res) {
-        console.log('POST localhost:3000/users');
-        console.log(req.body);
+        logger.log(req, 'POST', '/users/', req.body);
         var data = new Data(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
@@ -79,7 +78,7 @@ usersRouter.route('/')
 
 usersRouter.route('/:id')
     .get(function(req, res) {
-        console.log(`GET localhost:3000/users/${req.params.id}`);
+        logger.log(req, 'GET', `/users/${req.params.id}`, {});
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
@@ -98,8 +97,7 @@ usersRouter.route('/:id')
         res.status(405).end() // not supported
     })
     .put(function(req, res) {
-        console.log(`PUT localhost:3000/users/${req.params.id}`);
-        console.log(req.body);
+        logger.log(req, 'PUT', `/users/${req.params.id}`, req.body);
         var data = new Data(req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
@@ -128,7 +126,7 @@ usersRouter.route('/:id')
         });
     })
     .delete(function(req, res) {
-        console.log(`DELETE localhost:3000/users/${req.params.id}`);
+        logger.log(req, 'DELETE', `/users/${req.params.id}`, {});
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;

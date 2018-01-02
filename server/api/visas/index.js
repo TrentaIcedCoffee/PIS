@@ -16,7 +16,7 @@ var goPublic = function(data) {
 
 visasRouter.route('/')
     .get(function(req, res) {
-        console.log('GET localhost:3000/visas');
+        logger.log(req, 'GET', '/visas/', {});
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;

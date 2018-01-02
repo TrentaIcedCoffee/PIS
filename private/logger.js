@@ -1,4 +1,12 @@
+// TODO: debug on server
+
 'use strict'
+
+/**
+ * logger maintains a log on server
+ *
+ * logger.log(req, uri, method, data), it logs time, ip, uri, method, data
+ */
 
 var fs = require('fs');
 var config = require(`${rootUri}/private/config`);
@@ -7,16 +15,11 @@ var exceptions = require(`${rootUri}/private/exceptions`);
 
 var logger = {
     'logUri': config.logUri,
-    'log': function(...params) {
-        var message;
-        if (params.length == 1) {
-            message = params[0];
-        } else if (params.length == 5) {
-            message = params.join(';');
-        } else {
-            throw new exceptions.DebugException();
-        }
-
+    'log': function(req, method, uri, data) {
+        var time = util.getTime();
+        var ip = util.getIp(req);
+        var dataString = JSON.stringify(data);
+        var message = [time, ip, method, uri, dataString].join(';');
         fs.appendFile(config.logUri, message + "\n", function(err) {
             if (err) {
                 console.error(err);

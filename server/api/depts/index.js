@@ -18,7 +18,7 @@ var goPublic = function(data) {
 
 deptsRouter.route('/')
     .get(function(req, res) {
-        console.log('GET localhost:3000/depts');
+        logger.log(req, 'GET', '/depts/', {});
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;

@@ -14,8 +14,7 @@ loginRouter.route('/')
         res.status(405).end(); // not supported
     })
     .post(function(req, res) {
-        console.log('POST localhost:3000/login');
-        console.log(req.body);
+        logger.log(req, 'POST', '/login/', req.body);
         MongoClient.connect(config.dbUri, function(err, db) {
             if (err) {
                 throw err;
