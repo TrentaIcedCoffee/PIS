@@ -41,4 +41,4 @@ url (shell 3.6 or later)
     mongo "mongodb+srv://siss-aoiln.mongodb.net/test" --authenticationDatabase admin --username sissdata --password <PASSWORD>
 
 ### API
-[api_data.txt](https://raw.githubusercontent.com/TrentaIcedCoffee/PICS/master/api_data.json)
+[api_data.json](https://raw.githubusercontent.com/TrentaIcedCoffee/PICS/master/api_data.json)
