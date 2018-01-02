@@ -1,24 +1,16 @@
-// switch function
-var signupToLogin = function() {
-    $('div[ng-controller="controller-signup"]').hide();
-    $('div[ng-controller="controller-login"]').show();
-};
-var loginToSignup = function() {
-    $('div[ng-controller="controller-signup"]').show();
-    $('div[ng-controller="controller-login"]').hide();
-};
-// switch anchor setup
-$(document).ready(function() {
-    $('#anchor-signup_to_login').click(function() {
-        signupToLogin();
-    });
-    $('#anchor-login_to_signup').click(function() {
-        loginToSignup();
-    });
-});
+'use strict'
 
-// daterangepicker setup
 $(document).ready(function() {
+    // switch function
+    signupToLogin = function() {
+        $('div[ng-controller="controller-signup"]').hide();
+        $('div[ng-controller="controller-login"]').show();
+    };
+    loginToSignup = function() {
+        $('div[ng-controller="controller-signup"]').show();
+        $('div[ng-controller="controller-login"]').hide();
+    };
+
     // ini time, ini daterangepicker input
     var curTime = new Time();
     var endTime = new Time(curTime).setMonthGap(6);
@@ -33,7 +25,8 @@ $(document).ready(function() {
         minDate: curTime.getDate(),
         maxDate: maxTime.getDate()
     });
-    // daterangepicker botton function
+
+    // daterangepicker button function
     setMonthGap = function(months) {
         var endTime = new Time(curTime);
         endTime.setMonthGap(months);
@@ -41,10 +34,8 @@ $(document).ready(function() {
         dateRangePicker.setStartDate(endTime.getDate());
         dateRangePicker.setEndDate(endTime.getDate());
     };
-});
 
-// signup input check setup
-$(document).ready(function() {
+    // signup input check setup
     $('#input-email').change(function() {
         $('#field-email .error').hide();
         if ($('#input-email').val().length == 0) {
@@ -111,63 +102,63 @@ $(document).ready(function() {
             $('#error-invalid_supervisor_email').show();
         }
     });
+
+    // signup whole check function
+    signupValidate = function() {
+        $('.error').hide();
+
+        var isValidSignup = true;
+
+        if ($('#input-email').val().length == 0) {
+            $('#error-empty_email').show();
+            isValidSignup = false;
+        } else if (!isValidEmail($('#input-email').val())) {
+            $('#error-invalid_email').show();
+            isValidSignup = false;
+        } else if ($.inArray($('#input-email').val(), emails) != -1) {
+            $('#error-email_exists').show();
+            isValidSignup = false;
+        }
+        if ($('#input-password').val().length == 0) {
+            $('#error-empty_password').show();
+            isValidSignup = false;
+        } else if (!isValidPassword($('#input-password').val())) {
+            $('#error-short_password').show();
+            isValidSignup = false;
+        }
+        if ($('#input-password-retype').val() != $('#input-password').val()) {
+            $('#error-password_mismatch').show();
+            isValidSignup = false;
+        }
+        if ($('#input-name').val().length == 0) {
+            $('#error-empty_name').show();
+            isValidSignup = false;
+        }
+        if ($('#input-phone').val().length == 0) {
+            $('#error-empty_phone').show();
+            isValidSignup = false;
+        }
+        if ($('#input-stop_time').val().length == 0) {
+            $('#error-empty_stop_time').show();
+            isValidSignup = false;
+        }
+        if ($('#select-dept_names').val() == null) {
+            $('#error-empty_dept_names').show();
+            isValidSignup = false;
+        }
+        if ($('#select-visa_types').val() == null) {
+            $('#error-empty_visa_types').show();
+            isValidSignup = false;
+        }
+        if ($('#input-working_email').val() != '' && !isValidEmail($('#input-working_email').val())) {
+            $('#error-invalid_working_email').show();
+            isValidSignup = false;
+        }
+        if ($('#input-supervisor_email').val() != '' && !isValidEmail($('#input-supervisor_email').val())) {
+            $('#error-invalid_supervisor_email').show();
+            isValidSignup = false;
+        }
+
+        return isValidSignup;
+    };
 });
-
-// signup whole check function
-var signupValidate = function() {
-    $('.error').hide();
-
-    var isValidSignup = true;
-
-    if ($('#input-email').val().length == 0) {
-        $('#error-empty_email').show();
-        isValidSignup = false;
-    } else if (!isValidEmail($('#input-email').val())) {
-        $('#error-invalid_email').show();
-        isValidSignup = false;
-    } else if ($.inArray($('#input-email').val(), emails) != -1) {
-        $('#error-email_exists').show();
-        isValidSignup = false;
-    }
-    if ($('#input-password').val().length == 0) {
-        $('#error-empty_password').show();
-        isValidSignup = false;
-    } else if (!isValidPassword($('#input-password').val())) {
-        $('#error-short_password').show();
-        isValidSignup = false;
-    }
-    if ($('#input-password-retype').val() != $('#input-password').val()) {
-        $('#error-password_mismatch').show();
-        isValidSignup = false;
-    }
-    if ($('#input-name').val().length == 0) {
-        $('#error-empty_name').show();
-        isValidSignup = false;
-    }
-    if ($('#input-phone').val().length == 0) {
-        $('#error-empty_phone').show();
-        isValidSignup = false;
-    }
-    if ($('#input-stop_time').val().length == 0) {
-        $('#error-empty_stop_time').show();
-        isValidSignup = false;
-    }
-    if ($('#select-dept_names').val() == null) {
-        $('#error-empty_dept_names').show();
-        isValidSignup = false;
-    }
-    if ($('#select-visa_types').val() == null) {
-        $('#error-empty_visa_types').show();
-        isValidSignup = false;
-    }
-    if ($('#input-working_email').val() != '' && !isValidEmail($('#input-working_email').val())) {
-        $('#error-invalid_working_email').show();
-        isValidSignup = false;
-    }
-    if ($('#input-supervisor_email').val() != '' && !isValidEmail($('#input-supervisor_email').val())) {
-        $('#error-invalid_supervisor_email').show();
-        isValidSignup = false;
-    }
-
-    return isValidSignup;
-};
