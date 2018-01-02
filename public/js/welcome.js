@@ -34,7 +34,7 @@ $(document).ready(function() {
         maxDate: maxTime.getDate()
     });
     // daterangepicker botton function
-    var setMonthGap = function(months) {
+    setMonthGap = function(months) {
         var endTime = new Time(curTime);
         endTime.setMonthGap(months);
         var dateRangePicker = $('#input-stop_time').data('daterangepicker');
