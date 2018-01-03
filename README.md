@@ -15,9 +15,9 @@ To login, click login.
 ## Update My Information
 After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.    
 ![change](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/change.JPG)    
-In order to edit information, you must first click on the lock button to unlock the field.    
+- In order to edit information, you must first click on the lock button to unlock the field.    
 ![unlock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/unlock.JPG)    
-After making a change, click on the lock button again to turn off editing.    
+- After making a change, click on the lock button again to turn off editing.    
 ![lock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/lock.JPG)     
 
 ## Search and Query
