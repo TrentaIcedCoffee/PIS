@@ -1,30 +1,30 @@
 # PICS - UC Davis Department Contact
 This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are a SISS administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-guide).
 
-### Sign up
+## Sign up
 To sign up a new account, please go to the [website](TODO). Complete the form to create your account.
-> - You can use the search box to find your department(s) and type(s) of visa requests you process.
-> ![search_box](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search_box.JPG)
-> - End date (select an end date that your information is valid through).
-> ![end_date](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/end_date.JPG)  
+- You can use the search box to find your department(s) and type(s) of visa requests you process.
+![search_box](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search_box.JPG)
+- End date (select an end date that your information is valid through).
+![end_date](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/end_date.JPG)  
 
-### Login
-To login, click login.
+## Login
+To login, click login.    
 ![login](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/login.JPG)
 
-### Update My Information
-After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.
-![change](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/change.JPG)
-In order to edit information, you must first click on the lock button to unlock the field.
-![unlock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/unlock.JPG)
-After making a change, click on the lock button again to turn off editing.
-![lock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/lock.JPG)
+## Update My Information
+After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.    
+![change](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/change.JPG)    
+In order to edit information, you must first click on the lock button to unlock the field.    
+![unlock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/unlock.JPG)    
+After making a change, click on the lock button again to turn off editing.    
+![lock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/lock.JPG)     
 
-### Search and Query
-##### Global Search
+## Search and Query
+### Global Search
 You can type keywords in Global search, and it will display all information related to keywords.    
 ![search](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search.JPG)
-##### Column Specific Query
+### Column Specific Query
 You can type keywords into the query box of each column, and it will filter information related to keywords you enter.    
 ![query](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/query.JPG)
 
