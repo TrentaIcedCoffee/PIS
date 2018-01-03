@@ -1,32 +1,36 @@
 # PICS - UC Davis Department Contact
-This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are an administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-guide).
+This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are a SISS administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-guide).
 
 ### Sign up
-If you need a new account, please go to the [website](TODO), and fill in all your record, then it will give a new account associated with your record.
-
-> - You can only have one account with one email
-> - You can use search box when choosing departments and visas
+To sign up a new account, please go to the [website](TODO). Complete the form to create your account.
+> - You can use the search box to find your department(s) and type(s) of visa requests you process.
 > ![search_box](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search_box.JPG)
-> - End Date indicates that you consider your record is valid at least before the date
+> - End date (select an end date that your information is valid through).
 > ![end_date](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/end_date.JPG)  
 
 ### Login
-click blue "login" link to login page    
+To login, click login.
 ![login](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/login.JPG)
 
-### Change Record
-After you login to website, you can open My Information, click blue lock button, unlock your information, change it, and lock it back    
+### Update My Information
+After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.
 ![change](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/change.JPG)
+In order to edit information, you must first click on the lock button to unlock the field.
+![unlock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/unlock.JPG)
+After making a change, click on the lock button again to turn off editing.
+![lock](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/lock.JPG)
 
 ### Search and Query
-You can type keywords on in Global search, and it will filter all information related to keywords.    
+##### Global Search
+You can type keywords in Global search, and it will display all information related to keywords.    
 ![search](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search.JPG)
-You can type keywords into search box of each column, and it will filter information related to keywords in that specific field.    
+##### Column Specific Query
+You can type keywords into the query box of each column, and it will filter information related to keywords you enter.    
 ![query](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/query.JPG)
 
-#### Any further problems? Please send an email to (TODO)
+#### Any questions? Please send an email to sissdata@ucdavis.edu
 
-## Administrator Guide
+## Administrator Reference Tools
 
 ### Database
 Mongo 3.4.10    
