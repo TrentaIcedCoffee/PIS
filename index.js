@@ -18,5 +18,5 @@ app.use(bodyParser.json());
 
 app.use(api);
 
-console.log('listening on port 80');
 app.listen(80);
+console.log('listening on port 80');

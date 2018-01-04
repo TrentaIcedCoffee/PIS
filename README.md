@@ -2,7 +2,7 @@
 This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are a SISS administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-guide).
 
 ## Sign up
-To sign up a new account, please go to the [website](TODO). Complete the form to create your account.
+To sign up a new account, please go to the [website](http://192.241.218.9/welcome.html). Complete the form to create your account.
 - You can use the search box to find your department(s) and type(s) of visa requests you process.
 ![search_box](https://github.com/TrentaIcedCoffee/PICS/blob/master/readme_resource/search_box.JPG)
 - End date (select an end date that your information is valid through).
