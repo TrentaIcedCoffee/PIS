@@ -1,11 +1,16 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "mongodb": "^2.2.33",
-    "mysql": "^2.15.0"
-  }
+    "name": "PICS-sissdata",
+    "version": "0.0.0",
+    "description": "public information collecting service for UC Davis sissdata",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "mongodb": "^2.2.33",
+        "mysql": "^2.15.0"
+    },
+    "author": "Xin Jin"
 }
