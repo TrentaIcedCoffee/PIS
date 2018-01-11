@@ -1,5 +1,5 @@
 # PICS - UC Davis Department Contact
-This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are a SISS administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-guide).
+This is a training guide for staff to learn how to use the UC Davis Department Contact website. If you are a SISS administrator of the website, click [here](https://github.com/TrentaIcedCoffee/PICS#administrator-reference-tools).
 
 ## Sign up
 To sign up a new account, please go to the [website](http://192.241.218.9/welcome.html). Complete the form to create your account.
