@@ -173,183 +173,220 @@
                         </th>
                     </tr>
                 </thead>
-              <tbody id="public-info">
-              </tbody>
-              <script>
-                  $(document).ready(function() {
-                      $('#public-info').html(publicInfo(users, function(users) {
-                          return users;
-                      }));
-                  });
-              </script>
+                <tbody id="public-info">
+                </tbody>
+                <script>
+                    $(document).ready(function() {
+                        $('#public-info').html(publicInfo(users, function(users) {
+                            return users;
+                        }));
+                    });
+                </script>
             </table>
-          </div>
         </div>
-        <div class="modal fade" id="model-change_password" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Change Password</h4>
+    </div>
+    <div class="modal fade" id="model-change_password" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Change Password</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="input-old_password" class="form-control interact" type="password" placeholder="Old password" />
                     </div>
-                    <div class="modal-body">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-old_password" class="form-control interact" type="password" placeholder="Old password" />
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-new_password" class="form-control interact" type="password" placeholder="New password" />
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="input-new_password_retyped" class="form-control interact" type="password" placeholder="Retype new password" />
-                        </div>
-                        <div class="interact error" id="error-old_password_mismatch">Old password incorrect</div>
-                        <div class="interact error" id="error-short_password">New password has to be 6 characters or more</div>
-                        <div class="interact error" id="error-retyped_password_mismatch">Inconsistent new passwords</div>
-                        <button class="btn btn-warning btn-full interact" onclick="changePassword()" type="button">Change password</button>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="input-new_password" class="form-control interact" type="password" placeholder="New password" />
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="input-new_password_retyped" class="form-control interact" type="password" placeholder="Retype new password" />
                     </div>
+                    <div class="interact error" id="error-old_password_mismatch">Old password incorrect</div>
+                    <div class="interact error" id="error-short_password">New password has to be 6 characters or more</div>
+                    <div class="interact error" id="error-retyped_password_mismatch">Inconsistent new passwords</div>
+                    <button class="btn btn-warning btn-full interact" onclick="changePassword()" type="button">Change password</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-        <script>
-            // change password http
-            var changePassword = function() {
-            	var oldPasswordInput = $('#input-old_password').val();
-                var newPasswordInput = $('#input-new_password').val();
-                var newPasswordRetypedInput = $('#input-new_password_retyped').val();
-                var errorOldPasswordMismatch = $('#error-old_password_mismatch');
-                var errorShortPassword = $('#error-short_password');
-                var errorRetypedPasswordMismatch = $('#error-retyped_password_mismatch');
+    </div>
+    <script>
+        // change password http
+        var changePassword = function() {
+        	var oldPasswordInput = $('#input-old_password').val();
+            var newPasswordInput = $('#input-new_password').val();
+            var newPasswordRetypedInput = $('#input-new_password_retyped').val();
+            var errorOldPasswordMismatch = $('#error-old_password_mismatch');
+            var errorShortPassword = $('#error-short_password');
+            var errorRetypedPasswordMismatch = $('#error-retyped_password_mismatch');
 
-                errorOldPasswordMismatch.hide();
-                errorShortPassword.hide();
-                errorRetypedPasswordMismatch.hide();
+            errorOldPasswordMismatch.hide();
+            errorShortPassword.hide();
+            errorRetypedPasswordMismatch.hide();
 
-                // http oldPasswordInput
-                var keyInput = {email: user.email, password: oldPasswordInput};
-                var keyResponse = JSON.parse($.ajax({url: 'login', method: 'POST', async: false, dataType: 'json', data: keyInput}).responseText);
+            // http oldPasswordInput
+            var keyInput = {email: user.email, password: oldPasswordInput};
+            var keyResponse = JSON.parse($.ajax({url: 'login', method: 'POST', async: false, dataType: 'json', data: keyInput}).responseText);
 
-                if (!keyResponse._id || keyResponse._id != _id) {
-                    errorOldPasswordMismatch.show();
-                } else if (!isValidPassword(newPasswordInput)) {
-                    errorShortPassword.show();
-                } else if (newPasswordInput != newPasswordRetypedInput) {
-                    errorRetypedPasswordMismatch.show();
+            if (!keyResponse._id || keyResponse._id != _id) {
+                errorOldPasswordMismatch.show();
+            } else if (!isValidPassword(newPasswordInput)) {
+                errorShortPassword.show();
+            } else if (newPasswordInput != newPasswordRetypedInput) {
+                errorRetypedPasswordMismatch.show();
+            } else {
+                $('#model-change_password').modal('hide');
+                $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: {password: newPasswordInput}}).done(function() {
+                    document.cookie = cookieOf('usr', jwtOf(email, _id, newPasswordInput));
+                    alert('your password has been successfully changed');
+                });
+            }
+        };
+    </script>
+    <div class="modal fade" id="model-delete_user" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Delete This User</h4>
+                </div>
+                <div class="modal-body">
+                    <p>This action <b>cannot</b> be undone. This will <b>permanently delete</b> all information of this user<br /><br />
+                        Please type in your email <b><span id="span-user_email"></span></b> to confirm.
+                    </p>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control interact" oninput="confirmEmail(this)" placeholder="Email" />
+                    </div>
+                    <button id="btn-delete_user" class="btn btn-danger btn-full interact" onclick="deleteUser()" type="button" disabled>Delete this user</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // delete user http
+        var deleteUser = function() {
+            $.ajax({url: `users/${_id}`, method: 'DELETE', async: true, dataType: 'json'}).done(function() {
+                document.cookie += ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+                window.location.replace('welcome.html');
+            });
+        };
+    </script>
+    <div ng-controller="controller-update_depts_and_visas" class="modal fade" id="model-update_depts_and_visas" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Departments and Visas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="interact">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
+                    <div class="input-group">
+                        <select class="select-full selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true" data-selected-text-format="count > 3">
+                            <option class="interact" ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="interact">Visa type(s) - Please at least select 1 visa type</div>
+                    <div class="input-group">
+                        <select class="select-full selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true" data-selected-text-format="count > 3">
+                            <option class="interact" ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
+                        </select>
+                    </div>
+                    <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
+                    <div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
+                    <button class="btn btn-warning btn-full interact" ng-click="updateDeptNamesAndVisaTypes()" type="button">Update</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // change depts and visas https
+        app.controller('controller-update_depts_and_visas', function($scope, $http) {
+        	$scope.deptNameChoices = deptNames;
+        	$scope.visaTypeChoices = visaTypes;
+            $scope.updateDeptNamesAndVisaTypes = function() {
+                var errorEmptyDeptNames = $('#error-empty_dept_names');
+                var errorEmptyVisaTypes = $('#error-empty_visa_types');
+
+                errorEmptyDeptNames.hide();
+                errorEmptyVisaTypes.hide();
+
+                if (!$scope.inputDeptNames) {
+                    errorEmptyDeptNames.show();
+                } else if (!$scope.inputVisaTypes) {
+                    errorEmptyVisaTypes.show();
                 } else {
-                    $('#model-change_password').modal('hide');
-                    $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: {password: newPasswordInput}}).done(function() {
-                        document.cookie = cookieOf('usr', jwtOf(email, _id, newPasswordInput));
-                        alert('your password has been successfully changed');
+                    var dataInput = {
+                        dept_names: $scope.inputDeptNames,
+                        visa_types: $scope.inputVisaTypes
+                    };
+                    $http({
+                        method: 'PUT',
+                        url: `users/${_id}`,
+                        data: dataInput
+                    }).then(function(res) {
+                        $('#model-update_depts_and_visas').modal('hide');
+                        user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
+                        users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
+                        $('#public-info').html(publicInfo(users, function(users) {
+                            return users;
+                        }));
+                    }, function(err) {
+                        throw err;
                     });
                 }
             };
-        </script>
-        <div class="modal fade" id="model-delete_user" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Delete This User</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>This action <b>cannot</b> be undone. This will <b>permanently delete</b> all information of this user<br /><br />
-                            Please type in your email <b><span id="span-user_email"></span></b> to confirm.
-                        </p>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input class="form-control interact" oninput="confirmEmail(this)" placeholder="Email" />
-                        </div>
-                        <button id="btn-delete_user" class="btn btn-danger btn-full interact" onclick="deleteUser()" type="button" disabled>Delete this user</button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            stopTime = (new Time()).setNanotime((new Date(user.stop_time)).getTime());
+            inAWeek = (new Time()).setMonthGap(1);
+
+            if ((Number)(stopTime.getNanotime()) < (Number)(inAWeek.getNanotime())) {
+                $('#modal-renew').modal('show');
+            }
+        });
+    </script>
+    <div class="modal fade" id="modal-renew" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Renew iGlobal access end date</h4>
+                </div>
+                <div class="modal-body">
+                    <p>We noticed that your record will be no longer valid in 1 month, will you like to have extra 6 months?</p>
+                    <button class="btn btn-info btn-full interact" onclick="renewUser()" type="button">Renew 6 months</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-        <script>
-            // delete user http
-            var deleteUser = function() {
-                $.ajax({url: `users/${_id}`, method: 'DELETE', async: true, dataType: 'json'}).done(function() {
-                    document.cookie += ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
-                    window.location.replace('welcome.html');
-                });
-            };
-        </script>
-        <div ng-controller="controller-update_depts_and_visas" class="modal fade" id="model-update_depts_and_visas" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Edit Departments and Visas</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="interact">Deparment - select department(s) for which you process visas. Please at least select 1 department</div>
-                        <div class="input-group">
-                            <select class="select-full selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true" data-selected-text-format="count > 3">
-                                <option class="interact" ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="interact">Visa type(s) - Please at least select 1 visa type</div>
-                        <div class="input-group">
-                            <select class="select-full selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true" data-selected-text-format="count > 3">
-                                <option class="interact" ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
-                            </select>
-                        </div>
-                        <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
-                        <div class="error" id="error-empty_visa_types">Must choose at least 1 visa type.</div>
-                        <button class="btn btn-warning btn-full interact" ng-click="updateDeptNamesAndVisaTypes()" type="button">Update</button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            // change depts and visas https
-            app.controller('controller-update_depts_and_visas', function($scope, $http) {
-            	$scope.deptNameChoices = deptNames;
-            	$scope.visaTypeChoices = visaTypes;
-                $scope.updateDeptNamesAndVisaTypes = function() {
-                    var errorEmptyDeptNames = $('#error-empty_dept_names');
-                    var errorEmptyVisaTypes = $('#error-empty_visa_types');
-
-                    errorEmptyDeptNames.hide();
-                    errorEmptyVisaTypes.hide();
-
-                    if (!$scope.inputDeptNames) {
-                        errorEmptyDeptNames.show();
-                    } else if (!$scope.inputVisaTypes) {
-                        errorEmptyVisaTypes.show();
-                    } else {
-                        var dataInput = {
-                            dept_names: $scope.inputDeptNames,
-                            visa_types: $scope.inputVisaTypes
-                        };
-                        $http({
-                            method: 'PUT',
-                            url: `users/${_id}`,
-                            data: dataInput
-                        }).then(function(res) {
-                            $('#model-update_depts_and_visas').modal('hide');
-                            user = JSON.parse($.ajax({url: `users/${_id}`, async: false, dataType: 'json'}).responseText);
-                            users = JSON.parse($.ajax({url: 'users', async: false, dataType: 'json'}).responseText);
-                            $('#public-info').html(publicInfo(users, function(users) {
-                                return users;
-                            }));
-                        }, function(err) {
-                            throw err;
-                        });
-                    }
-                };
+    </div>
+    <script>
+        var renewUser = function() {
+            stopTimeNew = (new Time()).setNanotime((new Date(user.stop_time)).getTime()).setMonthGap(6);
+            data = {stop_time: stopTimeNew.getDate()}
+            
+            $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: data}).done(function() {
+                window.location.replace('ui.html');
             });
-        </script>
+        };
+    </script>
 </body>
 </html>
