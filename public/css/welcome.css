@@ -50,3 +50,6 @@ form.form-signin button {
 div[ng-controller='controller-login'] {
     display: none;
 }
+#field-note {
+    display: none;
+}

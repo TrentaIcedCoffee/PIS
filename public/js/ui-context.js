@@ -59,7 +59,7 @@ var privateGeneral = function(user) {
     result += inputPrivateGeneral('user', user.name);
     result += inputPrivateGeneralPhone(user.phone);
     result += inputPrivateGeneral('envelope', (user.working_email || ''));
-    result += inputPrivateGeneral('comment', (user.note || ''));
+    // result += inputPrivateGeneral('comment', (user.note || ''));
     result += '</form>';
     result += '</div>';
     return result;
@@ -142,11 +142,11 @@ var tr = function(user) {
     result += td(user.supervisor_name || '');
     result += td(user.supervisor_email || '');
     result += '</tr>';
-    if (user.note) {
-        result += '<tr>';
-        result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
-        result += '</tr>';
-    }
+    // if (user.note) {
+    //     result += '<tr>';
+    //     result += `<td class="note-public" colspan="8">Note: ${user.note}</td>`;
+    //     result += '</tr>';
+    // }
     return result;
 };
 var publicInfo = function(users, filter) {

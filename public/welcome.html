@@ -41,7 +41,7 @@
     <body ng-app="app">
         <script src="js/welcome-http.js"></script>
         <h1>UC Davis department contact update</h1>
-        <p class="intro">Please use the form below to update SISS staff with the details of each department for which you process visa requests.</p>
+        <p class="intro">Please provide your updated information for visa processing.</p>
         <!-- sign up -->
         <div ng-controller="controller-signup" class="container">
             <form class="form-signin">
@@ -91,7 +91,7 @@
                     <div class="error" id="error-empty_phone">Phone number is required.</div>
                 </div>
                 <div class="input-field" id="field-stop_time">
-                    <div class="illustration">End date - the information you provide here will be considered valid until this date</div>
+                    <div class="illustration">iGlobal Access end date (renewable)</div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         <input type="text" id="input-stop_time" ng-model="inputStopTime" class="form-control" />
@@ -105,14 +105,14 @@
                     <div class="error" id="error-empty_stop_time">End date is required.</div>
                 </div>
                 <div class="input-field" id="field-dept_names">
-                    <div class="illustration">Department - select department(s) for which you process visas. Please at least select 1 department</div>
+                    <div class="illustration">Department - select department(s) for which you process visas.</div>
                     <select class="selectpicker" id="select-dept_names" multiple ng-model="inputDeptNames" data-live-search="true" data-selected-text-format="count > 3">
                         <option ng-repeat="deptNameChoice in deptNameChoices">{{deptNameChoice}}</option>
                     </select>
                     <div class="error" id="error-empty_dept_names">Must choose at least 1 department.</div>
                 </div>
                 <div class="input-field" id="field-visa_types">
-                    <div class="illustration">Visa type(s) - Please at least select 1 visa type</div>
+                    <div class="illustration">Visa type(s)</div>
                     <select class="selectpicker" id="select-visa_types" multiple ng-model="inputVisaTypes" data-live-search="true" data-selected-text-format="count > 3">
                         <option ng-repeat="visaTypeChoice in visaTypeChoices">{{visaTypeChoice}}</option>
                     </select>
@@ -157,7 +157,6 @@
             <form class="form-signin">
                 <h2 class="form-signin-heading">Login</h2>
                 <p>Back to <a onclick="loginToSignup()">Sign Up</a></p>
-                <!-- TODO password retrieve <p><a data-toggle="modal" data-target="#model-retrieve_password">Forgot password?</a></p> -->
                 <div class="input-field" id="field-email-login">
                     <div class="illustration">User Email</div>
                     <div class="input-group">
@@ -172,7 +171,7 @@
                         <input id="input-password-login" ng-model="inputPassword" required type="password" class="form-control" placeholder="User Password" />
                     </div>
                 </div>
-                <div class="error-login" id="error-incorrect">Wrong email/password</div>
+                <div class="error-login" id="error-incorrect">Wrong Password. For a password reset, contact sissdata@ucdavis.edu</div>
                 <button ng-click="login()" type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
             </form>
         </div>
