@@ -13,24 +13,26 @@ To create new account, please go to the [website](http://192.241.218.9/welcome.h
 ![search_box](/readme_resource/search_box.JPG)
 - iGlobal Access End Date  
   You are allowed to set an access end date up to one year in the future. Any time your profile information changes, you are responsible to update your information. As the access end date approaches, you will receive email reminders to update your account info and extend your access.  
+
   Example: A departmental contact is processing visas for the next 6 months for Mechanical Engineering. The contact would enter an access end date 6 months in the future. Then, if an update is needed, the contact would make the update before the end of that 6 months. Otherwise, iGlobal access will be removed and the profile at UC Davis Department Contacts will be deleted.  
 ![end_date](/readme_resource/end_date.JPG)  
 
 ## How to use UC Davis Department Contacts
 
 ## Login
-To login, click login.    
-![login](/readme_resource/login.JPG)
+To login, click login.  
+![login](/readme_resource/login.JPG)  
 If you forgot your passport, please email sissdata@ucdavis.edu
 
 ## Update My Information
-After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.    
+After you login to UC Davis Department Contact, you can update any information for your profile by going to My Information.  
 ![change](/readme_resource/change.JPG)    
-- In order to edit General Info and Supervisor Info, you must first click on the lock button to unlock the field.    
+- In order to edit General Info and Supervisor Info, you must first click on the lock button to unlock the field.  
 ![unlock](/readme_resource/unlock.JPG)    
-After making a change, click on the lock button again to turn off editing.    
+After making a change, click on the lock button again to turn off editing.  
 ![lock](/readme_resource/lock.JPG)     
-- To edit your Department and Visa information, click on the edit icon to access the drop down and search selection.
+- To edit your Department and Visa information, click on the edit icon to access the drop down and search selection.  
+![edit](/readme_resource/edit.JPG)
 
 ## Search and Query
 ### Global Search
