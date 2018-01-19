@@ -2,8 +2,9 @@
 This is a training guide for SISS departmental contacts to learn how to use the UC Davis Department Contacts website.
 
 ## Background Information
-  In order to obtain and maintain administrative access to process scholar visa requests in iGlobal, SISS requires department contacts to create and update a profile at the UC Davis Department Contacts website.  If the contact’s profile at this website expires, iGlobal access will be removed and the contact’s profile will be deleted from the website.  SISS will send reminders to contacts three times: 2 months, 1 month and 1 week prior to expiration. (TODO)  
-  UC Davis Department Contacts allows staff to create and update their profile to reflect any changes in assigned departments for processing visa requests.  SISS and departmental contacts may use this website to search for assigned contacts for each department that processes visas.
+In order to obtain and maintain administrative access to process scholar visa requests in iGlobal, SISS requires department contacts to create and update a profile at the UC Davis Department Contacts website.  If the contact’s profile at this website expires, iGlobal access will be removed and the contact’s profile will be deleted from the website.  SISS will send reminders to contacts three times: 2 months, 1 month and 1 week prior to expiration.  
+  
+UC Davis Department Contacts allows staff to create and update their profile to reflect any changes in assigned departments for processing visa requests.  SISS and departmental contacts may use this website to search for assigned contacts for each department that processes visas.
 
 ## Sign up
 To create new account, please go to the [website](http://192.241.218.9/welcome.html) and complete the form.
@@ -13,9 +14,8 @@ To create new account, please go to the [website](http://192.241.218.9/welcome.h
 ![search_box](/readme_resource/search_box.JPG)
 - iGlobal Access End Date  
   You are allowed to set an access end date up to one year in the future. Any time your profile information changes, you are responsible to update your information. As the access end date approaches, you will receive email reminders to update your account info and extend your access.  
-
+  ![end_date](/readme_resource/end_date.JPG)  
   Example: A departmental contact is processing visas for the next 6 months for Mechanical Engineering. The contact would enter an access end date 6 months in the future. Then, if an update is needed, the contact would make the update before the end of that 6 months. Otherwise, iGlobal access will be removed and the profile at UC Davis Department Contacts will be deleted.  
-![end_date](/readme_resource/end_date.JPG)  
 
 ## How to use UC Davis Department Contacts
 
