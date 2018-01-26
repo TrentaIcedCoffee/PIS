@@ -1,12 +1,11 @@
-// TODO: hard-code -> config file
-
 /**
     This script drops specific user with id from db
     NOTE use with care
 */
 
 'use strict'
-var id = '';
+
+config = require('./config');
 
 if (process.argv.length != 3) {
     console.log('Incorrect parameters');
