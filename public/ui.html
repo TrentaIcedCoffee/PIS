@@ -6,7 +6,7 @@
     <meta name="description" content="Public Information Collecting Service - UC Davis sissdata" />
     <meta name="author" content="Xin Jin" />
     <link rel="icon" href="img/favicon.ico" />
-    <title>PICS - UC Davis department contact</title>
+    <title>UC Davis Department Contacts</title>
     <!-- jQuery 2.0.0 CDN -->
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <!-- jQuery highlight -->
@@ -96,7 +96,7 @@
             </script>
             </div>
             <div class="col-md-6 navbar-header">
-                <a class="navbar-brand express express-large">PICS - UC Davis Department Contacts</a>
+                <a class="navbar-brand express express-large">UC Davis Department Contacts</a>
             </div>
             <div class="col-md-3 navbar-right">
                 <form class="navbar-form">
@@ -382,7 +382,7 @@
         var renewUser = function() {
             stopTimeNew = (new Time()).setNanotime((new Date(user.stop_time)).getTime()).setMonthGap(6);
             data = {stop_time: stopTimeNew.getDate()}
-            
+
             $.ajax({url: `users/${_id}`, method: 'PUT', async: true, dataType: 'json', data: data}).done(function() {
                 window.location.replace('ui.html');
             });
