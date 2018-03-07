@@ -1,6 +1,6 @@
 {
-    "name": "PICS-sissdata",
-    "version": "0.0.0",
+    "name": "PIS-sissdata",
+    "version": "1.0.0",
     "description": "public information collecting service for UC Davis sissdata",
     "main": "index.js",
     "scripts": {
