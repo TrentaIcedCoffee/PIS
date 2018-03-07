@@ -4,24 +4,22 @@ var fs = require('fs');
 var red = require('./red');
 var passport = require('./passport.json');
 
-module.exports = (function() {
-    var is_exit = false;
-    if (passport.db_production_uri == null
-        || passport.db_production_uri == undefined
-        || passport.db_production_uri == '') {
-        console.log(red('passport.db_production_uri not valid'));
-        is_exit = true;
-    }
-    if (passport.db_dev_uri == null
-        || passport.db_dev_uri == undefined
-        || passport.db_dev_uri == '') {
-        console.log(red('passport.db_dev_uri not valid'));
-        is_exit = true;
-    }
-    if (is_exit) {
-        console.log(red('ERR'));
-        process.exit(0);
-    }
+var passport_fields = ['db_dev_username', 'db_dev_password', 'db_dev_dbname', 'db_dev_zone',
+    'db_production_username', 'db_production_password', 'db_production_dbname', 'db_production_zone'];
 
-    return passport;
-})();
+for (var field of passport_fields) {
+    if (!(field in passport)) {
+        console.log(red(`passport.json missing field ${field}`));
+        process.exit(-1);
+    }
+}
+
+passport.db_dev_uri = `mongodb://${passport.db_dev_username}:${passport.db_dev_password}@` +
+    `${passport.db_dev_dbname}-00-00-${passport.db_dev_zone}.mongodb.net:27017` +
+    `/test?ssl=true&replicaSet=siss-shard-0&authSource=admin`;
+
+passport.db_production_uri = `mongodb://${passport.db_production_username}:${passport.db_production_password}@` +
+    `${passport.db_production_dbname}-00-00-${passport.db_production_zone}.mongodb.net:27017` +
+    `/test?ssl=true&replicaSet=siss-shard-0&authSource=admin`;
+
+module.exports = passport;
