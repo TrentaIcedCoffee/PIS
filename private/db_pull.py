@@ -12,7 +12,9 @@ PASSPORT_PATH = './passport.json'
 PASSPORT_FIELDS = ['db_dev_username', 'db_dev_password',
                    'db_dev_dbname', 'db_dev_zone',
                    'db_production_username', 'db_production_password',
-                   'db_production_dbname', 'db_production_zone']
+                   'db_production_dbname', 'db_production_zone',
+                   'db_backup_username', 'db_backup_password',
+                   'db_backup_dbname', 'db_backup_zone']
 
 def pull():
     ''' pull all document from production to dev '''
